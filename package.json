@@ -7,8 +7,8 @@
     "start": "webpack serve --open",
     "build": "webpack",
     "lint": "eslint ./src/** --fix",
-    "prettier": "npx prettier . --check",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "eslint-plugin-react": "7.27.1",
     "eslint-plugin-react-hooks": "4.3.0",
     "html-webpack-plugin": "5.5.0",
+    "husky": "^7.0.4",
     "prettier": "2.5.1",
     "prettier-eslint": "13.0.0",
     "tsconfig-paths-webpack-plugin": "3.5.2",
