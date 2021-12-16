@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"],
+
+      "@appConstants": ["./shared/appConstants"],
+      "@appConstants/*": ["./shared/appConstants/*"],
+
+      "@utils": ["./shared/utils"],
+      "@utils/*": ["./shared/utils/*"],
+
+      "@hooks": ["./shared/hooks"],
+      "@hooks/*": ["./shared/hooks/*"],
+
+      "@components": ["./shared/components"],
+      "@components/*": ["./shared/components/*"],
+
+      "@containers": ["./shared/containers"],
+      "@containers/*": ["./shared/containers/*"],
+    }
+  }
+}
