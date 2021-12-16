@@ -1,5 +1,6 @@
 import React from 'react';
+import { Title } from '@components';
 
 export const Login = () => {
-  return <h1>Login</h1>;
+  return <Title>Hello world from Login page</Title>;
 };

@@ -1,3 +1,4 @@
 import React from 'react';
+import { Title } from '@components';
 
-export const Registration = () => <h1>Hello register</h1>;
+export const Registration = () => <Title>Hello register</Title>;
