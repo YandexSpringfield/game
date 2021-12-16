@@ -1,8 +1,24 @@
 module.exports = {
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'plugin:prettier/recommended',
+  ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 13,
+    sourceType: 'module',
+  },
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
+    'prettier/prettier': 'error',
     '@typescript-eslint/dot-notation': 'off',
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
@@ -17,5 +33,6 @@ module.exports = {
     'max-len': ['error', { code: 125 }],
     'class-methods-use-this': 0,
     '@typescript-eslint/no-unused-expressions': 0,
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
   },
 };
