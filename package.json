@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --open",
+    "dev": "webpack serve --open",
     "build": "webpack",
-    "server": "node server.js",
+    "start": "node server.js",
     "lint": "eslint ./src/** --fix",
     "type-check": "tsc --noEmit",
     "prepare": "husky install"
