@@ -12,5 +12,5 @@
   },
   "extends": "./tsconfig.paths.json",
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-  "exclude": ["node_modules", "./node_modules/@types/react-table/index.d.ts"]
+  "exclude": ["node_modules", "node_modules/@types/react-router/index.d.ts"]
 }
