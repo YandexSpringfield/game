@@ -4,20 +4,23 @@
     "paths": {
       "@/*": ["./*"],
 
-      "@appConstants": ["./shared/appConstants"],
-      "@appConstants/*": ["./shared/appConstants/*"],
+      "@appConstants": ["./appConstants"],
+      "@appConstants/*": ["./appConstants/*"],
 
-      "@utils": ["./shared/utils"],
-      "@utils/*": ["./shared/utils/*"],
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
 
-      "@hooks": ["./shared/hooks"],
-      "@hooks/*": ["./shared/hooks/*"],
+      "@hooks": ["./hooks"],
+      "@hooks/*": ["./hooks/*"],
 
-      "@components": ["./shared/components"],
-      "@components/*": ["./shared/components/*"],
+      "@components": ["./components"],
+      "@components/*": ["./components/*"],
 
-      "@containers": ["./shared/containers"],
-      "@containers/*": ["./shared/containers/*"],
+      "@containers": ["./containers"],
+      "@containers/*": ["./containers/*"],
+
+      "@pages": ["./pages"],
+      "@pages/*": ["./pages/*"]
     }
   }
 }
