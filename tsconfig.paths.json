@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"],
+
+      "@appConstants": ["./appConstants"],
+      "@appConstants/*": ["./appConstants/*"],
+
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
+
+      "@hooks": ["./hooks"],
+      "@hooks/*": ["./hooks/*"],
+
+      "@components": ["./components"],
+      "@components/*": ["./components/*"],
+
+      "@containers": ["./containers"],
+      "@containers/*": ["./containers/*"],
+
+      "@pages": ["./pages"],
+      "@pages/*": ["./pages/*"]
+    }
+  }
+}
