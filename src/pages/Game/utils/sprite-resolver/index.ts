@@ -1,0 +1,1 @@
+export { SpriteResolver } from './SpriteImage';
