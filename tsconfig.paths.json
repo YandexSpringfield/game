@@ -20,7 +20,10 @@
       "@containers/*": ["./containers/*"],
 
       "@pages": ["./pages"],
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["./pages/*"],
+
+      "@store": ["./store"],
+      "@store/*": ["./store/*"]
     }
   }
 }
