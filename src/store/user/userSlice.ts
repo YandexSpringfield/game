@@ -26,11 +26,17 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserProfile.pending, (state) => {
-      state.requestStatus = RequestStatus.REQUEST;
+      return {
+        ...state,
+        requestStatus: RequestStatus.REQUEST,
+      };
     });
 
     builder.addCase(fetchUserProfile.rejected, (state) => {
-      state.requestStatus = RequestStatus.ERROR;
+      return {
+        ...state,
+        requestStatus: RequestStatus.ERROR,
+      };
     });
 
     builder.addCase(fetchUserProfile.fulfilled, (state, { payload }) => {
