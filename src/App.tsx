@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
 import { routes } from '@appConstants';
 import { Login, Registration } from '@pages';
-import { store } from '@store/store';
+import { store } from '@store';
 
 export const App = () => {
   return (

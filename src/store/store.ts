@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
-import { userSlice } from '@store/user/userSlice';
+import { userSlice } from '@store/user';
 
 const reducer = combineReducers({
   user: userSlice.reducer,

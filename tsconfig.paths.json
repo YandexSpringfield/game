@@ -23,7 +23,10 @@
       "@pages/*": ["./pages/*"],
 
       "@store": ["./store"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+
+      "@types": ["./types"],
+      "@types/*": ["./types/*"]
     }
   }
 }
