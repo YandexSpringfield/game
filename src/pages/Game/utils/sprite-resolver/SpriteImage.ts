@@ -7,7 +7,7 @@ export class SpriteResolver {
 
   public tiles: Map<string, HTMLCanvasElement>;
 
-  constructor(image: HTMLImageElement, width = 16, height = 16) {
+  constructor(image: HTMLImageElement, width = 32, height = 32) {
     this.image = image;
     this.width = width;
     this.height = height;

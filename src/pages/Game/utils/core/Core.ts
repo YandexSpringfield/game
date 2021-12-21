@@ -2,8 +2,8 @@
 import { loadImage, SpriteResolver } from '@pages/Game/utils';
 import spriteImage from '@/assets/images/sprite.png';
 
-const skyRange = [[0, 40, 0, 38]];
-const groundRange = [[0, 40, 38, 40]];
+const skyRange = [[0, 20, 0, 18]];
+const groundRange = [[0, 20, 18, 20]];
 
 /* eslint-disable no-constructor-return */
 export class Core {
@@ -13,6 +13,8 @@ export class Core {
 
   public context: CanvasRenderingContext2D;
 
+  public spriteImage: HTMLImageElement | null;
+
   constructor(canvas: HTMLCanvasElement) {
     if (Core._instance) {
       return this;
@@ -21,15 +23,19 @@ export class Core {
     Core._instance = this;
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+    this.spriteImage = null;
   }
 
   init() {
     this.drawBackgrounds();
+    this.drawMario();
   }
 
   private drawBackgrounds() {
     loadImage(spriteImage).then((image) => {
-      const sprites = new SpriteResolver(image);
+      this.spriteImage = image;
+
+      const sprites = new SpriteResolver(this.spriteImage);
       sprites.defineTile('ground', 0, 0);
       sprites.defineTile('sky', 1, 0);
 
@@ -48,6 +54,16 @@ export class Core {
           }
         }
       });
+
+      this.drawMario();
     });
+  }
+
+  private drawMario() {
+    if (this.spriteImage) {
+      const sprites = new SpriteResolver(this.spriteImage);
+      sprites.define('mario', 64, 0, 32, 32);
+      sprites.draw('mario', this.context, 32, 544);
+    }
   }
 }
