@@ -24,6 +24,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
     'react/prop-types': 'off',
+    'react/destructuring-assignment': 'off',
     '@typescript-eslint/no-shadow': 'off',
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',

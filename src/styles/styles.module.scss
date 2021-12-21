@@ -1,0 +1,11 @@
+@import 'colors';
+@import 'mixins';
+@import 'null';
+@import 'fonts';
+
+$fontFamily: 'SF-Pro', sans-serif;
+
+body {
+  font-family: $fontFamily;
+};
+

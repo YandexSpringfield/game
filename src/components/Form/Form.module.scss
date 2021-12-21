@@ -1,0 +1,5 @@
+@import '../../styles/mixins';
+
+.form {
+  @include flex(column, space-between, center);
+}

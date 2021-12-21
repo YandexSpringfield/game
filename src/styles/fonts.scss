@@ -1,0 +1,7 @@
+@import 'mixins';
+
+@include font('SF-Pro', 'SF-Pro-Display-Light', '300', 'normal');
+@include font('SF-Pro', 'SF-Pro-Display-Regular', '400', 'normal');
+@include font('SF-Pro', 'SF-Pro-Display-Medium', '500', 'normal');
+@include font('SF-Pro', 'SF-Pro-Display-SemiBold', '600', 'normal');
+@include font('SF-Pro', 'SF-Pro-Display-Bold', '700', 'normal');

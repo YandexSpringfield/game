@@ -1,4 +1,1 @@
-import React from 'react';
-import { Title } from '@components';
-
-export const Registration = () => <Title>Hello register</Title>;
+export { Registration } from '@pages/Registration/Registration';
