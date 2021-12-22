@@ -5,8 +5,7 @@ export type TProps = {
   label: string;
   type: string;
   value: string;
-  errorMessage: string;
-  inputValid: boolean;
+  error: string | boolean;
   onBlur: FocusEventHandler<HTMLInputElement>;
   onChange: FocusEventHandler<HTMLInputElement>;
 };

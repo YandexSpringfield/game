@@ -11,33 +11,27 @@ export class Registration extends Component<any, IState> {
     this.state = {
       first_name: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       second_name: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       login: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       email: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       password: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       password_confirm: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
     };
   }
@@ -79,8 +73,7 @@ export class Registration extends Component<any, IState> {
       const { re } = data[name];
       return {
         value,
-        error: re.test(value) ? '' : data[name].message,
-        valid: re.test(value),
+        error: !re.test(value) ? data[name].message : false,
       };
     }
 
@@ -94,7 +87,6 @@ export class Registration extends Component<any, IState> {
       return {
         value,
         error: data[name].message,
-        valid: false,
       };
     }
 
@@ -123,8 +115,7 @@ export class Registration extends Component<any, IState> {
               type="text"
               name="first_name"
               label="Имя"
-              inputValid={first_name.valid}
-              errorMessage={first_name.error}
+              error={first_name.error}
               value={first_name.value}
               onBlur={this.onBlur}
               onChange={this.onChange}
@@ -133,8 +124,7 @@ export class Registration extends Component<any, IState> {
               type="text"
               name="second_name"
               label="Фамилия"
-              inputValid={second_name.valid}
-              errorMessage={second_name.error}
+              error={second_name.error}
               value={second_name.value}
               onBlur={this.onBlur}
               onChange={this.onChange}
@@ -144,8 +134,7 @@ export class Registration extends Component<any, IState> {
             type="text"
             name="login"
             label="Логин"
-            inputValid={login.valid}
-            errorMessage={login.error}
+            error={login.error}
             value={login.value}
             onBlur={this.onBlur}
             onChange={this.onChange}
@@ -154,8 +143,7 @@ export class Registration extends Component<any, IState> {
             type="email"
             name="email"
             label="Почта"
-            inputValid={email.valid}
-            errorMessage={email.error}
+            error={email.error}
             value={email.value}
             onBlur={this.onBlur}
             onChange={this.onChange}
@@ -164,8 +152,7 @@ export class Registration extends Component<any, IState> {
             type="password"
             name="password"
             label="Пароль"
-            inputValid={password.valid}
-            errorMessage={password.error}
+            error={password.error}
             value={password.value}
             onBlur={this.onBlur}
             onChange={this.onChange}
@@ -174,8 +161,7 @@ export class Registration extends Component<any, IState> {
             type="password"
             name="password_confirm"
             label="Повторите пароль"
-            inputValid={password_confirm.valid}
-            errorMessage={password_confirm.error}
+            error={password_confirm.error}
             value={password_confirm.value}
             onBlur={this.onBlur}
             onChange={this.onChange}

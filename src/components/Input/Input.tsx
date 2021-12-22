@@ -1,29 +1,24 @@
 import React, { FC } from 'react';
+import cn from 'classnames';
 import { TProps } from '@components/Input/types';
 
 import styles from './Input.module.scss';
 
-export const Input: FC<TProps> = ({
-  name,
-  label,
-  errorMessage,
-  inputValid,
-  ...rest
-}) => (
+export const Input: FC<TProps> = ({ name, label, error, ...rest }) => (
   <div className={styles.input__wrapper}>
     <label className={styles.input__label} htmlFor={name}>
       {label}
     </label>
     <input
-      className={styles.input__field + (inputValid ? '' : ` ${styles.error}`)}
+      className={cn(styles.input__field, { [styles.error]: !!error })}
       name={name}
       id={name}
       {...rest}
     />
-    {inputValid ? (
-      ''
+    {typeof error === 'string' ? (
+      <span className={styles.error__field}>{error}</span>
     ) : (
-      <span className={styles.error__filed}>{errorMessage}</span>
+      ''
     )}
   </div>
 );

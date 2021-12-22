@@ -11,13 +11,11 @@ export class Login extends Component<any, IState> {
     this.state = {
       login: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
       password: {
         value: '',
-        error: '',
-        valid: true,
+        error: false,
       },
     };
   }
@@ -53,8 +51,7 @@ export class Login extends Component<any, IState> {
       const { re } = data[name];
       return {
         value,
-        error: re.test(value) ? '' : data[name].message,
-        valid: re.test(value),
+        error: !re.test(value) ? data[name].message : false,
       };
     }
 
@@ -75,8 +72,7 @@ export class Login extends Component<any, IState> {
             type="text"
             name="login"
             label="Логин"
-            inputValid={login.valid}
-            errorMessage={login.error}
+            error={login.error}
             value={login.value}
             onBlur={this.onBlur}
             onChange={this.onChange}
@@ -85,8 +81,7 @@ export class Login extends Component<any, IState> {
             type="password"
             name="password"
             label="Пароль"
-            inputValid={password.valid}
-            errorMessage={password.error}
+            error={password.error}
             value={password.value}
             onBlur={this.onBlur}
             onChange={this.onChange}
