@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '@types';
 import { fetchUserProfile } from './thunks';
@@ -18,33 +17,25 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setState: (state, action: PayloadAction<Partial<TUserState>>) => {
-      return {
-        ...state,
-        ...action.payload,
-      };
+      Object.keys(action.payload).forEach((key) => {
+        state[key] = action.payload[key];
+      });
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserProfile.pending, (state) => {
-      return {
-        ...state,
-        requestStatus: RequestStatus.REQUEST,
-      };
+      state.requestStatus = RequestStatus.REQUEST;
     });
 
     builder.addCase(fetchUserProfile.rejected, (state) => {
-      return {
-        ...state,
-        requestStatus: RequestStatus.ERROR,
-      };
+      state.requestStatus = RequestStatus.ERROR;
     });
 
     builder.addCase(fetchUserProfile.fulfilled, (state, { payload }) => {
-      return {
-        ...state,
-        email: payload.email,
-        requestStatus: RequestStatus.SUCCESS,
-      };
+      state.requestStatus = RequestStatus.SUCCESS;
+      Object.keys(payload).forEach((key) => {
+        state[key] = payload[key];
+      });
     });
   },
 });
