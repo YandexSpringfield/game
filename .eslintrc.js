@@ -35,6 +35,10 @@ module.exports = {
     'class-methods-use-this': 0,
     '@typescript-eslint/no-unused-expressions': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] },
+    ],
     'react/function-component-definition': [
       2,
       { namedComponents: 'arrow-function' },
