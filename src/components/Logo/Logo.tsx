@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { TProps } from '@components/Logo/types';
 
-export const Logo = ({ width, height }) => {
+export const Logo: FC<TProps> = ({ width, height }) => {
   return (
     <svg
       width={width}

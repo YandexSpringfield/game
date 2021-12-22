@@ -6,12 +6,9 @@ import styles from './Input.module.scss';
 export const Input: FC<TProps> = ({
   name,
   label,
-  type,
-  value,
   errorMessage,
   inputValid,
-  handleInput,
-  changeInput,
+  ...rest
 }) => (
   <div className={styles.input__wrapper}>
     <label className={styles.input__label} htmlFor={name}>
@@ -19,12 +16,9 @@ export const Input: FC<TProps> = ({
     </label>
     <input
       className={styles.input__field + (inputValid ? '' : ` ${styles.error}`)}
-      type={type}
       name={name}
       id={name}
-      value={value}
-      onBlur={handleInput}
-      onChange={changeInput}
+      {...rest}
     />
     {inputValid ? (
       ''

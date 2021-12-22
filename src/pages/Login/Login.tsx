@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, MainButton, SecondaryButton } from '@components';
+import { Form, Input, MainButton, SecondaryButton, Logo } from '@components';
 import { IState } from '@pages/Login/types';
-import { Logo } from '@/icons/Logo.svg';
 import { VALIDATION_DATA as data } from '@appConstants/validationData';
 
 import styles from './Login.module.scss';
@@ -23,9 +22,10 @@ export class Login extends Component<any, IState> {
     };
   }
 
-  changeInput = (e) => {
+  onChange = (e) => {
     const { name } = e.target;
     const { value } = e.target;
+
     this.setState((prevState) => ({
       ...prevState,
       [name]: {
@@ -35,10 +35,11 @@ export class Login extends Component<any, IState> {
     }));
   };
 
-  handleInput = (e) => {
+  onBlur = (e) => {
     const { name } = e.target;
     const { value } = e.target;
     const newState = this.checkInput(name, value);
+
     this.setState((prevState) => ({
       ...prevState,
       [name]: {
@@ -56,14 +57,13 @@ export class Login extends Component<any, IState> {
         valid: re.test(value),
       };
     }
-    return {
-      value,
-      error: '',
-      valid: true,
-    };
+
+    return this.state[name];
   };
 
   render() {
+    const { login, password } = this.state;
+
     return (
       <div className={styles.container__login}>
         <div className={styles.login__header}>
@@ -75,21 +75,21 @@ export class Login extends Component<any, IState> {
             type="text"
             name="login"
             label="Логин"
-            inputValid={this.state.login.valid}
-            errorMessage={this.state.login.error}
-            value={this.state.login.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={login.valid}
+            errorMessage={login.error}
+            value={login.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <Input
             type="password"
             name="password"
             label="Пароль"
-            inputValid={this.state.password.valid}
-            errorMessage={this.state.password.error}
-            value={this.state.password.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={password.valid}
+            errorMessage={password.error}
+            value={password.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <MainButton title="Войти" />
           <SecondaryButton href="/registration" title="Нет аккаунта?" />

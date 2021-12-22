@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, MainButton, SecondaryButton } from '@components';
+import { Form, Input, MainButton, SecondaryButton, Logo } from '@components';
 import { IState } from '@pages/Registration/types';
-import { Logo } from '@/icons/Logo.svg';
 import { VALIDATION_DATA as data } from '@appConstants';
 
 import styles from './Registration.module.scss';
@@ -43,9 +42,10 @@ export class Registration extends Component<any, IState> {
     };
   }
 
-  changeInput = (e) => {
+  onChange = (e) => {
     const { name } = e.target;
     const { value } = e.target;
+
     this.setState((prevState) => ({
       ...prevState,
       [name]: {
@@ -55,7 +55,7 @@ export class Registration extends Component<any, IState> {
     }));
   };
 
-  handleInput = (e) => {
+  onBlur = (e) => {
     const { name } = e.target;
     const { value } = e.target;
     let newState;
@@ -83,29 +83,34 @@ export class Registration extends Component<any, IState> {
         valid: re.test(value),
       };
     }
-    return {
-      value,
-      error: '',
-      valid: true,
-    };
+
+    return this.state[name];
   };
 
   checkPasswords = (name: string, value: string) => {
-    if (value !== this.state.password.value && data[name]) {
+    const { password, password_confirm } = this.state;
+
+    if (value !== password.value && data[name]) {
       return {
         value,
         error: data[name].message,
         valid: false,
       };
     }
-    return {
-      value,
-      error: '',
-      valid: true,
-    };
+
+    return password_confirm;
   };
 
   render() {
+    const {
+      first_name,
+      second_name,
+      login,
+      email,
+      password,
+      password_confirm,
+    } = this.state;
+
     return (
       <div className={styles.container__registration}>
         <div className={styles.registration__header}>
@@ -118,62 +123,62 @@ export class Registration extends Component<any, IState> {
               type="text"
               name="first_name"
               label="Имя"
-              inputValid={this.state.first_name.valid}
-              errorMessage={this.state.first_name.error}
-              value={this.state.first_name.value}
-              handleInput={this.handleInput}
-              changeInput={this.changeInput}
+              inputValid={first_name.valid}
+              errorMessage={first_name.error}
+              value={first_name.value}
+              onBlur={this.onBlur}
+              onChange={this.onChange}
             />
             <Input
               type="text"
               name="second_name"
               label="Фамилия"
-              inputValid={this.state.second_name.valid}
-              errorMessage={this.state.second_name.error}
-              value={this.state.second_name.value}
-              handleInput={this.handleInput}
-              changeInput={this.changeInput}
+              inputValid={second_name.valid}
+              errorMessage={second_name.error}
+              value={second_name.value}
+              onBlur={this.onBlur}
+              onChange={this.onChange}
             />
           </div>
           <Input
             type="text"
             name="login"
             label="Логин"
-            inputValid={this.state.login.valid}
-            errorMessage={this.state.login.error}
-            value={this.state.login.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={login.valid}
+            errorMessage={login.error}
+            value={login.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <Input
             type="email"
             name="email"
             label="Почта"
-            inputValid={this.state.email.valid}
-            errorMessage={this.state.email.error}
-            value={this.state.email.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={email.valid}
+            errorMessage={email.error}
+            value={email.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <Input
             type="password"
             name="password"
             label="Пароль"
-            inputValid={this.state.password.valid}
-            errorMessage={this.state.password.error}
-            value={this.state.password.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={password.valid}
+            errorMessage={password.error}
+            value={password.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <Input
             type="password"
             name="password_confirm"
             label="Повторите пароль"
-            inputValid={this.state.password_confirm.valid}
-            errorMessage={this.state.password_confirm.error}
-            value={this.state.password_confirm.value}
-            handleInput={this.handleInput}
-            changeInput={this.changeInput}
+            inputValid={password_confirm.valid}
+            errorMessage={password_confirm.error}
+            value={password_confirm.value}
+            onBlur={this.onBlur}
+            onChange={this.onChange}
           />
           <MainButton title="Зарегистрироваться" />
           <SecondaryButton href="/" title="Войти" />
