@@ -9,6 +9,7 @@ export const Logo = ({ width, height }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      {/*eslint-disable*/}
       <path
         d="M83.959 6.32172H71.0423V31.6074H83.959V25.286H90.4173V12.6431H83.959V6.32172Z"
         fill="#F0D0B0"
@@ -68,6 +69,7 @@ export const Logo = ({ width, height }) => {
       />
       <path d="M116.25 44.25H122.708V56.8929H116.25V44.25Z" fill="black" />
       <path d="M109.792 44.25H103.333V56.8929H109.792V44.25Z" fill="black" />
+      {/* eslint-enable */}
     </svg>
   );
 };

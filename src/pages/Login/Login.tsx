@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, MainButton, SecondaryButton } from '@components';
 import { IState } from '@pages/Login/types';
+import { Logo } from '@/icons/Logo.svg';
 import { VALIDATION_DATA as data } from '@appConstants/validationData';
-import { Logo } from '@/icons/Logo';
 
 import styles from './Login.module.scss';
 
@@ -56,6 +56,11 @@ export class Login extends Component<any, IState> {
         valid: re.test(value),
       };
     }
+    return {
+      value,
+      error: '',
+      valid: true,
+    };
   };
 
   render() {

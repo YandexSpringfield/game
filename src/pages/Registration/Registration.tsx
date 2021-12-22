@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, MainButton, SecondaryButton } from '@components';
 import { IState } from '@pages/Registration/types';
+import { Logo } from '@/icons/Logo.svg';
 import { VALIDATION_DATA as data } from '@appConstants';
-import { Logo } from '@/icons/Logo';
 
 import styles from './Registration.module.scss';
 
@@ -83,6 +83,11 @@ export class Registration extends Component<any, IState> {
         valid: re.test(value),
       };
     }
+    return {
+      value,
+      error: '',
+      valid: true,
+    };
   };
 
   checkPasswords = (name: string, value: string) => {
