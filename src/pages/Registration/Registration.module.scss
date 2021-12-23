@@ -2,9 +2,7 @@
 @import '../../styles/colors';
 
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(column, center, center);
 
   &__registration {
     width: 550px;
