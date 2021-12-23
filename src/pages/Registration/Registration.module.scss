@@ -1,15 +1,21 @@
 @import '../../styles/mixins';
 @import '../../styles/colors';
 
-.container__registration {
-  width: 550px;
-  min-height: 400px;
-  margin: 20px auto;
-  padding: 20px 55px;
-  border: 0.5px solid #EAEAEF;
-  box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
-  border-radius: 4px;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__registration {
+    width: 550px;
+    min-height: 400px;
+    margin: 20px 0;
+    padding: 30px 55px;
+    border: 0.5px solid $border-container;
+    box-sizing: border-box;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+  }
 }
 
 .registration__header {
@@ -22,5 +28,8 @@
 }
 
 .form__username {
-  @include flex(row, space-between, normal);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 15px;
+  width: 100%;
 }

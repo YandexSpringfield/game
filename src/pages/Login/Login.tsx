@@ -1,67 +1,49 @@
-import React, { Component } from 'react';
-import { Form, Input, MainButton, SecondaryButton, Logo } from '@components';
-import { IState } from '@pages/Login/types';
-import { VALIDATION_DATA as data } from '@appConstants/validationData';
+import React, { FC, FocusEvent, useState } from 'react';
+import { Form, Input, Logo, Button } from '@components';
+import { checkInput } from '@utils/utils';
 
 import styles from './Login.module.scss';
 
-export class Login extends Component<any, IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: {
-        value: '',
-        error: false,
-      },
-      password: {
-        value: '',
-        error: false,
-      },
-    };
-  }
+export const Login: FC<any> = () => {
+  const [login, setLogin] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  onChange = (e) => {
+  const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     const { value } = e.target;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...prevState[name],
-        value,
-      },
-    }));
-  };
-
-  onBlur = (e) => {
-    const { name } = e.target;
-    const { value } = e.target;
-    const newState = this.checkInput(name, value);
-
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...newState,
-      },
-    }));
-  };
-
-  checkInput = (name: string, value: string) => {
-    if (data[name]) {
-      const { re } = data[name];
-      return {
-        value,
-        error: !re.test(value) ? data[name].message : false,
-      };
+    switch (name) {
+      case 'login':
+        setLogin(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      default:
+        break;
     }
-
-    return this.state[name];
   };
 
-  render() {
-    const { login, password } = this.state;
+  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    const { value } = e.target;
+    const newState = checkInput(name, value);
 
-    return (
+    switch (name) {
+      case 'login':
+        setLoginError(newState);
+        break;
+      case 'password':
+        setPasswordError(newState);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div className={styles.container}>
       <div className={styles.container__login}>
         <div className={styles.login__header}>
           <Logo width="50" height="100%" />
@@ -72,24 +54,24 @@ export class Login extends Component<any, IState> {
             type="text"
             name="login"
             label="Логин"
-            error={login.error}
-            value={login.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={login}
+            error={loginError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
           <Input
             type="password"
             name="password"
             label="Пароль"
-            error={password.error}
-            value={password.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={password}
+            error={passwordError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
-          <MainButton title="Войти" />
-          <SecondaryButton href="/registration" title="Нет аккаунта?" />
+          <Button title="Войти" type="submit" view="main" />
+          <Button title="Нет аккаунта?" type="button" view="secondary" />
         </Form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

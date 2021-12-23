@@ -5,7 +5,7 @@ export type TProps = {
   label: string;
   type: string;
   value: string;
-  error: string | boolean;
-  onBlur: FocusEventHandler<HTMLInputElement>;
-  onChange: FocusEventHandler<HTMLInputElement>;
+  error: string;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  onChange?: FocusEventHandler<HTMLInputElement>;
 };

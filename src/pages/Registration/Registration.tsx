@@ -1,109 +1,87 @@
-import React, { Component } from 'react';
-import { Form, Input, MainButton, SecondaryButton, Logo } from '@components';
-import { IState } from '@pages/Registration/types';
-import { VALIDATION_DATA as data } from '@appConstants';
+import React, { FC, FocusEvent, useState } from 'react';
+import { Form, Input, Button, Logo } from '@components';
+import { checkInput, checkPassword } from '@utils/utils';
 
 import styles from './Registration.module.scss';
 
-export class Registration extends Component<any, IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      first_name: {
-        value: '',
-        error: false,
-      },
-      second_name: {
-        value: '',
-        error: false,
-      },
-      login: {
-        value: '',
-        error: false,
-      },
-      email: {
-        value: '',
-        error: false,
-      },
-      password: {
-        value: '',
-        error: false,
-      },
-      password_confirm: {
-        value: '',
-        error: false,
-      },
-    };
-  }
+export const Registration: FC<any> = () => {
+  const [firstName, setFirstName] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [secondName, setSecondName] = useState('');
+  const [secondNameError, setSecondNameError] = useState('');
+  const [login, setLogin] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordConfirmError, setPasswordConfirmError] = useState('');
 
-  onChange = (e) => {
+  const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     const { value } = e.target;
-
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...prevState[name],
-        value,
-      },
-    }));
+    switch (name) {
+      case 'first_name':
+        setFirstName(value);
+        break;
+      case 'second_name':
+        setSecondName(value);
+        break;
+      case 'login':
+        setLogin(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      case 'password_confirm':
+        setPasswordConfirm(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  onBlur = (e) => {
+  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
     const { value } = e.target;
     let newState;
 
-    if (name !== 'password_confirm') {
-      newState = this.checkInput(name, value);
+    if (name === 'password_confirm') {
+      newState = checkPassword(name, value, password);
     } else {
-      newState = this.checkPasswords(name, value);
+      newState = checkInput(name, value);
     }
 
-    this.setState((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...newState,
-      },
-    }));
-  };
-
-  checkInput = (name: string, value: string) => {
-    if (data[name]) {
-      const { re } = data[name];
-      return {
-        value,
-        error: !re.test(value) ? data[name].message : false,
-      };
+    switch (name) {
+      case 'first_name':
+        setFirstNameError(newState);
+        break;
+      case 'second_name':
+        setSecondNameError(newState);
+        break;
+      case 'login':
+        setLoginError(newState);
+        break;
+      case 'email':
+        setEmailError(newState);
+        break;
+      case 'password':
+        setPasswordError(newState);
+        break;
+      case 'password_confirm':
+        setPasswordConfirmError(newState);
+        break;
+      default:
+        break;
     }
-
-    return this.state[name];
   };
 
-  checkPasswords = (name: string, value: string) => {
-    const { password, password_confirm } = this.state;
-
-    if (value !== password.value && data[name]) {
-      return {
-        value,
-        error: data[name].message,
-      };
-    }
-
-    return password_confirm;
-  };
-
-  render() {
-    const {
-      first_name,
-      second_name,
-      login,
-      email,
-      password,
-      password_confirm,
-    } = this.state;
-
-    return (
+  return (
+    <div className={styles.container}>
       <div className={styles.container__registration}>
         <div className={styles.registration__header}>
           <Logo width="50" height="100%" />
@@ -115,61 +93,61 @@ export class Registration extends Component<any, IState> {
               type="text"
               name="first_name"
               label="Имя"
-              error={first_name.error}
-              value={first_name.value}
-              onBlur={this.onBlur}
-              onChange={this.onChange}
+              value={firstName}
+              error={firstNameError}
+              onBlur={onBlur}
+              onChange={onChange}
             />
             <Input
               type="text"
               name="second_name"
               label="Фамилия"
-              error={second_name.error}
-              value={second_name.value}
-              onBlur={this.onBlur}
-              onChange={this.onChange}
+              value={secondName}
+              error={secondNameError}
+              onBlur={onBlur}
+              onChange={onChange}
             />
           </div>
           <Input
             type="text"
             name="login"
             label="Логин"
-            error={login.error}
-            value={login.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={login}
+            error={loginError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
           <Input
             type="email"
             name="email"
             label="Почта"
-            error={email.error}
-            value={email.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={email}
+            error={emailError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
           <Input
             type="password"
             name="password"
             label="Пароль"
-            error={password.error}
-            value={password.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={password}
+            error={passwordError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
           <Input
             type="password"
             name="password_confirm"
             label="Повторите пароль"
-            error={password_confirm.error}
-            value={password_confirm.value}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
+            value={passwordConfirm}
+            error={passwordConfirmError}
+            onBlur={onBlur}
+            onChange={onChange}
           />
-          <MainButton title="Зарегистрироваться" />
-          <SecondaryButton href="/" title="Войти" />
+          <Button title="Зарегистрироваться" type="submit" view="main" />
+          <Button title="Войти" type="button" view="secondary" />
         </Form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

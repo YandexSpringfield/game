@@ -10,15 +10,11 @@ export const Input: FC<TProps> = ({ name, label, error, ...rest }) => (
       {label}
     </label>
     <input
-      className={cn(styles.input__field, { [styles.error]: !!error })}
+      className={cn(styles.input__field, { [styles.error]: Boolean(error) })}
       name={name}
       id={name}
       {...rest}
     />
-    {typeof error === 'string' ? (
-      <span className={styles.error__field}>{error}</span>
-    ) : (
-      ''
-    )}
+    {error ? <span className={styles.error__field}>{error}</span> : null}
   </div>
 );

@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'off',
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/button-has-type': 'off',
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/no-implied-eval': 0,
     '@typescript-eslint/no-throw-literal': 0,
