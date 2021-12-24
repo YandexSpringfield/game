@@ -1,45 +1,29 @@
 import React, { FC, FocusEvent, useState } from 'react';
-import { Form, Input, Logo, Button } from '@components';
+import { Button, Form, Input, Logo } from '@components';
 import { checkInput } from '@utils/utils';
+import { ViewButton } from '@components/Button';
 
 import styles from './Login.module.scss';
 
 export const Login: FC<any> = () => {
-  const [login, setLogin] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [fields, setFields] = useState({
+    login: '',
+    password: '',
+  });
+  const [fieldsError, setFieldsError] = useState({
+    login: '',
+    password: '',
+  });
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const { value } = e.target;
-    switch (name) {
-      case 'login':
-        setLogin(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      default:
-        break;
-    }
+    const { name, value } = e.target;
+    setFields({ ...fields, [name]: value });
   };
 
   const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const { value } = e.target;
+    const { name, value } = e.target;
     const newState = checkInput(name, value);
-
-    switch (name) {
-      case 'login':
-        setLoginError(newState);
-        break;
-      case 'password':
-        setPasswordError(newState);
-        break;
-      default:
-        break;
-    }
+    setFieldsError({ ...fieldsError, [name]: newState });
   };
 
   return (
@@ -54,8 +38,8 @@ export const Login: FC<any> = () => {
             type="text"
             name="login"
             label="Логин"
-            value={login}
-            error={loginError}
+            value={fields.login}
+            error={fieldsError.login}
             onBlur={onBlur}
             onChange={onChange}
           />
@@ -63,13 +47,17 @@ export const Login: FC<any> = () => {
             type="password"
             name="password"
             label="Пароль"
-            value={password}
-            error={passwordError}
+            value={fields.password}
+            error={fieldsError.password}
             onBlur={onBlur}
             onChange={onChange}
           />
-          <Button title="Войти" type="submit" view="main" />
-          <Button title="Нет аккаунта?" type="button" view="secondary" />
+          <Button title="Войти" type="submit" view={ViewButton.main} />
+          <Button
+            title="Нет аккаунта?"
+            type="button"
+            view={ViewButton.secondary}
+          />
         </Form>
       </div>
     </div>

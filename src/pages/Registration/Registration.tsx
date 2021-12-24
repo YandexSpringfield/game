@@ -1,83 +1,44 @@
 import React, { FC, FocusEvent, useState } from 'react';
-import { Form, Input, Button, Logo } from '@components';
+import { Button, Form, Input, Logo } from '@components';
 import { checkInput, checkPassword } from '@utils/utils';
+import { ViewButton } from '@components/Button';
 
 import styles from './Registration.module.scss';
 
 export const Registration: FC<any> = () => {
-  const [firstName, setFirstName] = useState('');
-  const [firstNameError, setFirstNameError] = useState('');
-  const [secondName, setSecondName] = useState('');
-  const [secondNameError, setSecondNameError] = useState('');
-  const [login, setLogin] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [passwordConfirmError, setPasswordConfirmError] = useState('');
+  const [fields, setFields] = useState({
+    first_name: '',
+    second_name: '',
+    login: '',
+    email: '',
+    password: '',
+    password_confirm: '',
+  });
+  const [fieldsError, setFieldsError] = useState({
+    first_name: '',
+    second_name: '',
+    login: '',
+    email: '',
+    password: '',
+    password_confirm: '',
+  });
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const { value } = e.target;
-    switch (name) {
-      case 'first_name':
-        setFirstName(value);
-        break;
-      case 'second_name':
-        setSecondName(value);
-        break;
-      case 'login':
-        setLogin(value);
-        break;
-      case 'email':
-        setEmail(value);
-        break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'password_confirm':
-        setPasswordConfirm(value);
-        break;
-      default:
-        break;
-    }
+    const { name, value } = e.target;
+    setFields({ ...fields, [name]: value });
   };
 
   const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    const { value } = e.target;
+    const { name, value } = e.target;
     let newState;
 
     if (name === 'password_confirm') {
-      newState = checkPassword(name, value, password);
+      newState = checkPassword(name, value, fields.password);
     } else {
       newState = checkInput(name, value);
     }
 
-    switch (name) {
-      case 'first_name':
-        setFirstNameError(newState);
-        break;
-      case 'second_name':
-        setSecondNameError(newState);
-        break;
-      case 'login':
-        setLoginError(newState);
-        break;
-      case 'email':
-        setEmailError(newState);
-        break;
-      case 'password':
-        setPasswordError(newState);
-        break;
-      case 'password_confirm':
-        setPasswordConfirmError(newState);
-        break;
-      default:
-        break;
-    }
+    setFieldsError({ ...fieldsError, [name]: newState });
   };
 
   return (
@@ -93,8 +54,8 @@ export const Registration: FC<any> = () => {
               type="text"
               name="first_name"
               label="Имя"
-              value={firstName}
-              error={firstNameError}
+              value={fields.first_name}
+              error={fieldsError.first_name}
               onBlur={onBlur}
               onChange={onChange}
             />
@@ -102,8 +63,8 @@ export const Registration: FC<any> = () => {
               type="text"
               name="second_name"
               label="Фамилия"
-              value={secondName}
-              error={secondNameError}
+              value={fields.second_name}
+              error={fieldsError.second_name}
               onBlur={onBlur}
               onChange={onChange}
             />
@@ -112,8 +73,8 @@ export const Registration: FC<any> = () => {
             type="text"
             name="login"
             label="Логин"
-            value={login}
-            error={loginError}
+            value={fields.login}
+            error={fieldsError.login}
             onBlur={onBlur}
             onChange={onChange}
           />
@@ -121,8 +82,8 @@ export const Registration: FC<any> = () => {
             type="email"
             name="email"
             label="Почта"
-            value={email}
-            error={emailError}
+            value={fields.email}
+            error={fieldsError.email}
             onBlur={onBlur}
             onChange={onChange}
           />
@@ -130,8 +91,8 @@ export const Registration: FC<any> = () => {
             type="password"
             name="password"
             label="Пароль"
-            value={password}
-            error={passwordError}
+            value={fields.password}
+            error={fieldsError.password}
             onBlur={onBlur}
             onChange={onChange}
           />
@@ -139,13 +100,17 @@ export const Registration: FC<any> = () => {
             type="password"
             name="password_confirm"
             label="Повторите пароль"
-            value={passwordConfirm}
-            error={passwordConfirmError}
+            value={fields.password_confirm}
+            error={fieldsError.password_confirm}
             onBlur={onBlur}
             onChange={onChange}
           />
-          <Button title="Зарегистрироваться" type="submit" view="main" />
-          <Button title="Войти" type="button" view="secondary" />
+          <Button
+            title="Зарегистрироваться"
+            type="submit"
+            view={ViewButton.main}
+          />
+          <Button title="Войти" type="button" view={ViewButton.secondary} />
         </Form>
       </div>
     </div>

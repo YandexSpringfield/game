@@ -1,8 +1,13 @@
 import { DOMAttributes, ButtonHTMLAttributes } from 'react';
 
+export enum ViewButton {
+  main = 'main',
+  secondary = 'secondary',
+}
+
 export type TBaseProps = {
   title: string;
-  view: string;
+  view: ViewButton;
 };
 
 export type TProps = ButtonHTMLAttributes<HTMLButtonElement> &
