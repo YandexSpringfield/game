@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 export const Avatar: FC<TProps> = ({ className, src, alt }) => {
   return (
     <div className={cn(styles.avatar, className)}>
-      <img src={src} alt={alt || 'Avatar'} />
+      <img className={styles.img} src={src} alt={alt || 'Avatar'} />
     </div>
   );
 };
