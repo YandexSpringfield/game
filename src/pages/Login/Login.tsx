@@ -5,15 +5,14 @@ import { ViewButton } from '@components/Button';
 
 import styles from './Login.module.scss';
 
+const initialFields = {
+  login: '',
+  password: '',
+};
+
 export const Login: FC<any> = () => {
-  const [fields, setFields] = useState({
-    login: '',
-    password: '',
-  });
-  const [fieldsError, setFieldsError] = useState({
-    login: '',
-    password: '',
-  });
+  const [fields, setFields] = useState(initialFields);
+  const [fieldsError, setFieldsError] = useState(initialFields);
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

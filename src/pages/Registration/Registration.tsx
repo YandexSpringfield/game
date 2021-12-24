@@ -5,23 +5,18 @@ import { ViewButton } from '@components/Button';
 
 import styles from './Registration.module.scss';
 
+const initialFields = {
+  first_name: '',
+  second_name: '',
+  login: '',
+  email: '',
+  password: '',
+  password_confirm: '',
+};
+
 export const Registration: FC<any> = () => {
-  const [fields, setFields] = useState({
-    first_name: '',
-    second_name: '',
-    login: '',
-    email: '',
-    password: '',
-    password_confirm: '',
-  });
-  const [fieldsError, setFieldsError] = useState({
-    first_name: '',
-    second_name: '',
-    login: '',
-    email: '',
-    password: '',
-    password_confirm: '',
-  });
+  const [fields, setFields] = useState(initialFields);
+  const [fieldsError, setFieldsError] = useState(initialFields);
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
