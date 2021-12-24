@@ -1,0 +1,15 @@
+.card {
+  &:not(:Last-child) {
+    margin-bottom: 30px;
+  }
+}
+
+.title {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.content {
+  font-size: 14px;
+}
