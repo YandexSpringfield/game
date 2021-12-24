@@ -7,11 +7,9 @@ export const Skeleton: FC<{}> = () => {
   return (
     <>
       <Header />
-      <main>
-        <Routes>
-          <Route path={routes.forum} element={<Forum />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path={routes.forum} element={<Forum />} />
+      </Routes>
     </>
   );
 };

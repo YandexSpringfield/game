@@ -1,3 +1,36 @@
-.header {
+@import "../../styles/colors";
+@import "../../styles/mixins";
 
+.header {
+  @include flex(row, flex-start, center);
+  padding-right: 20px;
+  background-color: $card-bg;
+}
+
+.logo {
+  padding: 10px 16px;
+  border-right: 1px solid $border-container;
+}
+
+.navs {
+  margin-left: 25px;
+}
+
+.link {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 700;
+  color: $main-text;
+
+  &:not(:last-child) {
+    margin-right: 25px;
+  }
+
+  &.active {
+    color: #4945FF;
+  }
+}
+
+.avatar {
+  margin-left: auto;
 }
