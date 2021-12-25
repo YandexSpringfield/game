@@ -4,3 +4,11 @@ export enum RequestStatus {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR',
 }
+
+export enum AuthError {
+  text = 'Не удалось авторизоваться',
+}
+
+export enum RegistrationError {
+  text = 'Не удалось зарегистрироваться',
+}

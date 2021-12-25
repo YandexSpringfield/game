@@ -18,3 +18,13 @@ export const checkPassword = (
   }
   return '';
 };
+
+export const omit = (obj: {}, omitKey: string): {} => {
+  const result = {};
+  Object.keys(obj).forEach((key) => {
+    if (key !== omitKey) {
+      result[key] = obj[key];
+    }
+  });
+  return result;
+};
