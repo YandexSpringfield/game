@@ -4,7 +4,7 @@ export const PATH_API = {
   AUTH: {
     SIGN_UP: '/auth/signup',
     SIGN_IN: '/auth/signin',
-    USER: '/auth/user/',
+    USER: '/auth/user',
     LOGOUT: '/auth/logout',
   },
   USER: {
