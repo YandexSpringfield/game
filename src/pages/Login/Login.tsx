@@ -4,7 +4,7 @@ import { checkInput } from '@utils/utils';
 import { authAPI } from '@api';
 import { useAppDispatch } from '@store';
 import { fetchUserProfile } from '@store/user';
-import { AuthError } from '@types';
+import {authError} from '@appConstants';
 
 import styles from './Login.module.scss';
 
@@ -39,7 +39,7 @@ export const Login: FC<any> = () => {
         setErrorAuth('');
         dispatch(fetchUserProfile());
       })
-      .catch(() => setErrorAuth(AuthError.text));
+      .catch(() => setErrorAuth(authError));
   };
 
   return (

@@ -12,12 +12,7 @@ class AuthAPI {
   };
 
   getUserInfo = async () => {
-    return await instanceAxios
-      .get(PATH_API.AUTH.USER)
-      .then((res) => res)
-      .catch((err) => {
-        throw new Error(`${err.response.data.reason}`);
-      });
+    return await instanceAxios.get(PATH_API.AUTH.USER)
   };
 
   logout = async () => {

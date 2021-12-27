@@ -4,7 +4,7 @@ import { checkInput, checkPassword, omit } from '@utils/utils';
 import { authAPI, TSignUp } from '@api';
 import { useAppDispatch } from '@store';
 import { fetchUserProfile } from '@store/user';
-import { RegistrationError } from '@types';
+import { registrationError} from '@appConstants';
 
 import styles from './Registration.module.scss';
 
@@ -43,7 +43,7 @@ export const Registration: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
-  const onClick = async (e: MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = omit(fields, 'password_confirm') as TSignUp;
     authAPI
@@ -52,7 +52,7 @@ export const Registration: FC<any> = () => {
         setErrorAuth('');
         dispatch(fetchUserProfile());
       })
-      .catch(() => setErrorAuth(RegistrationError.text));
+      .catch(() => setErrorAuth(registrationError));
   };
 
   return (
