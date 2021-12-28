@@ -4,7 +4,7 @@ import { checkInput, checkPassword, omit } from '@utils/utils';
 import { authAPI, TSignUp } from '@api';
 import { useAppDispatch } from '@store';
 import { fetchUserProfile } from '@store/user';
-import { registrationError} from '@appConstants';
+import { registrationError } from '@appConstants';
 
 import styles from './Registration.module.scss';
 
@@ -128,7 +128,7 @@ export const Registration: FC<any> = () => {
             onBlur={onBlur}
             onChange={onChange}
           />
-          {Boolean(errorAuth) && <Error title={errorAuth} />}
+          {errorAuth && <Error title={errorAuth} />}
           <Button
             title="Зарегистрироваться"
             type="submit"

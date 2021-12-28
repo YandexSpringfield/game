@@ -4,7 +4,7 @@ import { checkInput } from '@utils/utils';
 import { authAPI } from '@api';
 import { useAppDispatch } from '@store';
 import { fetchUserProfile } from '@store/user';
-import {authError} from '@appConstants';
+import { authError } from '@appConstants';
 
 import styles from './Login.module.scss';
 
@@ -68,7 +68,7 @@ export const Login: FC<any> = () => {
             onBlur={onBlur}
             onChange={onChange}
           />
-          {Boolean(errorAuth) && <Error title={errorAuth} />}
+          {errorAuth && <Error title={errorAuth} />}
           <Button
             title="Войти"
             type="submit"
