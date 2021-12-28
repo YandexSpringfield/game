@@ -1,17 +1,16 @@
 @import '../../styles/colors';
+@import '../../styles/mixins';
 
-.errorBoundary {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+.content {
+    @include flex(column, space-around, center);
     padding: 20px;
-    &__title{
-        margin-top: 8px;
-        font-size: 16px;
-        line-height: 1.2;
-        color: $main-text;
-        font-weight: bold;
-    }
-
 }
+
+.title {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: $main-text;
+    font-weight: bold;
+}
+

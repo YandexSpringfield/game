@@ -1,14 +1,14 @@
 import React, { Component, ErrorInfo } from 'react';
 import { Logo } from '@components';
-import { IProps, IState } from './types';
+import { TProps, TState } from './types';
 import styles from './ErrorBoundary.module.scss';
 
-export class ErrorBoundary extends Component<IProps, IState> {
-  public state: IState = {
+export class ErrorBoundary extends Component<TProps, TState> {
+  public state: TState = {
     hasError: false,
   };
 
-  public static getDerivedStateFromError(_: Error): IState {
+  public static getDerivedStateFromError(_: Error): TState {
     return { hasError: true };
   }
 
@@ -19,11 +19,9 @@ export class ErrorBoundary extends Component<IProps, IState> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className={styles.errorBoundary}>
+        <div className={styles.content}>
           <Logo width="50" height="100%" />
-          <span className={styles.errorBoundary__title}>
-            Что то пошло не так...
-          </span>
+          <span className={styles.title}>Что то пошло не так...</span>
         </div>
       );
     }
