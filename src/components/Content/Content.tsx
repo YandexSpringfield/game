@@ -4,11 +4,9 @@ import { TProps } from '.';
 
 import styles from './styles.module.scss';
 
-export const Content: FC<TProps> = ({ title, children, className }) => {
-  return (
-    <main className={styles.container}>
-      <h1 className={styles.title}>{title}</h1>
-      <section className={cn(className)}>{children}</section>
-    </main>
-  );
-};
+export const Content: FC<TProps> = ({ title, children, className }) => (
+  <main className={styles.container}>
+    <h1 className={styles.title}>{title}</h1>
+    <section className={cn(className)}>{children}</section>
+  </main>
+);
