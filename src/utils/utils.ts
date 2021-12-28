@@ -20,11 +20,7 @@ export const checkPassword = (
 };
 
 export const omit = (obj: {}, omitKey: string): {} => {
-  const result = {};
-  Object.keys(obj).forEach((key) => {
-    if (key !== omitKey) {
-      result[key] = obj[key];
-    }
-  });
+  const result = { ...obj };
+  delete result[omitKey];
   return result;
 };
