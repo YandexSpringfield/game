@@ -3,12 +3,26 @@ import { RequestStatus } from '@types';
 import { fetchUserProfile } from './thunks';
 
 export type TUserState = {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
   email: string;
+  phone: string;
+  avatar: string;
   requestStatus: RequestStatus;
 };
 
 const initialState: TUserState = {
+  id: 0,
+  first_name: '',
+  second_name: '',
+  display_name: '',
+  login: '',
   email: '',
+  phone: '',
+  avatar: '',
   requestStatus: RequestStatus.INIT,
 };
 

@@ -1,7 +1,10 @@
-import React, { FC, FocusEvent, useState } from 'react';
-import { Button, Form, Input, Logo } from '@components';
+import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
 import { checkInput } from '@utils/utils';
-import { ViewButton } from '@components/Button';
+import { authAPI } from '@api';
+import { useAppDispatch } from '@store';
+import { fetchUserProfile } from '@store/user';
+import { authError } from '@appConstants';
 
 import styles from './Login.module.scss';
 
@@ -13,6 +16,9 @@ const initialFields = {
 export const Login: FC<any> = () => {
   const [fields, setFields] = useState(initialFields);
   const [fieldsError, setFieldsError] = useState(initialFields);
+  const [errorAuth, setErrorAuth] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,6 +29,17 @@ export const Login: FC<any> = () => {
     const { name, value } = e.target;
     const newState = checkInput(name, value);
     setFieldsError({ ...fieldsError, [name]: newState });
+  };
+
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    authAPI
+      .signIn(fields)
+      .then(() => {
+        setErrorAuth('');
+        dispatch(fetchUserProfile());
+      })
+      .catch(() => setErrorAuth(authError));
   };
 
   return (
@@ -51,7 +68,13 @@ export const Login: FC<any> = () => {
             onBlur={onBlur}
             onChange={onChange}
           />
-          <Button title="Войти" type="submit" view={ViewButton.main} />
+          {errorAuth && <Error title={errorAuth} />}
+          <Button
+            title="Войти"
+            type="submit"
+            view={ViewButton.main}
+            onClick={onClick}
+          />
           <Button
             title="Нет аккаунта?"
             type="button"

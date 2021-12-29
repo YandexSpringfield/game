@@ -18,3 +18,9 @@ export const checkPassword = (
   }
   return '';
 };
+
+export const omit = (obj: {}, omitKey: string): {} => {
+  const result = { ...obj };
+  delete result[omitKey];
+  return result;
+};

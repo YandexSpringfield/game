@@ -1,7 +1,10 @@
-import React, { FC, FocusEvent, useState } from 'react';
-import { Button, Form, Input, Logo } from '@components';
-import { checkInput, checkPassword } from '@utils/utils';
-import { ViewButton } from '@components/Button';
+import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
+import { checkInput, checkPassword, omit } from '@utils/utils';
+import { authAPI, TSignUp } from '@api';
+import { useAppDispatch } from '@store';
+import { fetchUserProfile } from '@store/user';
+import { registrationError } from '@appConstants';
 
 import styles from './Registration.module.scss';
 
@@ -10,6 +13,7 @@ const initialFields = {
   second_name: '',
   login: '',
   email: '',
+  phone: '',
   password: '',
   password_confirm: '',
 };
@@ -17,6 +21,9 @@ const initialFields = {
 export const Registration: FC<any> = () => {
   const [fields, setFields] = useState(initialFields);
   const [fieldsError, setFieldsError] = useState(initialFields);
+  const [errorAuth, setErrorAuth] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,6 +41,18 @@ export const Registration: FC<any> = () => {
     }
 
     setFieldsError({ ...fieldsError, [name]: newState });
+  };
+
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const data = omit(fields, 'password_confirm') as TSignUp;
+    authAPI
+      .signUp(data)
+      .then(() => {
+        setErrorAuth('');
+        dispatch(fetchUserProfile());
+      })
+      .catch(() => setErrorAuth(registrationError));
   };
 
   return (
@@ -83,6 +102,15 @@ export const Registration: FC<any> = () => {
             onChange={onChange}
           />
           <Input
+            type="phone"
+            name="phone"
+            label="Телефон"
+            value={fields.phone}
+            error={fieldsError.phone}
+            onBlur={onBlur}
+            onChange={onChange}
+          />
+          <Input
             type="password"
             name="password"
             label="Пароль"
@@ -100,10 +128,12 @@ export const Registration: FC<any> = () => {
             onBlur={onBlur}
             onChange={onChange}
           />
+          {errorAuth && <Error title={errorAuth} />}
           <Button
             title="Зарегистрироваться"
             type="submit"
             view={ViewButton.main}
+            onClick={onClick}
           />
           <Button title="Войти" type="button" view={ViewButton.secondary} />
         </Form>

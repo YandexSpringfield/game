@@ -26,7 +26,10 @@
       "@store/*": ["./store/*"],
 
       "@types": ["./types"],
-      "@types/*": ["./types/*"]
+      "@types/*": ["./types/*"],
+
+      "@api": ["./api"],
+      "@api/*": ["./api/*"],
     }
   }
 }
