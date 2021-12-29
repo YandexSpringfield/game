@@ -7,3 +7,4 @@ export { Avatar } from './Avatar';
 export { Card } from './Card';
 export { Error } from './Error';
 export { ErrorBoundary } from './ErrorBoundary';
+export { ChangeAvatar } from './ChangeAvatar';

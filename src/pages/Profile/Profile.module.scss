@@ -1,0 +1,26 @@
+@import "../../styles/colors";
+@import "../../styles/mixins";
+
+.container {
+  padding: 25px 30px;
+  background-color: $card-bg;
+  border-radius: 5px;
+  border: 1px solid $border-container;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    color: $main-text;
+}
+
+.row {
+    @include flex(row, space-between, flex-start);
+}
+
+.column {
+    width: 49%;
+    display: grid;
+    grid-row-gap: 15px;
+}
