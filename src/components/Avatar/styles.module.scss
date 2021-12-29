@@ -1,0 +1,11 @@
+$size: 35px;
+
+.avatar {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+.img {
+  object-fit: contain;
+}

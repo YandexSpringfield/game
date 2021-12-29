@@ -7,7 +7,7 @@
     "dev": "webpack serve --open --mode=development",
     "build": "webpack --mode=production",
     "start": "node server.js",
-    "lint": "eslint ./src/** --fix",
+    "lint": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "prepare": "husky install"
   },
