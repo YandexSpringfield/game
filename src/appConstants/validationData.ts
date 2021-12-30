@@ -30,7 +30,7 @@ export const VALIDATION_DATA: TValidation = {
     message:
       'Пароль должен быть от 8 до 20 символов, включать заглавные буквы и цифры',
   },
-  new_password: {
+  newPassword: {
     re: /^(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d]{8,20}$/,
     message:
       'Пароль должен быть от 8 до 20 символов, включать заглавные буквы и цифры',
@@ -38,7 +38,7 @@ export const VALIDATION_DATA: TValidation = {
   password_confirm: {
     message: 'Пароли не совпадают',
   },
-  new_password_confirm: {
+  newPasswordConfirm: {
     message: 'Пароли не совпадают',
   },
 };

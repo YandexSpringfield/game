@@ -1,7 +1,5 @@
 import React, { FC, useState } from 'react';
 import { TProps } from './types';
-import cn from 'classnames';
-
 import styles from './ChangeAvatar.module.scss';
 
 export const ChangeAvatar: FC<TProps> = ({ src }) => {

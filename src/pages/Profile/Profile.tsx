@@ -13,9 +13,9 @@ const initialFields = {
   second_name: '',
   login: '',
   email: '',
-  old_password: '',
-  new_password: '',
-  new_password_confirm: '',
+  oldPassword: '',
+  newPassword: '',
+  newPasswordConfirm: '',
 };
 
 export const Profile: FC<any> = () => {
@@ -31,8 +31,8 @@ export const Profile: FC<any> = () => {
     const { name, value } = e.target;
     let newState;
 
-    if (name === 'new_password_confirm') {
-      newState = checkPassword(name, value, fields.new_password);
+    if (name === 'newPasswordConfirm') {
+      newState = checkPassword(name, value, fields.newPassword);
     } else {
       newState = checkInput(name, value);
     }
@@ -103,19 +103,19 @@ export const Profile: FC<any> = () => {
           <div className={styles.column}>
             <Input
               type="password"
-              name="old_password"
+              name="oldPassword"
               label="Старый пароль"
-              value={fields.old_password}
-              error={fieldsError.old_password}
+              value={fields.oldPassword}
+              error={fieldsError.oldPassword}
               onBlur={onBlur}
               onChange={onChange}
             />
             <Input
               type="password"
-              name="new_password_confirm"
+              name="newPasswordConfirm"
               label="Повторите новый пароль"
-              value={fields.new_password_confirm}
-              error={fieldsError.new_password_confirm}
+              value={fields.newPasswordConfirm}
+              error={fieldsError.newPasswordConfirm}
               onBlur={onBlur}
               onChange={onChange}
             />
@@ -123,10 +123,10 @@ export const Profile: FC<any> = () => {
           <div className={styles.column}>
             <Input
               type="password"
-              name="new_password"
+              name="newPassword"
               label="Новый пароль"
-              value={fields.new_password}
-              error={fieldsError.new_password}
+              value={fields.newPassword}
+              error={fieldsError.newPassword}
               onBlur={onBlur}
               onChange={onChange}
             />
