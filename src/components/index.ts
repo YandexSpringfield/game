@@ -6,3 +6,4 @@ export { Content } from './Content';
 export { Avatar } from './Avatar';
 export { Card } from './Card';
 export { Error } from './Error';
+export { ErrorBoundary } from './ErrorBoundary';
