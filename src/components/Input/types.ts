@@ -1,11 +1,13 @@
-import { FocusEventHandler } from 'react';
+import { InputHTMLAttributes, DOMAttributes } from 'react';
 
-export type TProps = {
+export type TBaseProps = {
   name: string;
   label: string;
   type: string;
   value: string;
   error: string;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
-  onChange?: FocusEventHandler<HTMLInputElement>;
+  onBlur?: DOMAttributes<HTMLInputElement>;
+  onChange?: DOMAttributes<HTMLInputElement>;
 };
+
+export type TProps = InputHTMLAttributes<HTMLInputElement> & TBaseProps;
