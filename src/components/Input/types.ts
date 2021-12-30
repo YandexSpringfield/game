@@ -1,4 +1,4 @@
-import { FocusEventHandler, InputHTMLAttributes, DOMAttributes } from 'react';
+import { InputHTMLAttributes, DOMAttributes } from 'react';
 
 export type TBaseProps = {
   name: string;
