@@ -62,7 +62,7 @@ export const Registration: FC<any> = () => {
           <Logo width="50" height="100%" />
           <h1 className={styles.registration__title}>Регистрация</h1>
         </div>
-        <Form name="registration">
+        <Form name="registration" method="post">
           <div className={styles.form__username}>
             <Input
               type="text"

@@ -3,9 +3,11 @@ $size: 35px;
 .avatar {
   width: $size;
   height: $size;
-  border-radius: 50%;
 }
 
 .img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   object-fit: contain;
 }

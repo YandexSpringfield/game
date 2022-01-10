@@ -49,7 +49,7 @@ export const Login: FC<any> = () => {
           <Logo width="50" height="100%" />
           <h1 className={styles.login__title}>Авторизация</h1>
         </div>
-        <Form name="login">
+        <Form name="login" method="post">
           <Input
             type="text"
             name="login"

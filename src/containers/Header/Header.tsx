@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
 import { routes } from '@appConstants';
 import { Logo, Avatar } from '@components';
-import defaultLogo from '@/assets/images/default-logo.png';
+import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './styles.module.scss';
 
@@ -42,7 +42,7 @@ export const Header = () => {
         ))}
       </nav>
       <Link to={routes.profile} className={styles.avatar}>
-        <Avatar src={defaultLogo} />
+        <Avatar src={defaultAvatar} />
       </Link>
     </header>
   );
