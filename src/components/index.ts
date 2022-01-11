@@ -9,3 +9,4 @@ export { Error } from './Error';
 export { TableRow } from './TableRow';
 export { ErrorBoundary } from './ErrorBoundary';
 export { ChangeAvatar } from './ChangeAvatar';
+export { Modal } from './Modal';
