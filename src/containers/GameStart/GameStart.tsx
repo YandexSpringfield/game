@@ -1,5 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { routes } from '@appConstants';
+
+import styles from './styles.module.scss';
 
 export const GameStart = () => {
-  return <h1>Some start game</h1>;
+  return (
+    <div className={styles.container}>
+      <Link to={routes.game.play}>Начать игру</Link>
+    </div>
+  );
 };
