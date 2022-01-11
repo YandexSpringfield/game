@@ -10,7 +10,7 @@ import styles from './styles.module.scss';
 const navs = [
   {
     label: 'Game',
-    to: routes.game,
+    to: routes.game.root,
   },
   {
     label: 'Leaderboard',
