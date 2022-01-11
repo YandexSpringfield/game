@@ -1,4 +1,4 @@
-import React, { FC, FocusEvent, useState, useEffect } from 'react';
+import React, { FC, FocusEvent, MouseEvent, useState, useEffect } from 'react';
 import { Button, Form, Input, ChangeAvatar } from '@components';
 import { checkInput, checkPassword } from '@utils/utils';
 import { ViewButton } from '@components/Button';
@@ -55,7 +55,8 @@ export const Profile: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
-  const onEditProfile = () => {
+  const onEditProfile = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const data = {
       login: fields.login,
       phone: fields.phone,
@@ -67,7 +68,8 @@ export const Profile: FC<any> = () => {
     editProfileAPI.editProfile(data);
   };
 
-  const onEditPassword = () => {
+  const onEditPassword = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const data = {
       oldPassword: fields.oldPassword,
       newPassword: fields.newPassword,

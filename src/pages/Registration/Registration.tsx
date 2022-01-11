@@ -1,4 +1,4 @@
-import React, { FC, FocusEvent, useState } from 'react';
+import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
 import { checkInput, checkPassword, omit } from '@utils/utils';
 import { authAPI, TSignUp } from '@api';
@@ -43,7 +43,8 @@ export const Registration: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
-  const onRegistration = () => {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const data = omit(fields, 'password_confirm') as TSignUp;
     authAPI
       .signUp(data)
@@ -132,7 +133,7 @@ export const Registration: FC<any> = () => {
             title="Зарегистрироваться"
             type="submit"
             view={ViewButton.main}
-            onClick={onRegistration}
+            onClick={onClick}
           />
           <Button title="Войти" type="button" view={ViewButton.secondary} />
         </Form>
