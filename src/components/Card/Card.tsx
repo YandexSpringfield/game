@@ -4,6 +4,6 @@ import { TProps } from '.';
 
 import styles from './styles.module.scss';
 
-export const Title: FC<TProps> = ({ children, className }) => (
-  <h1 className={cn(styles.title, className)}>{children}</h1>
+export const Card: FC<TProps> = ({ className, children }) => (
+  <div className={cn(styles.card, className)}>{children}</div>
 );
