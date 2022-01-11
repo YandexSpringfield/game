@@ -3,8 +3,8 @@ import { TProps } from './types';
 
 import styles from './Form.module.scss';
 
-export const Form: FC<TProps> = ({ name, children, method }) => (
-  <form className={styles.form} method={method} name={name}>
+export const Form: FC<TProps> = ({ name, children }) => (
+  <form className={styles.form} name={name}>
     {children}
   </form>
 );

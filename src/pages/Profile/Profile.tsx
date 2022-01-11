@@ -55,8 +55,7 @@ export const Profile: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
-  const onEditProfile = (e) => {
-    e.preventDefault();
+  const onEditProfile = () => {
     const data = {
       login: fields.login,
       phone: fields.phone,
@@ -68,8 +67,7 @@ export const Profile: FC<any> = () => {
     editProfileAPI.editProfile(data);
   };
 
-  const onEditPassword = (e) => {
-    e.preventDefault();
+  const onEditPassword = () => {
     const data = {
       oldPassword: fields.oldPassword,
       newPassword: fields.newPassword,
@@ -86,13 +84,13 @@ export const Profile: FC<any> = () => {
 
   return (
     <div className={styles.container}>
-      <Form name="avatar" method="put">
+      <Form name="avatar">
         <h3 className={styles.title}>Аватар</h3>
         <div className={styles.row}>
           <ChangeAvatar src={fields.avatar || defaultAvatar} />
         </div>
       </Form>
-      <Form name="profile" method="put">
+      <Form name="profile">
         <h3 className={styles.title}>Информация</h3>
         <div className={styles.row}>
           <div className={styles.column}>
@@ -146,7 +144,7 @@ export const Profile: FC<any> = () => {
           />
         </div>
       </Form>
-      <Form name="password" method="put">
+      <Form name="password">
         <h3 className={styles.title}>Изменение пароля</h3>
         <div className={styles.row}>
           <div className={styles.column}>

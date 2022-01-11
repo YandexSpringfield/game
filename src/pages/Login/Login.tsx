@@ -1,4 +1,4 @@
-import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import React, { FC, FocusEvent, useState } from 'react';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
 import { checkInput } from '@utils/utils';
 import { authAPI } from '@api';
@@ -31,8 +31,7 @@ export const Login: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onLogin = () => {
     authAPI
       .signIn(fields)
       .then(() => {
@@ -49,7 +48,7 @@ export const Login: FC<any> = () => {
           <Logo width="50" height="100%" />
           <h1 className={styles.login__title}>Авторизация</h1>
         </div>
-        <Form name="login" method="post">
+        <Form name="login">
           <Input
             type="text"
             name="login"
@@ -73,7 +72,7 @@ export const Login: FC<any> = () => {
             title="Войти"
             type="submit"
             view={ViewButton.main}
-            onClick={onClick}
+            onClick={onLogin}
           />
           <Button
             title="Нет аккаунта?"
