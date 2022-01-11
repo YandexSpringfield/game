@@ -1,11 +1,10 @@
 /* eslint-disable no-plusplus */
-import { loadImage, SpriteResolver } from '@pages/Game/utils';
+import { loadImage, SpriteResolver } from '@containers/GamePlay/Canvas';
 import spriteImage from '@/assets/images/sprite.png';
 
-const skyRange = [[0, 20, 0, 18]];
-const groundRange = [[0, 20, 18, 20]];
+const skyRange = [[0, 40, 0, 18]];
+const groundRange = [[0, 40, 18, 20]];
 
-/* eslint-disable no-constructor-return */
 export class Core {
   public static _instance: Core;
 
@@ -16,10 +15,6 @@ export class Core {
   public spriteImage: HTMLImageElement | null;
 
   constructor(canvas: HTMLCanvasElement) {
-    if (Core._instance) {
-      return this;
-    }
-
     Core._instance = this;
     this.canvas = canvas;
     this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D;
