@@ -4,10 +4,8 @@ import { routes } from '@appConstants';
 
 import styles from './styles.module.scss';
 
-export const GameStart = () => {
-  return (
-    <div className={styles.container}>
-      <Link to={routes.game.play}>Начать игру</Link>
-    </div>
-  );
-};
+export const GameStart = () => (
+  <div className={styles.container}>
+    <Link to={routes.game.play}>Начать игру</Link>
+  </div>
+);
