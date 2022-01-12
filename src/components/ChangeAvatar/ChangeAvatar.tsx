@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import { editProfileAPI } from '@api';
+import { Form } from '@components';
 import { TProps } from './types';
 import styles from './ChangeAvatar.module.scss';
 
@@ -20,17 +21,20 @@ export const ChangeAvatar: FC<TProps> = ({ src }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <img src={src} alt="avatar" className={styles.image} />
-      <input
-        type="file"
-        name="file"
-        id="fileInput"
-        className={styles.inputfile}
-        onChange={onChange}
-      />
-      <label htmlFor="fileInput">edit</label>
-      <span className={styles.description}>{labelVal}</span>
-    </div>
+    <Form name="avatar">
+      <h3 className={styles.title}>Аватар</h3>
+      <div className={styles.container}>
+        <img src={src} alt="avatar" className={styles.image} />
+        <input
+          type="file"
+          name="file"
+          id="fileInput"
+          className={styles.inputfile}
+          onChange={onChange}
+        />
+        <label htmlFor="fileInput">edit</label>
+        <span className={styles.description}>{labelVal}</span>
+      </div>
+    </Form>
   );
 };

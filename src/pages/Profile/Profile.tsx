@@ -57,23 +57,17 @@ export const Profile: FC<any> = () => {
 
   const onEditProfile = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const data = {
-      login: fields.login,
-      phone: fields.phone,
-      display_name: fields.display_name,
-      first_name: fields.first_name,
-      second_name: fields.second_name,
-      email: fields.email,
-    };
+    const { avatar, oldPassword, newPassword, newPasswordConfirm, ...data } =
+      fields;
+
     editProfileAPI.editProfile(data);
   };
 
   const onEditPassword = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const data = {
-      oldPassword: fields.oldPassword,
-      newPassword: fields.newPassword,
-    };
+    const { oldPassword, newPassword } = fields;
+    const data = { oldPassword, newPassword };
+
     editProfileAPI.editPassword(data).then(() =>
       setFields({
         ...fields,
@@ -86,13 +80,8 @@ export const Profile: FC<any> = () => {
 
   return (
     <div className={styles.container}>
-      <Form name="avatar">
-        <h3 className={styles.title}>Аватар</h3>
-        <div className={styles.row}>
-          <ChangeAvatar src={fields.avatar || defaultAvatar} />
-        </div>
-      </Form>
-      <Form name="profile">
+      <ChangeAvatar src={fields.avatar || defaultAvatar} />
+      <Form name="profile" onSubmit={onEditProfile}>
         <h3 className={styles.title}>Информация</h3>
         <div className={styles.row}>
           <div className={styles.column}>
@@ -146,7 +135,7 @@ export const Profile: FC<any> = () => {
           />
         </div>
       </Form>
-      <Form name="password">
+      <Form name="password" onSubmit={onEditPassword}>
         <h3 className={styles.title}>Изменение пароля</h3>
         <div className={styles.row}>
           <div className={styles.column}>
