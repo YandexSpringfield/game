@@ -4,10 +4,12 @@ import { TProps, TState } from './types';
 import styles from './ErrorBoundary.module.scss';
 
 export class ErrorBoundary extends Component<TProps, TState> {
+  // eslint-disable-next-line react/state-in-constructor
   public state: TState = {
     hasError: false,
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static getDerivedStateFromError(_: Error): TState {
     return { hasError: true };
   }

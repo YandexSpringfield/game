@@ -12,9 +12,9 @@ export const Leaderboard = () => (
         <div>Игрок</div>
         <div>Счет</div>
       </div>
-        {MOCK_DATA.map(({ rank, ...item }) => (
-          <TableRow key={rank} rank={rank} {...item} />
-        ))}
+      {MOCK_DATA.map(({ rank, ...item }) => (
+        <TableRow key={rank} rank={rank} {...item} />
+      ))}
     </div>
   </Content>
 );
