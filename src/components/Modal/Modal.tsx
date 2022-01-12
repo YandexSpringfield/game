@@ -6,20 +6,22 @@ import { Props } from '.';
 import styles from './styles.module.scss';
 
 export const Modal: FC<Props> = ({ isOpen, className, children, onClose }) => {
+  if (!isOpen) {
+    return null;
+  }
+
   return createPortal(
-    isOpen ? (
-      <div className={styles.overlay}>
-        <div className={cn(styles.modal, className)}>
-          {children}
-          <button
-            type="button"
-            aria-label="close"
-            className={styles.closeBtn}
-            onClick={onClose}
-          />
-        </div>
+    <div className={styles.overlay}>
+      <div className={cn(styles.modal, className)}>
+        {children}
+        <button
+          type="button"
+          aria-label="close"
+          className={styles.closeBtn}
+          onClick={onClose}
+        />
       </div>
-    ) : null,
+    </div>,
     document.body,
   );
 };
