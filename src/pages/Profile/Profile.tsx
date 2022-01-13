@@ -1,18 +1,22 @@
-import React, { FC, FocusEvent, useState } from 'react';
+import React, { FC, FocusEvent, MouseEvent, useState, useEffect } from 'react';
 import { Button, Form, Input, ChangeAvatar } from '@components';
 import { checkInput, checkPassword } from '@utils/utils';
 import { ViewButton } from '@components/Button';
+import { useAppDispatch } from '@store';
+import { fetchUserProfile, useUserSelector } from '@store/user';
+import { editProfileAPI } from '@api';
+import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
 
-const avatarMock =
-  'https://v1.popcornnews.ru/k2/news/1200/upload/news/623023559448.jpg';
-
 const initialFields = {
+  avatar: '',
   first_name: '',
   second_name: '',
   login: '',
   email: '',
+  phone: '',
+  display_name: '',
   oldPassword: '',
   newPassword: '',
   newPasswordConfirm: '',
@@ -21,6 +25,17 @@ const initialFields = {
 export const Profile: FC<any> = () => {
   const [fields, setFields] = useState(initialFields);
   const [fieldsError, setFieldsError] = useState(initialFields);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, []);
+
+  const user = useUserSelector();
+
+  useEffect(() => {
+    setFields({ ...initialFields, ...user });
+  }, [user]);
 
   const onChange = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -40,15 +55,33 @@ export const Profile: FC<any> = () => {
     setFieldsError({ ...fieldsError, [name]: newState });
   };
 
+  const onEditProfile = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { avatar, oldPassword, newPassword, newPasswordConfirm, ...data } =
+      fields;
+
+    editProfileAPI.editProfile(data);
+  };
+
+  const onEditPassword = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const { oldPassword, newPassword } = fields;
+    const data = { oldPassword, newPassword };
+
+    editProfileAPI.editPassword(data).then(() =>
+      setFields({
+        ...fields,
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
+      }),
+    );
+  };
+
   return (
     <div className={styles.container}>
-      <Form name="avatar">
-        <h3 className={styles.title}>Аватар</h3>
-        <div className={styles.row}>
-          <ChangeAvatar src={avatarMock} />
-        </div>
-      </Form>
-      <Form name="details">
+      <ChangeAvatar src={fields.avatar || defaultAvatar} />
+      <Form name="profile" onSubmit={onEditProfile}>
         <h3 className={styles.title}>Информация</h3>
         <div className={styles.row}>
           <div className={styles.column}>
@@ -94,10 +127,15 @@ export const Profile: FC<any> = () => {
           </div>
         </div>
         <div className={styles.row}>
-          <Button title="Обновить" type="submit" view={ViewButton.main} />
+          <Button
+            title="Обновить"
+            type="submit"
+            view={ViewButton.main}
+            onClick={onEditProfile}
+          />
         </div>
       </Form>
-      <Form name="password">
+      <Form name="password" onSubmit={onEditPassword}>
         <h3 className={styles.title}>Изменение пароля</h3>
         <div className={styles.row}>
           <div className={styles.column}>
@@ -137,6 +175,7 @@ export const Profile: FC<any> = () => {
             title="Обновить пароль"
             type="submit"
             view={ViewButton.main}
+            onClick={onEditPassword}
           />
         </div>
       </Form>
