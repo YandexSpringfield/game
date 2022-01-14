@@ -5,7 +5,14 @@ import { resourcesUrl } from '@appConstants';
 import defaultAvatar from '../../assets/images/default-avatar.png';
 import styles from './TableRow.module.scss';
 
-export const TableRow: FC<TProps> = ({ index, avatar, login, city, score }) => {
+export const TableRow: FC<TProps> = ({
+  index,
+  avatar,
+  login,
+  name,
+  city,
+  score,
+}) => {
   const itemAvatar = resourcesUrl + avatar;
 
   return (
@@ -13,7 +20,7 @@ export const TableRow: FC<TProps> = ({ index, avatar, login, city, score }) => {
       <div>{index}</div>
       <div className={styles.player}>
         <Avatar src={avatar ? itemAvatar : defaultAvatar} />
-        {login || 'unknown'}
+        {login || name || 'unknown'}
       </div>
       <div>{city || 'unknown'}</div>
       <div>{score}</div>

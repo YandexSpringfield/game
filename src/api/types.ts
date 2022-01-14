@@ -42,6 +42,7 @@ export type TLeaderboardUser = {
     avatar?: string;
     login?: string;
     city?: string;
+    name?: string;
     score: number;
   };
 };
