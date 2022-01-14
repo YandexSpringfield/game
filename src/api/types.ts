@@ -24,3 +24,24 @@ export type TUserRequest = {
   second_name: string;
   email: string;
 };
+
+export type TLeaderboardNewLeaderRequest = {
+  data: unknown;
+  ratingFieldName: string;
+  teamName?: string;
+};
+
+export type TLeaderboardRequest = {
+  ratingFieldName: string;
+  cursor: number;
+  limit: number;
+};
+
+export type TLeaderboardUser = {
+  data: {
+    avatar?: string;
+    login?: string;
+    city?: string;
+    score: number;
+  };
+};

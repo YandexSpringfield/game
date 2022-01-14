@@ -1,6 +1,7 @@
 export type TProps = {
-  rank: number;
+  index: number;
+  score?: number;
   avatar?: string;
-  username: string;
-  score: number | string;
+  login?: string;
+  city?: string;
 };
