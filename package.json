@@ -10,7 +10,8 @@
     "lint": "eslint . --fix",
     "type-check": "tsc --noEmit",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest --updateSnapshot",
+    "test:dev": "jest --watch"
   },
   "repository": {
     "type": "git",

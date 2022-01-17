@@ -10,7 +10,7 @@ const tsConfigPathsNameMapper = pathsToModuleNameMapper(
 
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   moduleNameMapper: {
     ...tsConfigPathsNameMapper,
     '\\.(scss|less)$': 'identity-obj-proxy',
