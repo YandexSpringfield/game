@@ -12,4 +12,8 @@ export const PATH_API = {
     AVATAR: '/user/profile/avatar',
     PASSWORD: '/user/password',
   },
+  LEADERBOARD: {
+    ADD_USER: '/leaderboard',
+    GET_ALL_USERS: '/leaderboard/all',
+  },
 };
