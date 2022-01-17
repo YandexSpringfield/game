@@ -5,7 +5,7 @@ export enum RequestStatus {
   ERROR = 'ERROR',
 }
 
-export interface DocumentElementWithFullscreen extends HTMLElement {
+export interface ElementWithFullscreen extends HTMLElement {
   fullscreenElement?: boolean;
   mozFullScreenElement?: boolean;
   webkitFullscreenElement?: boolean;
@@ -14,6 +14,15 @@ export interface DocumentElementWithFullscreen extends HTMLElement {
   mozRequestFullScreen?: () => void;
   webkitRequestFullscreen?: () => void;
   exitFullscreen?: () => void;
+  mozCancelFullScreen?: () => void;
+  webkitExitFullscreen?: () => void;
+}
+export interface DocumentWithFullscreen extends HTMLDocument {
+  mozFullScreenElement?: Element;
+  msFullscreenElement?: Element;
+  webkitFullscreenElement?: Element;
+  mozFullscreenElement?: Element;
+  msExitFullscreen?: () => void;
   mozCancelFullScreen?: () => void;
   webkitExitFullscreen?: () => void;
 }

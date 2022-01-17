@@ -1,5 +1,5 @@
 import { VALIDATION_DATA as data } from '@appConstants';
-import { DocumentElementWithFullscreen } from '@types';
+import { ElementWithFullscreen, DocumentWithFullscreen } from '@types';
 
 export const checkInput = (name: string, value: string) => {
   if (data[name]) {
@@ -26,7 +26,7 @@ export const omit = (obj: {}, omitKey: string): {} => {
   return result;
 };
 
-export const activateFullscreen = (element: DocumentElementWithFullscreen) => {
+export const activateFullscreen = (element: ElementWithFullscreen) => {
   if (element.requestFullscreen) {
     element.requestFullscreen();
   } else if (element.mozRequestFullScreen) {
@@ -50,4 +50,13 @@ export const deactivateFullscreen = () => {
     // @ts-ignore
     document.webkitExitFullscreen();
   }
+};
+
+export const getFullscreenElement = (document: DocumentWithFullscreen) => {
+  return (
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullscreenElement ||
+    document.msFullscreenElement
+  );
 };
