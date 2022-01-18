@@ -12,5 +12,8 @@ describe('Input', () => {
 
     const errorNode = component.root.findByType('span');
     expect(errorNode.children[0]).toBe(error);
+
+    const tree = component.toTree();
+    expect(tree).toMatchSnapshot();
   });
 });
