@@ -3,6 +3,7 @@ import { DOMAttributes, ButtonHTMLAttributes } from 'react';
 export enum ViewButton {
   main = 'main',
   secondary = 'secondary',
+  exit = 'exit',
 }
 
 export type TBaseProps = {
