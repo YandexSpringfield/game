@@ -2,6 +2,8 @@ import React, { memo, useLayoutEffect, useRef, useState } from 'react';
 import { Loading } from '@components';
 import { Core } from '.';
 
+import styles from './styles.module.scss';
+
 export const GamePlay = memo(() => {
   const [loading, setLoading] = useState(true);
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
@@ -18,26 +20,20 @@ export const GamePlay = memo(() => {
   }, []);
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: 'calc(100% - 70px)',
-      }}
-    >
+    <div className={styles.container}>
       {loading ? (
         <Loading />
       ) : (
         <>
           <canvas
-            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            className={styles.canvas}
             ref={canvasBgRef}
             width="1280"
             height="640"
             id="background"
           />
           <canvas
-            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            className={styles.canvas}
             ref={canvasMarioRef}
             width="1280"
             height="640"
