@@ -8,7 +8,9 @@
     "jsx": "react",
     "allowJs": false,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "esModuleInterop": true
   },
   "extends": "./tsconfig.paths.json",
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
