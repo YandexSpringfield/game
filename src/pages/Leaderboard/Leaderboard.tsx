@@ -1,12 +1,16 @@
 import React, { FC, useEffect } from 'react';
 import { TableRow } from '@components';
-import { useAppDispatch } from '@store';
-import { fetchLeaderboard, useLeaderboardSelector } from '@store/leaderboard';
+import {
+  useAppDispatch,
+  fetchLeaderboard,
+  useLeaderboardSelector,
+} from '@store';
 
 import styles from './Leaderboard.module.scss';
 
 export const Leaderboard: FC = () => {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fetchLeaderboard());
   }, []);

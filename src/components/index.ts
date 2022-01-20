@@ -10,3 +10,4 @@ export { TableRow } from './TableRow';
 export { ErrorBoundary } from './ErrorBoundary';
 export { ChangeAvatar } from './ChangeAvatar';
 export { Modal } from './Modal';
+export { Loading } from './Loading';
