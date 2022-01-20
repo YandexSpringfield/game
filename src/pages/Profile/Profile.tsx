@@ -1,10 +1,10 @@
 import React, { FC, FocusEvent, MouseEvent, useState, useEffect } from 'react';
-import { Button, Form, Input, ChangeAvatar } from '@components';
+import { useNavigate } from 'react-router-dom';
+import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
+import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
+import { authAPI, editProfileAPI } from '@api';
 import { checkInput, checkPassword } from '@utils/utils';
-import { ViewButton } from '@components/Button';
-import { useAppDispatch } from '@store';
-import { fetchUserProfile, useUserSelector } from '@store/user';
-import { editProfileAPI } from '@api';
+import { routes } from '@appConstants';
 import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
@@ -25,6 +25,9 @@ const initialFields = {
 export const Profile: FC<any> = () => {
   const [fields, setFields] = useState(initialFields);
   const [fieldsError, setFieldsError] = useState(initialFields);
+
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -76,6 +79,13 @@ export const Profile: FC<any> = () => {
         newPasswordConfirm: '',
       }),
     );
+  };
+
+  const onLogout = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    authAPI.logout().then(() => {
+      navigate(routes.login);
+    });
   };
 
   return (
@@ -176,6 +186,12 @@ export const Profile: FC<any> = () => {
             type="submit"
             view={ViewButton.main}
             onClick={onEditPassword}
+          />
+          <Button
+            title="Выход"
+            type="submit"
+            view={ViewButton.exit}
+            onClick={onLogout}
           />
         </div>
       </Form>

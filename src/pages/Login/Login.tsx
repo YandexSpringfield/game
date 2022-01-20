@@ -1,10 +1,10 @@
 import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
 import { checkInput } from '@utils/utils';
 import { authAPI } from '@api';
-import { useAppDispatch } from '@store';
-import { fetchUserProfile } from '@store/user';
-import { authError } from '@appConstants';
+import { useAppDispatch, fetchUserProfile } from '@store';
+import { authError, routes } from '@appConstants';
 
 import styles from './Login.module.scss';
 
@@ -17,6 +17,8 @@ export const Login: FC<any> = () => {
   const [fields, setFields] = useState(initialFields);
   const [fieldsError, setFieldsError] = useState(initialFields);
   const [errorAuth, setErrorAuth] = useState('');
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -39,7 +41,15 @@ export const Login: FC<any> = () => {
         setErrorAuth('');
         dispatch(fetchUserProfile());
       })
+      .then(() => {
+        navigate(routes.game.root);
+      })
       .catch(() => setErrorAuth(authError));
+  };
+
+  const toRegistration = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    navigate(routes.registration);
   };
 
   return (
@@ -79,6 +89,7 @@ export const Login: FC<any> = () => {
             title="Нет аккаунта?"
             type="button"
             view={ViewButton.secondary}
+            onClick={toRegistration}
           />
         </Form>
       </div>

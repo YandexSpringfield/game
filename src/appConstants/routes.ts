@@ -10,3 +10,8 @@ export const routes = {
   leaderboard: '/leaderboard',
   profile: '/profile',
 };
+
+export const section = {
+  core: 'core',
+  auth: 'auth',
+};
