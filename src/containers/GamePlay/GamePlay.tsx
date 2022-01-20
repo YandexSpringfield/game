@@ -5,8 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { Button } from '@components';
-import { ViewButton } from '@components/Button';
+import { Button, Loading, ViewButton } from '@components';
 import { ElementWithFullscreen } from '@types';
 import {
   activateFullscreen,
@@ -14,10 +13,12 @@ import {
   getFullscreenElement,
 } from '@utils/utils';
 import { Core } from '.';
+
 import styles from './styles.module.scss';
 
 export const GamePlay = memo(() => {
   const [isFull, setIsFull] = useState(false);
+  const [loading, setLoading] = useState(true);
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
   const canvasMarioRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -35,11 +36,13 @@ export const GamePlay = memo(() => {
   }, [document]);
 
   useLayoutEffect(() => {
-    if (canvasBgRef.current && canvasMarioRef.current) {
-      // @ts-ignore
-      const core = new Core(canvasBgRef.current, canvasMarioRef.current);
-      core.init();
-    }
+    setTimeout(() => {
+      setLoading(false);
+      if (canvasBgRef.current && canvasMarioRef.current) {
+        const core = new Core(canvasBgRef.current, canvasMarioRef.current);
+        core.init();
+      }
+    }, 1000);
   }, []);
 
   const handleScreen = () => {
@@ -54,28 +57,34 @@ export const GamePlay = memo(() => {
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <div className={styles.button}>
-        <Button
-          title={isFull ? 'Свернуть' : 'Развернуть'}
-          type="button"
-          view={ViewButton.transparent}
-          onClick={handleScreen}
-        />
-      </div>
-      <canvas
-        style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
-        ref={canvasBgRef}
-        width="1280"
-        height="640"
-        id="background"
-      />
-      <canvas
-        style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
-        ref={canvasMarioRef}
-        width="1280"
-        height="640"
-        id="mario"
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className={styles.button}>
+            <Button
+              title={isFull ? 'Свернуть' : 'Развернуть'}
+              type="button"
+              view={ViewButton.transparent}
+              onClick={handleScreen}
+            />
+          </div>
+          <canvas
+            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            ref={canvasBgRef}
+            width="1280"
+            height="640"
+            id="background"
+          />
+          <canvas
+            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            ref={canvasMarioRef}
+            width="1280"
+            height="640"
+            id="mario"
+          />
+        </>
+      )}
     </div>
   );
 });

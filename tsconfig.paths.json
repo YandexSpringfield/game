@@ -29,7 +29,13 @@
       "@types/*": ["./types/*"],
 
       "@api": ["./api"],
-      "@api/*": ["./api/*"]
+      "@api/*": ["./api/*"],
+
+      "@router": ["./router"],
+      "@router/*": ["./router/*"],
+
+      "@hoc-helpers": ["./hoc-helpers"],
+      "@hoc-helpers/*": ["./hoc-helpers/*"],
     }
   }
 }

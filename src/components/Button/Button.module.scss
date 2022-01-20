@@ -27,7 +27,7 @@
       color: $main-color-hover;
     }
   }
-  
+
   &__transparent {
     height: 35px;
     font-weight: bold;
@@ -37,5 +37,13 @@
     &:hover {
       background-color: transparent;
     }
+  }
+
+  &__exit {
+    height: 35px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #fff;
+    background-color: $main-error;
   }
 }
