@@ -5,16 +5,15 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { Button } from '@components';
-import { ViewButton } from '@components/Button';
+import { Button, Loading, ViewButton } from '@components';
 import { ElementWithFullscreen } from '@types';
 import {
   activateFullscreen,
   deactivateFullscreen,
   getFullscreenElement,
 } from '@utils/utils';
-import { Loading } from '@components';
 import { Core } from '.';
+
 import styles from './styles.module.scss';
 
 export const GamePlay = memo(() => {
@@ -59,7 +58,7 @@ export const GamePlay = memo(() => {
   return (
     <div className={styles.container} ref={containerRef}>
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           <div className={styles.button}>
@@ -88,5 +87,4 @@ export const GamePlay = memo(() => {
       )}
     </div>
   );
-}
-);
+});
