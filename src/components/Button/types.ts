@@ -4,6 +4,7 @@ export enum ViewButton {
   main = 'main',
   secondary = 'secondary',
   exit = 'exit',
+  transparent = 'transparent',
 }
 
 export type TBaseProps = {

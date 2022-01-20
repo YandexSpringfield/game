@@ -12,7 +12,7 @@
     height: 35px;
     border-radius: 4px;
     font-weight: bold;
-    color: #fff;
+    color: $card-bg;
     background-color: $main-color;
 
     &:hover {
@@ -25,6 +25,17 @@
 
     &:hover {
       color: $main-color-hover;
+    }
+  }
+
+  &__transparent {
+    height: 35px;
+    font-weight: bold;
+    color: $card-bg;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
     }
   }
 
