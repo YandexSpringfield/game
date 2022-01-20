@@ -9,7 +9,6 @@ self.addEventListener('install', (event) => {
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log('cached added');
         return cache.addAll(URLS);
       })
       .catch((err) => {
@@ -24,7 +23,6 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      console.log('deleta', cacheNames);
       return Promise.all(
         cacheNames
           .filter((name) => name !== CACHE_NAME)
@@ -37,7 +35,6 @@ self.addEventListener('activate', function (event) {
 self.addEventListener('fetch', function (event) {
   event.respondWith(
     caches.match(event.request).then(function (response) {
-      console.log('fetching');
       if (response) {
         return response;
       }
