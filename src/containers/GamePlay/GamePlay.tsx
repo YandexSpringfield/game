@@ -73,14 +73,14 @@ export const GamePlay = memo(() => {
             className={styles.canvas}
             ref={canvasBgRef}
             width="1280"
-            height="640"
+            height="480"
             id="background"
           />
           <canvas
             className={styles.canvas}
             ref={canvasMarioRef}
             width="1280"
-            height="640"
+            height="480"
             id="mario"
           />
         </>
