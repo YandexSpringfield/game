@@ -1,5 +1,9 @@
+import { tilesSize } from './spriteConfig';
+
 export class SpriteResolver {
   public image: HTMLImageElement;
+
+  public config;
 
   public width: number;
 
@@ -7,26 +11,56 @@ export class SpriteResolver {
 
   public tiles: Map<string, HTMLCanvasElement>;
 
-  constructor(image: HTMLImageElement, width = 32, height = 32) {
+  constructor(image: HTMLImageElement, spritesConfig) {
     this.image = image;
-    this.width = width;
-    this.height = height;
+    this.config = spritesConfig;
+    this.width = tilesSize.width;
+    this.height = tilesSize.height;
     this.tiles = new Map();
+
+    this.init();
   }
 
-  define(name: string, x: number, y: number, width: number, height: number) {
+  init() {
+    this.defineTiles();
+    this.defineEntities();
+  }
+
+  defineTiles() {
+    this.config.tiles.forEach((tile) => {
+      const x = tile.range[0];
+      const y = tile.range[1];
+      this.define(tile.name, x * this.width, y * this.height);
+    });
+  }
+
+  defineEntities() {
+    this.config.entities.forEach((entity) => {
+      const x = entity.range[0];
+      const y = entity.range[1];
+      this.define(entity.name, x * this.width, y * this.height);
+    });
+  }
+
+  define(name: string, x: number, y: number) {
     const buffer = document.createElement('canvas');
-    buffer.width = width;
-    buffer.height = height;
+    buffer.width = this.width;
+    buffer.height = this.height;
 
     buffer
       .getContext('2d')
-      ?.drawImage(this.image, x, y, width, height, 0, 0, width, height);
+      ?.drawImage(
+        this.image,
+        x,
+        y,
+        this.width,
+        this.height,
+        0,
+        0,
+        this.width,
+        this.height,
+      );
     this.tiles.set(name, buffer);
-  }
-
-  defineTile(name: string, x: number, y: number) {
-    this.define(name, x * this.width, y * this.height, this.width, this.height);
   }
 
   draw(name: string, context: CanvasRenderingContext2D, x: number, y: number) {

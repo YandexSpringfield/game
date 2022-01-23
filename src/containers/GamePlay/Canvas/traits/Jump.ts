@@ -7,12 +7,15 @@ export class Jump extends Trait {
 
   velocity: number;
 
+  cancel: boolean;
+
   constructor() {
     super('jump');
 
     this.duration = 0.2;
     this.engageTime = 0;
-    this.velocity = 300;
+    this.velocity = 350;
+    this.cancel = true;
   }
 
   start() {

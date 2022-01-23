@@ -1,3 +1,5 @@
+import { TileCollider } from '../collision';
+import { tilesSize } from '../sprite-resolver';
 import { Vectors } from './Vectors';
 
 export class Entity {
@@ -5,11 +7,25 @@ export class Entity {
 
   vel: Vectors;
 
+  width: number;
+
+  height: number;
+
+  gravity: number;
+
+  tileCollider: TileCollider;
+
   traits: any[];
 
-  constructor() {
+  constructor(matrix) {
     this.pos = new Vectors(0, 0);
     this.vel = new Vectors(0, 0);
+    this.width = tilesSize.width;
+    this.height = tilesSize.height;
+
+    this.gravity = 1000;
+
+    this.tileCollider = new TileCollider(matrix);
 
     this.traits = [];
   }
@@ -21,7 +37,7 @@ export class Entity {
     });
   }
 
-  update(deltaTime) {
+  updateTraits(deltaTime) {
     this.traits.forEach((trait) => {
       trait.update(this, deltaTime);
     });

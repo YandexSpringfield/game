@@ -29,6 +29,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/button-has-type': 'off',
+    'react/state-in-constructor': 'off',
     '@typescript-eslint/naming-convention': 0,
     '@typescript-eslint/no-implied-eval': 0,
     '@typescript-eslint/no-throw-literal': 0,
