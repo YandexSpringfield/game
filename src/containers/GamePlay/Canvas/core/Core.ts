@@ -91,7 +91,6 @@ export class Core {
   private timerStart() {
     this.timer.update = (deltaTime) => {
       this.mario.update(deltaTime);
-
       if (
         this.mario.vel.x !== 0 &&
         this.mario.pos.x > 300 &&
@@ -106,7 +105,7 @@ export class Core {
         this.gameRestart('lost');
       }
 
-      if (this.mario.pos.x > (this.level.getGrid().length - 1) * 32) {
+      if (this.mario.pos.x > (this.level.getGrid().length - 1) * tilesSize.width) {
         this.gameRestart('win');
       }
 
