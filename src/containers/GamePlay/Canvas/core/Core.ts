@@ -105,7 +105,10 @@ export class Core {
         this.gameRestart('lost');
       }
 
-      if (this.mario.pos.x > (this.level.getGrid().length - 1) * tilesSize.width) {
+      if (
+        this.mario.pos.x >
+        (this.level.getGrid().length - 1) * tilesSize.width
+      ) {
         this.gameRestart('win');
       }
 
