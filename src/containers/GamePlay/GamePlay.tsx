@@ -22,6 +22,7 @@ export const GamePlay = memo(() => {
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
   const canvasMarioRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  let core;
 
   useEffect(() => {
     document.addEventListener('fullscreenchange', () => {
@@ -39,10 +40,15 @@ export const GamePlay = memo(() => {
     setTimeout(() => {
       setLoading(false);
       if (canvasBgRef.current && canvasMarioRef.current) {
-        const core = new Core(canvasBgRef.current, canvasMarioRef.current);
-        core.init();
+        core = new Core(canvasBgRef.current, canvasMarioRef.current);
       }
-    }, 1000);
+    }, 500);
+    return () => {
+      if (core instanceof Core) {
+        core.mario.keyboardRemove();
+        core.timer.stop();
+      }
+    };
   }, []);
 
   const handleScreen = () => {

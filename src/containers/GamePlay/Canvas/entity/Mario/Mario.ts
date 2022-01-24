@@ -15,6 +15,8 @@ export class Mario extends Entity {
 
   context: CanvasRenderingContext2D;
 
+  keyboard: KeyboardState;
+
   go: Go;
 
   jump: Jump;
@@ -50,9 +52,9 @@ export class Mario extends Entity {
   }
 
   keyboardSetup() {
-    const keyboard = new KeyboardState();
+    this.keyboard = new KeyboardState();
 
-    keyboard.addKey(KEYS.SPACE, (keyState) => {
+    this.keyboard.addKey(KEYS.SPACE, (keyState) => {
       if (keyState && !this.jump.cancel) {
         this.jump.start();
         this.jump.cancel = true;
@@ -61,29 +63,28 @@ export class Mario extends Entity {
       }
     });
 
-    keyboard.addKey(KEYS.ARROW_RIGHT, (keyState) => {
+    this.keyboard.addKey(KEYS.ARROW_RIGHT, (keyState) => {
       this.go.direction = keyState;
     });
 
-    keyboard.addKey(KEYS.ARROW_LEFT, (keyState) => {
+    this.keyboard.addKey(KEYS.ARROW_LEFT, (keyState) => {
       this.go.direction = -keyState;
     });
 
-    keyboard.addListener(window);
+    this.keyboard.addListener(window);
+  }
+
+  keyboardRemove() {
+    this.keyboard.removeListener(window);
   }
 
   checkPosition(deltaTime: number) {
-    if (this.pos.y - this.height > 448) {
-      this.pos.x = INITIAL_POS.column * this.width;
-      this.pos.y = 0;
-    } else {
-      this.pos.x += this.vel.x * deltaTime;
-      this.tileCollider.checkX(this);
+    this.pos.x += this.vel.x * deltaTime;
+    this.tileCollider.checkX(this);
 
-      this.pos.y += this.vel.y * deltaTime;
-      this.tileCollider.checkY(this);
+    this.pos.y += this.vel.y * deltaTime;
+    this.tileCollider.checkY(this);
 
-      this.vel.y += this.gravity * deltaTime;
-    }
+    this.vel.y += this.gravity * deltaTime;
   }
 }

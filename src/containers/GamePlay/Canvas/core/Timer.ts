@@ -1,31 +1,46 @@
 export class Timer {
-  updateTime: (t: number) => void;
-
   update: (t: number) => void;
 
-  constructor(deltaTime = 1 / 60) {
-    let accumulatedTime = 0;
-    let lastTime = 0;
+  deltaTime: number;
 
-    this.updateTime = (time) => {
-      accumulatedTime += (time - lastTime) / 1000;
+  maxInterval: number;
 
-      while (accumulatedTime > deltaTime) {
-        this.update(deltaTime);
-        accumulatedTime -= deltaTime;
-      }
+  lastTime: number;
 
-      lastTime = time;
+  continueAnimating: boolean;
 
-      this.enqueue();
-    };
+  constructor() {
+    this.deltaTime = 0;
+    this.lastTime = 0;
+    this.maxInterval = 40;
+    this.continueAnimating = true;
   }
 
+  animate = (time) => {
+    this.deltaTime = time - this.lastTime;
+
+    if (this.deltaTime < this.maxInterval) {
+      this.update(this.deltaTime / 1000);
+    }
+
+    this.lastTime = time;
+
+    this.enqueue();
+  };
+
   enqueue() {
-    requestAnimationFrame(this.updateTime);
+    if (this.continueAnimating) {
+      requestAnimationFrame(this.animate);
+    }
   }
 
   start() {
+    this.continueAnimating = true;
     this.enqueue();
+  }
+
+  stop() {
+    this.continueAnimating = false;
+    this.update = () => {};
   }
 }
