@@ -1,0 +1,15 @@
+@import "../../../styles/mixins";
+
+.modal {
+  @include flex(column, center, center);
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+

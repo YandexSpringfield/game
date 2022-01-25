@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
-import { TableRow } from '@components';
+import { TableRow, Loading } from '@components';
 import {
   useAppDispatch,
   fetchLeaderboard,
   useLeaderboardSelector,
 } from '@store';
+import { RequestStatus } from '@types';
 
 import styles from './Leaderboard.module.scss';
 
@@ -15,7 +16,11 @@ export const Leaderboard: FC = () => {
     dispatch(fetchLeaderboard());
   }, []);
 
-  const leaderboard = useLeaderboardSelector();
+  const { data, requestStatus } = useLeaderboardSelector();
+
+  if (requestStatus === RequestStatus.REQUEST) {
+    <Loading />;
+  }
 
   return (
     <div className={styles.table}>
@@ -25,7 +30,7 @@ export const Leaderboard: FC = () => {
         <div>Город</div>
         <div>Счет</div>
       </div>
-      {leaderboard?.map(({ data }, index) => (
+      {data?.map(({ data }, index) => (
         <TableRow
           key={`${data.score}-${data?.login}-${data.name}`}
           {...data}
