@@ -6,8 +6,6 @@ import { loadImage, SpriteResolver } from '@containers/GamePlay/Canvas';
 import { Camera } from '@containers/GamePlay/Canvas/core/Camera';
 import { Mario } from '@containers/GamePlay/Canvas/entity/Mario';
 import { KEYS } from '@containers/GamePlay/Canvas/keyboardState';
-import level1 from '@/assets/levels/1-1.json';
-import level2 from '@/assets/levels/1-2.json';
 import spriteImage from '@/assets/images/sprite.png';
 import { Timer } from './Timer';
 import { Level } from './Level';
@@ -47,16 +45,16 @@ export class Core {
     this.contextMario = this.canvasMario.getContext(
       '2d',
     ) as CanvasRenderingContext2D;
+    this.timer = new Timer();
 
-    this.init(level1);
+    this.init();
   }
 
-  init(level) {
+  init() {
     loadImage(spriteImage)
       .then((image) => {
-        this.timer = new Timer();
         this.sprite = new SpriteResolver(image, overworldSprite);
-        this.level = new Level(level);
+        this.level = new Level();
         this.camera = new Camera();
         this.mario = new Mario(
           this.canvasMario,
@@ -85,12 +83,13 @@ export class Core {
     this.mario.keyboardRemove();
     window.removeEventListener('keypress', this.restartHandler);
 
-    this.init(level2);
+    this.init();
   }
 
   private timerStart() {
-    this.timer.update = (deltaTime) => {
+    this.timer.update = (deltaTime, time) => {
       this.mario.update(deltaTime);
+
       if (
         this.mario.vel.x !== 0 &&
         this.mario.pos.x > 300 &&
@@ -113,6 +112,8 @@ export class Core {
       }
 
       this.mario.draw(this.camera.pos.x, this.camera.pos.y);
+      this.drawTimerStatus(time);
+      this.drawCoinsStatus('0 / 0');
     };
 
     this.timer.start();
@@ -163,6 +164,28 @@ export class Core {
       }
     }
   };
+
+  drawCoinsStatus(coins) {
+    this.contextMario.clearRect(this.canvasMario.width - 300, 30, 150, 30);
+    this.contextMario.font = '20px Roboto';
+    this.contextMario.fillStyle = '#fff';
+    this.contextMario.fillText(
+      `Монеты: ${coins}`,
+      this.canvasMario.width - 300,
+      40,
+    );
+  }
+
+  drawTimerStatus(time) {
+    this.contextMario.clearRect(this.canvasMario.width - 120, 30, 200, 30);
+    this.contextMario.font = '20px Roboto';
+    this.contextMario.fillStyle = '#fff';
+    this.contextMario.fillText(
+      `Время: ${time}`,
+      this.canvasMario.width - 120,
+      40,
+    );
+  }
 
   drawStartText(text) {
     this.contextBg.font = 'bold 70px Roboto';
