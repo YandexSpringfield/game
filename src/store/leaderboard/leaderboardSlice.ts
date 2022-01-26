@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '@types';
 import { TLeaderboardUser } from '@api';
-import { fetchLeaderboard } from './thunks';
+import { fetchLeaderboard, addToLeaderboard } from './thunks';
 
 export type TLeaderboardState = {
   data?: TLeaderboardUser[];
@@ -31,12 +31,22 @@ export const leaderboardSlice = createSlice({
     builder.addCase(fetchLeaderboard.rejected, (state) => {
       state.requestStatus = RequestStatus.ERROR;
     });
-
     builder.addCase(fetchLeaderboard.fulfilled, (state, { payload }) => {
       state.requestStatus = RequestStatus.SUCCESS;
       Object.keys(payload).forEach((key) => {
         state[key] = payload[key];
       });
+    });
+
+    builder.addCase(addToLeaderboard.pending, (state) => {
+      state.requestStatus = RequestStatus.REQUEST;
+    });
+
+    builder.addCase(addToLeaderboard.rejected, (state) => {
+      state.requestStatus = RequestStatus.ERROR;
+    });
+    builder.addCase(addToLeaderboard.fulfilled, (state) => {
+      state.requestStatus = RequestStatus.SUCCESS;
     });
   },
 });

@@ -1,4 +1,4 @@
 import { useAppSelector } from '@store/hooks';
 
 export const useLeaderboardSelector = () =>
-  useAppSelector((store) => store.leaderboard.data);
+  useAppSelector((store) => store.leaderboard);

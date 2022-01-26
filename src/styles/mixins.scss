@@ -5,6 +5,13 @@
   align-items: $align-items;
 }
 
+@mixin inlineFlex($flex-direction, $justify-content, $align-items) {
+  display: inline-flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
 @mixin font($font_name, $file_name, $weight, $style) {
   @font-face {
     font-family: $font_name;
