@@ -12,7 +12,7 @@ export class KeyboardState {
     this.keyMap.set(keyCode, cb);
   }
 
-  handleEvent(e) {
+  handleEvent = (e) => {
     const { keyCode } = e;
 
     if (this.keyMap.has(keyCode)) {
@@ -27,15 +27,21 @@ export class KeyboardState {
       this.keyState.set(keyCode, keyState);
       this.keyMap.get(keyCode)?.(keyState);
     }
-  }
+  };
 
   addListener(canvas) {
     const eventNames = ['keydown', 'keyup'];
 
     eventNames.forEach((eventName) => {
-      canvas.addEventListener(eventName, (e) => {
-        this.handleEvent(e);
-      });
+      canvas.addEventListener(eventName, this.handleEvent);
+    });
+  }
+
+  removeListener(canvas) {
+    const eventNames = ['keydown', 'keyup'];
+
+    eventNames.forEach((eventName) => {
+      canvas.removeEventListener(eventName, this.handleEvent);
     });
   }
 }

@@ -25,6 +25,7 @@ export const GamePlay = memo(() => {
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
   const canvasMarioRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  let core;
 
   useEffect(() => {
     document.addEventListener('fullscreenchange', () => {
@@ -42,10 +43,15 @@ export const GamePlay = memo(() => {
     setTimeout(() => {
       setLoading(false);
       if (canvasBgRef.current && canvasMarioRef.current) {
-        const core = new Core(canvasBgRef.current, canvasMarioRef.current);
-        core.init();
+        core = new Core(canvasBgRef.current, canvasMarioRef.current);
       }
-    }, 1000);
+    }, 500);
+    return () => {
+      if (core instanceof Core) {
+        core.mario.keyboardRemove();
+        core.timer.stop();
+      }
+    };
   }, []);
 
   const handleScreen = () => {
@@ -73,17 +79,17 @@ export const GamePlay = memo(() => {
             />
           </div>
           <canvas
-            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            className={styles.canvas}
             ref={canvasBgRef}
             width="1280"
-            height="640"
+            height="480"
             id="background"
           />
           <canvas
-            style={{ display: 'block', position: 'absolute', margin: '0 auto' }}
+            className={styles.canvas}
             ref={canvasMarioRef}
             width="1280"
-            height="640"
+            height="480"
             id="mario"
           />
           <EndGameModal
