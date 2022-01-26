@@ -12,13 +12,16 @@ import {
   deactivateFullscreen,
   getFullscreenElement,
 } from '@utils/utils';
+import { EndGameModal } from './EndGameModal';
 import { Core } from '.';
 
 import styles from './styles.module.scss';
 
+// TODO где то здесь нужно ловить событие окончании игры и показывать модалку об окончании игры
 export const GamePlay = memo(() => {
   const [isFull, setIsFull] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isEndGameModalOpen, setIsEndGameModalOpen] = useState(false);
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
   const canvasMarioRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -88,6 +91,10 @@ export const GamePlay = memo(() => {
             width="1280"
             height="480"
             id="mario"
+          />
+          <EndGameModal
+            isOpen={isEndGameModalOpen}
+            onClose={() => setIsEndGameModalOpen(false)}
           />
         </>
       )}

@@ -1,5 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { DOMAttributes, HTMLAttributes } from 'react';
 
-export type TProps = PropsWithChildren<{
-  className?: string;
-}>;
+export type TProps = DOMAttributes<HTMLDivElement> &
+  HTMLAttributes<HTMLDivElement>;
