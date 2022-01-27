@@ -1,28 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
-import { routes } from '@appConstants';
+import { resourcesUrl, routes } from '@appConstants';
 import { Logo, Avatar } from '@components';
+import { fetchUserProfile, useAppDispatch, useUserSelector } from '@store';
 import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './styles.module.scss';
 
 const navs = [
   {
-    label: 'Game',
+    label: 'Игра',
     to: routes.game.root,
   },
   {
-    label: 'Leaderboard',
+    label: 'Таблица лидеров',
     to: routes.leaderboard,
   },
   {
-    label: 'Forum',
+    label: 'Форум',
     to: routes.forum,
   },
 ];
 
 export const Header = () => {
+  const [avatar, setAvatar] = useState('');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, []);
+
+  const user = useUserSelector();
+
+  useEffect(() => {
+    setAvatar(user.avatar);
+  }, [user.avatar]);
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -42,7 +56,7 @@ export const Header = () => {
         ))}
       </nav>
       <Link to={routes.profile} className={styles.avatar}>
-        <Avatar src={defaultAvatar} />
+        <Avatar src={avatar ? resourcesUrl + avatar : defaultAvatar} />
       </Link>
     </header>
   );
