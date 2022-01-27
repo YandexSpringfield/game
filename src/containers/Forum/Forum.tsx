@@ -5,7 +5,7 @@ import { MOCK_DATA } from './mockData';
 import styles from './styles.module.scss';
 
 export const Forum = () => (
-  <Content title="Forum">
+  <Content title="Форум">
     {MOCK_DATA.map((item) => (
       <Card key={item.id} className={styles.card}>
         <h3 className={styles.title}>{item.title}</h3>

@@ -9,15 +9,15 @@ import styles from './styles.module.scss';
 
 const navs = [
   {
-    label: 'Game',
+    label: 'Игра',
     to: routes.game.root,
   },
   {
-    label: 'Leaderboard',
+    label: 'Таблица лидеров',
     to: routes.leaderboard,
   },
   {
-    label: 'Forum',
+    label: 'Форум',
     to: routes.forum,
   },
 ];

@@ -5,3 +5,21 @@
 @include font('SF-Pro', 'SF-Pro-Display-Medium', '500', 'normal');
 @include font('SF-Pro', 'SF-Pro-Display-Semibold', '600', 'normal');
 @include font('SF-Pro', 'SF-Pro-Display-Bold', '700', 'normal');
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('../assets/fonts/icomoon.woff?c63pxp') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.iconImage:before {
+  font-family: 'icomoon' !important;
+  content: "\e90d";
+}
+
+.iconDownload:before {
+  font-family: 'icomoon' !important;
+  content: "\e960";
+}
