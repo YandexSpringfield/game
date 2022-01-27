@@ -4,7 +4,7 @@ import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
 import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
 import { authAPI, editProfileAPI } from '@api';
 import { checkInput, checkPassword } from '@utils/utils';
-import { routes } from '@appConstants';
+import { resourcesUrl, routes } from '@appConstants';
 import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
@@ -90,7 +90,9 @@ export const Profile: FC<any> = () => {
 
   return (
     <div className={styles.container}>
-      <ChangeAvatar src={fields.avatar || defaultAvatar} />
+      <ChangeAvatar
+        src={fields.avatar ? resourcesUrl + fields.avatar : defaultAvatar}
+      />
       <Form name="profile" onSubmit={onEditProfile}>
         <h3 className={styles.title}>Информация</h3>
         <div className={styles.row}>
