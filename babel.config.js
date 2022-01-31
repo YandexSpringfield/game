@@ -11,5 +11,6 @@ module.exports = {
         regenerator: true,
       },
     ],
+    'react-hot-loader/babel',
   ],
 };

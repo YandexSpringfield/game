@@ -1,0 +1,26 @@
+import React, { useState } from 'react';
+import { editProfileAPI } from '@api';
+import { Form } from '@components';
+import styles from './ChangeAvatar.module.scss';
+const defaultLabel = 'Имя файла';
+const errorLabel = 'Не удалось загрузить';
+export const ChangeAvatar = ({ src }) => {
+    const [labelVal, setLabelVal] = useState('Имя файла');
+    const onChange = (e) => {
+        const fileName = e.target.value.split('\\').pop();
+        setLabelVal(fileName);
+        const formData = new FormData();
+        formData.append('file', e.target.files[0]);
+        editProfileAPI
+            .editAvatar(formData)
+            .then(() => setLabelVal(defaultLabel))
+            .catch(() => setLabelVal(errorLabel));
+    };
+    return (React.createElement(Form, { name: "avatar" },
+        React.createElement("h3", { className: styles.title }, "\u0410\u0432\u0430\u0442\u0430\u0440"),
+        React.createElement("div", { className: styles.container },
+            React.createElement("img", { src: src, alt: "avatar", className: styles.image }),
+            React.createElement("input", { type: "file", name: "file", id: "fileInput", className: styles.inputfile, onChange: onChange }),
+            React.createElement("label", { className: styles.iconDownload, htmlFor: "fileInput" }),
+            React.createElement("span", { className: styles.description }, labelVal))));
+};

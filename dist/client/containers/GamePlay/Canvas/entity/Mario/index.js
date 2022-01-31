@@ -1,0 +1,1 @@
+export { Mario } from './Mario';
