@@ -6,6 +6,7 @@ import { loadImage, SpriteResolver } from '@containers/GamePlay/Canvas';
 import { Camera } from '@containers/GamePlay/Canvas/core/Camera';
 import { Mario } from '@containers/GamePlay/Canvas/entity/Mario';
 import { KEYS } from '@containers/GamePlay/Canvas/keyboardState';
+import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
 import spriteImage from '@/assets/images/sprite.png';
 import { Timer } from './Timer';
 import { Level } from './Level';
@@ -38,6 +39,8 @@ export class Core {
 
   gameStatus: string;
 
+  public coins: number;
+
   constructor(canvasBg: HTMLCanvasElement, canvasMario: HTMLCanvasElement) {
     this.canvasBg = canvasBg;
     this.canvasMario = canvasMario;
@@ -46,6 +49,7 @@ export class Core {
       '2d',
     ) as CanvasRenderingContext2D;
     this.timer = new Timer();
+    this.coins = 0;
 
     this.init();
   }
@@ -62,11 +66,16 @@ export class Core {
           this.contextMario,
           this.level.matrix,
           this.level.coinMatrix,
+          this.contextBg,
         );
       })
       .then(() => {
         this.drawTiles(0, Math.floor(this.canvasBg.width / tilesSize.width));
         this.timerStart();
+
+        this.mario.eventBus.on(EntityEvents.coin, () => {
+          this.drawCoinsStatus((this.coins += 1));
+        });
       });
   }
 
@@ -114,7 +123,7 @@ export class Core {
 
       this.mario.draw(this.camera.pos.x, this.camera.pos.y);
       this.drawTimerStatus(time);
-      this.drawCoinsStatus('0 / 0');
+      this.drawCoinsStatus(this.coins);
     };
 
     this.timer.start();
@@ -175,7 +184,9 @@ export class Core {
     }
   };
 
-  drawCoinsStatus(coins) {
+  drawCoinsStatus(coins: number) {
+    console.log('call draw coin status');
+    this.coins = coins;
     this.contextMario.clearRect(this.canvasMario.width - 300, 30, 150, 30);
     this.contextMario.font = '20px Roboto';
     this.contextMario.fillStyle = '#fff';

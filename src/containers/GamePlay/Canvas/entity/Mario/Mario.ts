@@ -2,6 +2,7 @@ import { Entity } from '@containers/GamePlay/Canvas/entity';
 import { KeyboardState, KEYS } from '@containers/GamePlay/Canvas/keyboardState';
 import { SpriteResolver } from '@containers/GamePlay';
 import { Go, Jump } from '@containers/GamePlay/Canvas/traits';
+import { Matrix } from '@containers/GamePlay/Canvas/core';
 
 const INITIAL_POS = {
   column: 1,
@@ -21,9 +22,15 @@ export class Mario extends Entity {
 
   jump: Jump;
 
-  constructor(canvas, sprite, context, matrix, coinMatrix) {
-    // TODO: пробрасываем матрицу с монетами в Entity
-    super(matrix, coinMatrix);
+  constructor(
+    canvas: HTMLCanvasElement,
+    sprite: SpriteResolver,
+    context: CanvasRenderingContext2D,
+    matrix: Matrix,
+    coinMatrix: Matrix,
+    contextBg: CanvasRenderingContext2D,
+  ) {
+    super(matrix, coinMatrix, sprite, contextBg);
     this.canvas = canvas;
     this.sprite = sprite;
     this.context = context;

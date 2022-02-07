@@ -66,15 +66,12 @@ export class TileConverter {
     this.toIndexRange(x1, x2).forEach((indexX) => {
       this.toIndexRange(y1, y2).forEach((indexY) => {
         const matchBg = this.getByIndex(this.matrix, indexX, indexY);
-        // TODO: здесь, кроме совпадения по матрице с бэкграундом, ищем совпадения по матрице с монетами
         const matchCoin = this.getByIndex(this.coinMatrix, indexX, indexY);
 
         if (matchBg) {
           matches.push(matchBg);
         }
-        // TODO: добавляем эти совпадения в общий массив с препятствиями.
-        // eslint-disable-next-line max-len
-        //  Как вариант, можно создать для монет отдельный массив, чтобы противники в будущем могли спокойно проходить через монеты.
+
         if (matchCoin) {
           matches.push(matchCoin);
         }

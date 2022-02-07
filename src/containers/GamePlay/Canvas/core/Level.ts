@@ -7,6 +7,7 @@ const obj = {
   '2.9': 'ground',
   '3.9': 'chance',
   '4.9': 'coin',
+  '8.12': 'coin',
 };
 
 export class Level {
@@ -45,6 +46,8 @@ export class Level {
         }
       }
     }
+
+    // console.log(this.coinMatrix);
   }
 
   getGrid() {
