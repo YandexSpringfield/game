@@ -33,7 +33,9 @@ export const ChangeAvatar: FC<TProps> = ({ src }) => {
           className={styles.inputfile}
           onChange={onChange}
         />
-        <label className={styles.iconDownload} htmlFor="fileInput"> </label>
+        <label className={styles.iconDownload} htmlFor="fileInput">
+          {' '}
+        </label>
         <span className={styles.description}>{labelVal}</span>
       </div>
     </Form>

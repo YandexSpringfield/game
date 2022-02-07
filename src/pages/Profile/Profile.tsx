@@ -1,10 +1,9 @@
 import React, { FC, MouseEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
 import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
-import { authAPI, editProfileAPI } from '@api';
 import { resourcesUrl, routes } from '@appConstants';
-import { useInput } from '@hooks/useInput';
+import { useInput, useAuth } from '@hooks';
+import { editProfileAPI } from '@api';
 import defaultAvatar from '@/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
@@ -24,9 +23,7 @@ const initialFields = {
 
 export const Profile: FC<any> = () => {
   const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
-
-  const navigate = useNavigate();
-
+  const { logout } = useAuth();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -59,13 +56,6 @@ export const Profile: FC<any> = () => {
         newPassword: '',
         newPasswordConfirm: '',
       });
-    });
-  };
-
-  const onLogout = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    authAPI.logout().then(() => {
-      navigate(routes.login);
     });
   };
 
@@ -165,9 +155,12 @@ export const Profile: FC<any> = () => {
           />
           <Button
             title="Выход"
-            type="submit"
+            type="button"
             view={ViewButton.exit}
-            onClick={onLogout}
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              logout(routes.login)
+            }}
           />
         </div>
       </Form>

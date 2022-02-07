@@ -20,6 +20,10 @@ export const checkPassword = (
   return '';
 };
 
+export const isEmpty = (obj): boolean => {
+  return Object.values(obj).every((value) => value === '')
+}
+
 export const omit = (obj: {}, omitKey: string): {} => {
   const result = { ...obj };
   delete result[omitKey];

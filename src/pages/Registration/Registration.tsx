@@ -1,11 +1,9 @@
-import React, { FC, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { omit } from '@utils/utils';
-import { authAPI, TSignUp } from '@api';
-import { useAppDispatch, fetchUserProfile } from '@store';
-import { registrationError, routes } from '@appConstants';
-import { useInput } from '@hooks/useInput';
+import { isEmpty, omit } from '@utils/utils';
+import { routes } from '@appConstants';
+import { useInput, useAuth } from '@hooks';
 
 import styles from './Registration.module.scss';
 
@@ -20,27 +18,9 @@ const initialFields = {
 };
 
 export const Registration: FC<any> = () => {
-  const [errorAuth, setErrorAuth] = useState('');
   const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
-
+  const { error, signUp } = useAuth();
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const data = omit(fields, 'password_confirm') as TSignUp;
-    authAPI
-      .signUp(data)
-      .then(() => {
-        setErrorAuth('');
-        dispatch(fetchUserProfile());
-      })
-      .then(() => {
-        navigate(routes.game.root);
-      })
-      .catch(() => setErrorAuth(registrationError));
-  };
 
   const toLogin = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -113,12 +93,17 @@ export const Registration: FC<any> = () => {
             error={fieldsError.password_confirm}
             {...rest}
           />
-          {errorAuth && <Error title={errorAuth} />}
+          {error && <Error title={error} />}
           <Button
             title="Зарегистрироваться"
             type="submit"
             view={ViewButton.main}
-            onClick={onClick}
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              if (isEmpty(fieldsError)) {
+                signUp(omit(fields, 'password_confirm'), routes.game.root)
+              }
+            }}
           />
           <Button
             title="Войти"

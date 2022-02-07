@@ -1,10 +1,8 @@
-import React, { FC, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { authAPI } from '@api';
-import { useAppDispatch, fetchUserProfile } from '@store';
-import { authError, routes } from '@appConstants';
-import { useInput } from '@hooks/useInput';
+import { routes } from '@appConstants';
+import { useAuth, useInput } from '@hooks';
 
 import styles from './Login.module.scss';
 
@@ -14,26 +12,9 @@ const initialFields = {
 };
 
 export const Login: FC<any> = () => {
-  const [errorAuth, setErrorAuth] = useState('');
   const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
-
+  const { error, signIn } = useAuth();
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    authAPI
-      .signIn(fields)
-      .then(() => {
-        setErrorAuth('');
-        dispatch(fetchUserProfile());
-      })
-      .then(() => {
-        navigate(routes.game.root);
-      })
-      .catch(() => setErrorAuth(authError));
-  };
 
   const toRegistration = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -64,12 +45,15 @@ export const Login: FC<any> = () => {
             error={fieldsError.password}
             {...rest}
           />
-          {errorAuth && <Error title={errorAuth} />}
+          {error && <Error title={error} />}
           <Button
             title="Войти"
             type="submit"
             view={ViewButton.main}
-            onClick={onClick}
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              signIn(fields, routes.game.root)
+            }}
           />
           <Button
             title="Нет аккаунта?"
