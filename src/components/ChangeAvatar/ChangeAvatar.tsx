@@ -9,6 +9,7 @@ const errorLabel = 'Не удалось загрузить';
 
 export const ChangeAvatar: FC<TProps> = ({ src }) => {
   const [labelVal, setLabelVal] = useState('Имя файла');
+
   const onChange = (e) => {
     const fileName = e.target.value.split('\\').pop();
     setLabelVal(fileName);
@@ -32,7 +33,7 @@ export const ChangeAvatar: FC<TProps> = ({ src }) => {
           className={styles.inputfile}
           onChange={onChange}
         />
-        <label className={styles.iconDownload} htmlFor="fileInput"></label>
+        <label className={styles.iconDownload} htmlFor="fileInput"> </label>
         <span className={styles.description}>{labelVal}</span>
       </div>
     </Form>

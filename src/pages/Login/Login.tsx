@@ -1,10 +1,10 @@
-import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { checkInput } from '@utils/utils';
 import { authAPI } from '@api';
 import { useAppDispatch, fetchUserProfile } from '@store';
 import { authError, routes } from '@appConstants';
+import { useInput } from '@hooks/useInput';
 
 import styles from './Login.module.scss';
 
@@ -14,24 +14,12 @@ const initialFields = {
 };
 
 export const Login: FC<any> = () => {
-  const [fields, setFields] = useState(initialFields);
-  const [fieldsError, setFieldsError] = useState(initialFields);
   const [errorAuth, setErrorAuth] = useState('');
+  const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
 
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-
-  const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
-  };
-
-  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const newState = checkInput(name, value);
-    setFieldsError({ ...fieldsError, [name]: newState });
-  };
 
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -66,8 +54,7 @@ export const Login: FC<any> = () => {
             label="Логин"
             value={fields.login}
             error={fieldsError.login}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="password"
@@ -75,8 +62,7 @@ export const Login: FC<any> = () => {
             label="Пароль"
             value={fields.password}
             error={fieldsError.password}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           {errorAuth && <Error title={errorAuth} />}
           <Button
