@@ -21,8 +21,9 @@ export class Mario extends Entity {
 
   jump: Jump;
 
-  constructor(canvas, sprite, context, matrix) {
-    super(matrix);
+  constructor(canvas, sprite, context, matrix, coinMatrix) {
+    // TODO: пробрасываем матрицу с монетами в Entity
+    super(matrix, coinMatrix);
     this.canvas = canvas;
     this.sprite = sprite;
     this.context = context;

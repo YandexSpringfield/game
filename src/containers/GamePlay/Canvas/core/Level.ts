@@ -22,15 +22,23 @@ const MAX_BRICKS_Y = 2;
 export class Level {
   matrix: Matrix;
 
+  coinMatrix: Matrix;
+
   constructor() {
     this.matrix = new Matrix();
+    this.coinMatrix = new Matrix();
 
     this.setBackground();
     this.setPatterns();
+    this.setCoins();
   }
 
   getGrid() {
     return this.matrix.grid;
+  }
+
+  getGridCoin() {
+    return this.coinMatrix.grid;
   }
 
   setBackground() {
@@ -50,6 +58,7 @@ export class Level {
 
     for (let i = 0; i < ITERATIONS; i += 1) {
       if ((step / 10) % 2 === 0) {
+        // Отрисовка обрывов
         this.setBricks(step);
       } else {
         this.setGaps(step);
@@ -59,6 +68,7 @@ export class Level {
     }
   }
 
+  // Отрисовка обрывов
   setGaps(step) {
     const value = { name: 'sky' };
     const range: number[] = [];
@@ -81,6 +91,18 @@ export class Level {
     }
   }
 
+  setCoins(x, len) {
+    // this.coinMatrix.set(6, 10, { name: 'coin', type: 'coin' });
+    // this.coinMatrix.set(7, 10, { name: 'coin', type: 'coin' });
+    // this.coinMatrix.set(8, 10, { name: 'coin', type: 'coin' });
+    // for (let i = 0; i <= COLS; i += 1) {
+    //   for (let j = 0; j <= ROWS; j += 1) {
+    //     console.log('foo', i, j);
+    //   }
+    // }
+  }
+
+  // отрисовка ступеней
   setChocolate(x, len) {
     const value = { name: 'chocolate', type: 'ground' };
     const y = 12;
@@ -100,7 +122,6 @@ export class Level {
     let x;
     let y;
     let xLen;
-
     const name = random() ? 'ground' : 'bricks';
     const value = { name, type: 'ground' };
 
@@ -117,6 +138,7 @@ export class Level {
     const double = random();
 
     while (xLen >= 0) {
+      console.log('while');
       if (double) {
         this.matrix.set(x + xLen, y, value);
         this.matrix.set(x + xLen, y - 4, value);

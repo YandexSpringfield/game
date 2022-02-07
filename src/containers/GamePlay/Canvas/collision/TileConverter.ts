@@ -12,10 +12,13 @@ export interface ITile {
 export class TileConverter {
   matrix: Matrix;
 
+  coinMatrix: Matrix;
+
   tileSize: number;
 
-  constructor(matrix) {
+  constructor(matrix: Matrix, coinMatrix: Matrix) {
     this.matrix = matrix;
+    this.coinMatrix = coinMatrix;
     this.tileSize = tilesSize.width;
   }
 
@@ -23,8 +26,9 @@ export class TileConverter {
     return Math.floor(pos / this.tileSize);
   }
 
-  getByIndex(indexX, indexY): ITile | undefined {
-    const tile = this.matrix.get(indexX, indexY);
+  getByIndex(matrix, indexX, indexY): ITile | undefined {
+    // TODO: добавляем в качестве параметров еще и матрицу, на которой будем искать препятствия.
+    const tile = matrix.get(indexX, indexY);
 
     if (tile) {
       const x1 = indexX * this.tileSize;
@@ -61,10 +65,17 @@ export class TileConverter {
 
     this.toIndexRange(x1, x2).forEach((indexX) => {
       this.toIndexRange(y1, y2).forEach((indexY) => {
-        const match = this.getByIndex(indexX, indexY);
+        const matchBg = this.getByIndex(this.matrix, indexX, indexY);
+        // TODO: здесь, кроме совпадения по матрице с бэкграундом, ищем совпадения по матрице с монетами
+        const matchCoin = this.getByIndex(this.coinMatrix, indexX, indexY);
 
-        if (match) {
-          matches.push(match);
+        if (matchBg) {
+          matches.push(matchBg);
+        }
+        // TODO: добавляем эти совпадения в общий массив с препятствиями.
+        //  Как вариант, можно создать для монет отдельный массив, чтобы противники в будущем могли спокойно проходить через монеты.
+        if (matchCoin) {
+          matches.push(matchCoin);
         }
       });
     });

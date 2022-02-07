@@ -61,6 +61,7 @@ export class Core {
           this.sprite,
           this.contextMario,
           this.level.matrix,
+          this.level.coinMatrix,
         );
       })
       .then(() => {
@@ -137,6 +138,15 @@ export class Core {
   drawTiles(start, end) {
     for (let x = start; x <= end; x += 1) {
       const col = this.level.getGrid()[x];
+      if (col) {
+        col.forEach((tile, y) => {
+          this.sprite.drawTile(tile.name, this.contextBg, x - start, y);
+        });
+      }
+    }
+
+    for (let x = start; x <= end; x += 1) {
+      const col = this.level.getGridCoin()[x];
       if (col) {
         col.forEach((tile, y) => {
           this.sprite.drawTile(tile.name, this.contextBg, x - start, y);

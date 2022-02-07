@@ -17,7 +17,7 @@ export class Entity {
 
   traits: any[];
 
-  constructor(matrix) {
+  constructor(matrix, coinMatrix) {
     this.pos = new Vectors(0, 0);
     this.vel = new Vectors(0, 0);
     this.width = tilesSize.width;
@@ -25,7 +25,7 @@ export class Entity {
 
     this.gravity = 1000;
 
-    this.tileCollider = new TileCollider(matrix);
+    this.tileCollider = new TileCollider(matrix, coinMatrix);
 
     this.traits = [];
   }

@@ -20,6 +20,7 @@ export const overworldSprite: IOverworld = {
     { name: 'bricks', range: [3, 0] },
     { name: 'chocolate', range: [4, 0] },
     { name: 'chance', range: [5, 0] },
+    { name: 'coin', range: [6, 0] },
   ],
   entities: [{ name: 'mario', range: [2, 0] }],
 };
