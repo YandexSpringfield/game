@@ -6,6 +6,7 @@ import { authAPI } from '@api';
 
 export const withAuth = (pathname: string) => {
   return (WrappedComponent) =>
+    // eslint-disable-next-line func-names
     function () {
       const [authed, setAuthed] = useState(false);
       const [loading, setLoading] = useState(true);

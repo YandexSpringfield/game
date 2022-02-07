@@ -21,7 +21,7 @@ export class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.type !== 'ground') {
+      if (!['ground', 'chance'].includes(match.tile.name)) {
         return;
       }
 
@@ -58,7 +58,7 @@ export class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.type !== 'ground') {
+      if (!['ground', 'chance'].includes(match.tile.name)) {
         return;
       }
 

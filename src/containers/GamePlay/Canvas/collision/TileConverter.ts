@@ -73,6 +73,7 @@ export class TileConverter {
           matches.push(matchBg);
         }
         // TODO: добавляем эти совпадения в общий массив с препятствиями.
+        // eslint-disable-next-line max-len
         //  Как вариант, можно создать для монет отдельный массив, чтобы противники в будущем могли спокойно проходить через монеты.
         if (matchCoin) {
           matches.push(matchCoin);
