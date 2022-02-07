@@ -1,6 +1,6 @@
 import React, { FC, MouseEvent, useEffect } from 'react';
 import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
-import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
+import { useUserSelector } from '@store';
 import { resourcesUrl, routes } from '@appConstants';
 import { useInput, useAuth } from '@hooks';
 import { editProfileAPI } from '@api';
@@ -24,12 +24,6 @@ const initialFields = {
 export const Profile: FC<any> = () => {
   const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
   const { logout } = useAuth();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, []);
-
   const user = useUserSelector();
 
   useEffect(() => {
@@ -159,7 +153,7 @@ export const Profile: FC<any> = () => {
             view={ViewButton.exit}
             onClick={(e: MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
-              logout(routes.login)
+              logout(routes.login);
             }}
           />
         </div>

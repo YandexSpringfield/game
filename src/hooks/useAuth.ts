@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fetchUserProfile, useAppDispatch } from '@store';
 import { authAPI } from '@api';
-import { authError, registrationError, routes } from '@appConstants';
+import { authError, registrationError } from '@appConstants';
 import { useNavigate } from 'react-router-dom';
 
 export const useAuth = () => {
@@ -20,7 +20,7 @@ export const useAuth = () => {
         navigate(link);
       })
       .catch(() => setError(authError));
-  }
+  };
 
   const signUp = (data, link) => {
     authAPI
@@ -33,18 +33,18 @@ export const useAuth = () => {
         navigate(link);
       })
       .catch(() => setError(registrationError));
-  }
+  };
 
   const logout = (link) => {
     authAPI.logout().then(() => {
       navigate(link);
     });
-  }
+  };
 
   return {
     error,
     signIn,
     signUp,
-    logout
-  }
-}
+    logout,
+  };
+};

@@ -21,8 +21,8 @@ export const checkPassword = (
 };
 
 export const isEmpty = (obj): boolean => {
-  return Object.values(obj).every((value) => value === '')
-}
+  return Object.values(obj).every((value) => value === '');
+};
 
 export const omit = (obj: {}, omitKey: string): {} => {
   const result = { ...obj };
