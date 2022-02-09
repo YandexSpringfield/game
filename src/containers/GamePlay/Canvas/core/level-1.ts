@@ -133,13 +133,6 @@ export const level1: Record<string, string> = {
   '90.8': 'bricks',
   '91.8': 'bricks',
 
-  // '44.12': 'chocolate',
-  // '45.11': 'chocolate',
-  // '45.12': 'chocolate',
-  // '46.10': 'chocolate',
-  // '46.11': 'chocolate',
-  // '46.12': 'chocolate',
-
   '115.9': 'ground',
   '116.9': 'ground',
   '117.9': 'ground',

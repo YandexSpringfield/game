@@ -27,7 +27,6 @@ export class TileConverter {
   }
 
   getByIndex(matrix, indexX, indexY): ITile | undefined {
-    // TODO: добавляем в качестве параметров еще и матрицу, на которой будем искать препятствия.
     const tile = matrix.get(indexX, indexY);
 
     if (tile) {

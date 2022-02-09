@@ -64,7 +64,6 @@ export class SpriteResolver {
   }
 
   draw(name: string, context: CanvasRenderingContext2D, x: number, y: number) {
-    // console.log('draw');
     const buffer = this.tiles.get(name);
     if (buffer) {
       context.drawImage(buffer, x, y);
