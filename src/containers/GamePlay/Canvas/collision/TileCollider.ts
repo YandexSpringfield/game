@@ -1,41 +1,24 @@
 import { Entity } from '@containers/GamePlay/Canvas/entity';
-import { SpriteResolver } from '@containers/GamePlay';
-import { Matrix } from '@containers/GamePlay/Canvas/core';
 import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
 import { TileConverter, ITile } from './TileConverter';
 
 export class TileCollider extends TileConverter {
-  public spriteResolver: SpriteResolver;
-
-  public context: CanvasRenderingContext2D;
-
-  constructor(
-    matrix: Matrix,
-    coinMatrix: Matrix,
-    spriteResolver: SpriteResolver,
-    context: CanvasRenderingContext2D,
-  ) {
-    super(matrix, coinMatrix);
-
-    this.spriteResolver = spriteResolver;
-    this.context = context;
-  }
-
-  private _matchCoin(match: ITile, entity: Entity) {
+  /**
+   * Method for matching a coin and notifying entity about it
+   */
+  private _notifyCoin(match: ITile, entity: Entity) {
     const indexX = this.toIndex(match.x1);
     const indexY = this.toIndex(match.y1);
-    const bg = this.matrix.get(indexX, indexY);
+    entity.eventBus.emit(EntityEvents.selectCoin, indexX, indexY);
+  }
 
-    if (bg) {
-      this.coinMatrix.delete(indexX, indexY);
-      entity.spriteResolver.draw(
-        bg.name,
-        this.context,
-        this.spriteResolver.width * indexX,
-        this.spriteResolver.width * indexY,
-      );
-      entity.eventBus.emit(EntityEvents.coin);
-    }
+  /**
+   * Method for matching a break and notifying entity about it
+   */
+  private _notifyBreak(match: ITile, entity: Entity) {
+    const indexX = this.toIndex(match.x1);
+    const indexY = this.toIndex(match.y1);
+    entity.eventBus.emit(EntityEvents.break, indexX, indexY);
   }
 
   checkX(entity: Entity) {
@@ -58,10 +41,13 @@ export class TileCollider extends TileConverter {
 
     matches.forEach((match: ITile) => {
       if (match.tile.name === 'coin') {
-        this._matchCoin(match, entity);
+        this._notifyCoin(match, entity);
       }
 
-      if (!['ground', 'chance'].includes(match.tile.name)) {
+      if (
+        !['ground', 'chance', 'bricks', 'chocolate'].includes(match.tile.name)
+      ) {
+        this._notifyBreak(match, entity);
         return;
       }
 
@@ -99,10 +85,13 @@ export class TileCollider extends TileConverter {
 
     matches.forEach((match: ITile) => {
       if (match.tile.name === 'coin') {
-        this._matchCoin(match, entity);
+        this._notifyCoin(match, entity);
       }
 
-      if (!['ground', 'chance'].includes(match.tile.name)) {
+      if (
+        !['ground', 'chance', 'bricks', 'chocolate'].includes(match.tile.name)
+      ) {
+        this._notifyBreak(match, entity);
         return;
       }
 

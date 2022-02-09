@@ -66,16 +66,16 @@ export class Core {
           this.contextMario,
           this.level.matrix,
           this.level.coinMatrix,
-          this.contextBg,
         );
       })
       .then(() => {
-        this.drawTiles(0, Math.floor(this.canvasBg.width / tilesSize.width));
-        this.timerStart();
-
-        this.mario.eventBus.on(EntityEvents.coin, () => {
+        this.mario.eventBus.on(EntityEvents.selectCoin, (indexX, indexY) => {
+          this.level.coinMatrix.delete(indexX, indexY);
+          this.updateBackground();
           this.drawCoinsStatus((this.coins += 1));
         });
+        this.drawTiles(0, Math.floor(this.canvasBg.width / tilesSize.width));
+        this.timerStart();
       });
   }
 
@@ -147,17 +147,16 @@ export class Core {
   drawTiles(start, end) {
     for (let x = start; x <= end; x += 1) {
       const col = this.level.getGrid()[x];
+      const coinCol = this.level.getGridCoin()[x];
+
       if (col) {
         col.forEach((tile, y) => {
           this.sprite.drawTile(tile.name, this.contextBg, x - start, y);
         });
       }
-    }
 
-    for (let x = start; x <= end; x += 1) {
-      const col = this.level.getGridCoin()[x];
-      if (col) {
-        col.forEach((tile, y) => {
+      if (coinCol) {
+        coinCol.forEach((tile, y) => {
           this.sprite.drawTile(tile.name, this.contextBg, x - start, y);
         });
       }
@@ -169,6 +168,8 @@ export class Core {
 
     this.timer.stop();
     this.drawStartText(GAME[status]);
+    this.drawCoinsStatus(0);
+    this.level.initMatrix();
 
     window.addEventListener('keypress', this.restartHandler);
   }
@@ -185,7 +186,6 @@ export class Core {
   };
 
   drawCoinsStatus(coins: number) {
-    console.log('call draw coin status');
     this.coins = coins;
     this.contextMario.clearRect(this.canvasMario.width - 300, 30, 150, 30);
     this.contextMario.font = '20px Roboto';

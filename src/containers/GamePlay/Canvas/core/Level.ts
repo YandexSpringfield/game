@@ -1,14 +1,8 @@
+import { level1 } from '@containers/GamePlay/Canvas/core/level-1';
 import { Matrix } from '.';
 
 const ROWS = 14;
 const COLS = 150;
-
-const obj = {
-  '2.9': 'ground',
-  '3.9': 'chance',
-  '4.9': 'coin',
-  '8.12': 'coin',
-};
 
 export class Level {
   matrix: Matrix;
@@ -18,14 +12,29 @@ export class Level {
   constructor() {
     this.matrix = new Matrix();
     this.coinMatrix = new Matrix();
+    this.initMatrix();
+  }
 
+  public initMatrix() {
     for (let i = 0; i <= COLS; i += 1) {
       for (let j = 0; j <= ROWS; j += 1) {
-        const element = obj[`${i}.${j}`];
+        const element = level1[`${i}.${j}`];
 
         switch (element) {
           case 'ground':
             this.matrix.set(i, j, { name: 'ground' });
+            break;
+
+          case 'sky':
+            this.matrix.set(i, j, { name: 'sky' });
+            break;
+
+          case 'bricks':
+            this.matrix.set(i, j, { name: 'bricks' });
+            break;
+
+          case 'chocolate':
+            this.matrix.set(i, j, { name: 'chocolate' });
             break;
 
           case 'chance':
@@ -46,8 +55,6 @@ export class Level {
         }
       }
     }
-
-    // console.log(this.coinMatrix);
   }
 
   getGrid() {

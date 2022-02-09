@@ -5,7 +5,8 @@ import { SpriteResolver, tilesSize } from '../sprite-resolver';
 import { Vectors } from './Vectors';
 
 export enum EntityEvents {
-  coin = 'coin',
+  selectCoin = 'selectCoin',
+  break = 'break',
 }
 
 export class Entity {
@@ -31,7 +32,6 @@ export class Entity {
     matrix: Matrix,
     coinMatrix: Matrix,
     spriteResolver: SpriteResolver,
-    context: CanvasRenderingContext2D,
   ) {
     this.pos = new Vectors(0, 0);
     this.vel = new Vectors(0, 0);
@@ -40,12 +40,7 @@ export class Entity {
 
     this.gravity = 1000;
 
-    this.tileCollider = new TileCollider(
-      matrix,
-      coinMatrix,
-      spriteResolver,
-      context,
-    );
+    this.tileCollider = new TileCollider(matrix, coinMatrix);
 
     this.traits = [];
     this.spriteResolver = spriteResolver;

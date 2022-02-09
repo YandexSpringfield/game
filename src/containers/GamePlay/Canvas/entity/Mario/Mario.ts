@@ -28,9 +28,8 @@ export class Mario extends Entity {
     context: CanvasRenderingContext2D,
     matrix: Matrix,
     coinMatrix: Matrix,
-    contextBg: CanvasRenderingContext2D,
   ) {
-    super(matrix, coinMatrix, sprite, contextBg);
+    super(matrix, coinMatrix, sprite);
     this.canvas = canvas;
     this.sprite = sprite;
     this.context = context;
