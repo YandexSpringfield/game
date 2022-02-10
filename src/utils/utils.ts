@@ -72,3 +72,19 @@ export const getFullscreenElement = (document: DocumentWithFullscreen) => {
     document.msFullscreenElement
   );
 };
+
+export const parseNumbers = (str: string) => {
+  const re = /([a-z]+)=([^&]+)/g;
+  const founded = str.matchAll(re);
+
+  return Array.from(founded).reduce(
+    (obj: { [key: string]: string }, cur: RegExpMatchArray) => {
+      const name = cur[1];
+      const value = cur[2];
+      /* eslint-disable no-param-reassign */
+      obj[name] = value;
+      return obj;
+    },
+    {},
+  );
+};

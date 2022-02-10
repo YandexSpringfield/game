@@ -110,6 +110,7 @@ module.exports = (env, options) => {
     },
     devServer: {
       historyApiFallback: true,
+      port: 5000,
     },
     plugins,
   };

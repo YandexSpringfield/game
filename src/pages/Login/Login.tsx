@@ -1,6 +1,14 @@
 import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
+import {
+  Button,
+  ViewButton,
+  Form,
+  Input,
+  Logo,
+  Error,
+  YaButton,
+} from '@components';
 import { routes } from '@appConstants';
 import { useAuth, useInput } from '@hooks';
 
@@ -13,7 +21,7 @@ const initialFields = {
 
 export const Login: FC<any> = () => {
   const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
-  const { error, signIn } = useAuth();
+  const { error, signIn, yaGetId } = useAuth();
   const navigate = useNavigate();
 
   const toRegistration = (e: MouseEvent<HTMLButtonElement>) => {
@@ -46,15 +54,23 @@ export const Login: FC<any> = () => {
             {...rest}
           />
           {error && <Error title={error} />}
-          <Button
-            title="Войти"
-            type="submit"
-            view={ViewButton.main}
-            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              signIn(fields, routes.game.root);
-            }}
-          />
+          <div className={styles.row}>
+            <Button
+              title="Войти"
+              type="submit"
+              view={ViewButton.main}
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                signIn(fields, routes.game.root);
+              }}
+            />
+            <YaButton
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                yaGetId();
+              }}
+            />
+          </div>
           <Button
             title="Нет аккаунта?"
             type="button"

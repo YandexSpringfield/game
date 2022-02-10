@@ -1,11 +1,17 @@
 export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
+export const BASE_YA_URL = 'https://oauth.yandex.ru';
+
 export const PATH_API = {
   AUTH: {
     SIGN_UP: '/auth/signup',
     SIGN_IN: '/auth/signin',
     USER: '/auth/user',
     LOGOUT: '/auth/logout',
+  },
+  AUTH_YA: {
+    ID: '/oauth/yandex/service-id',
+    SING_IN: '/oauth/yandex',
   },
   USER: {
     PROFILE: '/user/profile',
