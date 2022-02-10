@@ -1,6 +1,14 @@
 import { Entity } from '@containers/GamePlay/Canvas/entity';
 import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
+import { OverworldName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
 import { TileConverter, ITile } from './TileConverter';
+
+const breaksToEntityPrevent: OverworldName[] = [
+  OverworldName.Chance,
+  OverworldName.Ground,
+  OverworldName.Bricks,
+  OverworldName.Chocolate,
+];
 
 export class TileCollider extends TileConverter {
   /**
@@ -44,9 +52,7 @@ export class TileCollider extends TileConverter {
         this._notifyCoin(match, entity);
       }
 
-      if (
-        !['ground', 'chance', 'bricks', 'chocolate'].includes(match.tile.name)
-      ) {
+      if (!breaksToEntityPrevent.includes(match.tile.name)) {
         this._notifyBreak(match, entity);
         return;
       }
@@ -88,9 +94,7 @@ export class TileCollider extends TileConverter {
         this._notifyCoin(match, entity);
       }
 
-      if (
-        !['ground', 'chance', 'bricks', 'chocolate'].includes(match.tile.name)
-      ) {
+      if (!breaksToEntityPrevent.includes(match.tile.name)) {
         this._notifyBreak(match, entity);
         return;
       }

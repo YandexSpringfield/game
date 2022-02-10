@@ -1,8 +1,8 @@
 import { Matrix } from '../core/Matrix';
-import { tilesSize } from '../sprite-resolver/spriteConfig';
+import { OverworldName, tilesSize } from '../sprite-resolver/spriteConfig';
 
 export interface ITile {
-  tile: { name: string; type: string | undefined };
+  tile: { name: OverworldName; type: string | undefined };
   x1: number;
   x2: number;
   y1: number;
