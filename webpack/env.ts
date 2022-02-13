@@ -1,3 +1,7 @@
-const IS_DEV = process.env.NODE_ENV !== 'production';
+import path from 'path';
 
-export { IS_DEV };
+const IS_DEV = process.env.NODE_ENV !== 'production';
+const SRC_DIR = path.join(__dirname, '../src');
+const BUILD_DIR = path.join(__dirname, '../build');
+
+export { IS_DEV, SRC_DIR, BUILD_DIR };

@@ -55,6 +55,7 @@
     "husky": "7.0.4",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.4.7",
+    "null-loader": "4.0.1",
     "postcss-loader": "6.2.1",
     "postcss-preset-env": "7.0.2",
     "prettier": "2.5.1",
