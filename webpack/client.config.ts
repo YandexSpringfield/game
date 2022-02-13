@@ -1,8 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import { Configuration, Entry } from 'webpack';
+import { Configuration, Entry, EntryPlugin } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
 
 import { BUILD_DIR, SRC_DIR, IS_DEV } from './env';
@@ -10,13 +9,7 @@ import jsLoader from './loaders/js';
 import cssLoader from './loaders/css';
 import fileLoader from './loaders/file';
 
-const plugins = [
-  new HtmlWebpackPlugin({
-    template: path.join(__dirname, '../public/index.html'),
-    favicon: path.join(__dirname, '../public/favicon.ico'),
-    inject: 'body',
-  }),
-];
+const plugins: EntryPlugin[] = [];
 
 if (!IS_DEV) {
   plugins.push(
@@ -37,7 +30,7 @@ const config: Configuration = {
     // // Entry для работы HMR
     // IS_DEV && 'webpack-hot-middleware/client',
     // IS_DEV && 'css-hot-loader/hotModuleReplacement',
-    path.join(SRC_DIR, 'index.tsx'),
+    path.join(SRC_DIR, 'client'),
   ].filter(Boolean) as unknown as Entry,
   module: {
     rules: [...fileLoader.client, ...cssLoader.client, jsLoader.client],

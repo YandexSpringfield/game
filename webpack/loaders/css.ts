@@ -52,7 +52,7 @@ export default {
     },
   ],
   server: {
-    test: /\.css$/,
+    test: /\.s[ac]ss$/i,
     loader: 'null-loader',
   },
 };

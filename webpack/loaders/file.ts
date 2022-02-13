@@ -5,7 +5,7 @@ export default {
       use: ['@svgr/webpack'],
     },
     {
-      test: /\.(png|jpg)$/i,
+      test: /\.(png|jpg|ico)$/i,
       type: 'asset/resource',
     },
   ],
@@ -15,8 +15,8 @@ export default {
       use: 'null-loader',
     },
     {
-      test: /\.(png|jpg)$/i,
-      type: 'null-loader',
+      test: /\.(png|jpg|ico)$/i,
+      type: 'asset/resource',
     },
   ],
 };
