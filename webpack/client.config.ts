@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import { Configuration, Entry, EntryPlugin } from 'webpack';
+import webpack, { Configuration as WebpackConfiguration, Entry } from 'webpack';
+import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
 
@@ -9,7 +10,11 @@ import jsLoader from './loaders/js';
 import cssLoader from './loaders/css';
 import fileLoader from './loaders/file';
 
-const plugins: EntryPlugin[] = [];
+const plugins = [new webpack.HotModuleReplacementPlugin()];
+
+interface Configuration extends WebpackConfiguration {
+  devServer?: WebpackDevServerConfiguration;
+}
 
 if (!IS_DEV) {
   plugins.push(
@@ -28,7 +33,8 @@ const config: Configuration = {
   entry: [
     // IS_DEV && 'react-hot-loader/patch',
     // // Entry для работы HMR
-    // IS_DEV && 'webpack-hot-middleware/client',
+    IS_DEV &&
+      'webpack-hot-middleware/client?path=http://localhost:9001/__what&reload=true',
     // IS_DEV && 'css-hot-loader/hotModuleReplacement',
     path.join(SRC_DIR, 'client'),
   ].filter(Boolean) as unknown as Entry,
@@ -38,6 +44,7 @@ const config: Configuration = {
   output: {
     path: BUILD_DIR,
     filename: '[name].js',
+    clean: true,
     publicPath: '/',
   },
   resolve: {

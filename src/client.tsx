@@ -7,6 +7,10 @@ import { App } from './App';
 
 import 'styles/styles.module.scss';
 
+if (module && module.hot && module.hot.accept) {
+  module.hot.accept();
+}
+
 hydrate(
   <BrowserRouter>
     <Provider store={store}>
