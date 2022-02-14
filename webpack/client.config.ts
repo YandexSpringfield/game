@@ -3,13 +3,19 @@ import path from 'path';
 import webpack, { Configuration, Entry } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import { BUILD_DIR, SRC_DIR, IS_DEV } from './env';
 import jsLoader from './loaders/js';
 import cssLoader from './loaders/css';
 import fileLoader from './loaders/file';
 
-const plugins = [new webpack.HotModuleReplacementPlugin()];
+const plugins = [
+  new webpack.HotModuleReplacementPlugin(),
+  new MiniCssExtractPlugin({
+    filename: 'static/styles.css',
+  }),
+];
 
 if (!IS_DEV) {
   plugins.push(

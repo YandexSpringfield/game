@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 export default {
   client: [
     {
@@ -5,10 +8,7 @@ export default {
       exclude: /\.module.s[ac]ss$/i,
       use: [
         {
-          loader: 'style-loader',
-          options: {
-            injectType: 'singletonStyleTag',
-          },
+          loader: MiniCssExtractPlugin.loader,
         },
         'css-loader',
         {
@@ -26,10 +26,7 @@ export default {
       test: /\.module.s[ac]ss$/i,
       use: [
         {
-          loader: 'style-loader',
-          options: {
-            injectType: 'singletonStyleTag',
-          },
+          loader: MiniCssExtractPlugin.loader,
         },
         {
           loader: 'css-loader',
