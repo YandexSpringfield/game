@@ -2,6 +2,8 @@ import { Entity } from '@containers/GamePlay/Canvas/entity';
 import { KeyboardState, KEYS } from '@containers/GamePlay/Canvas/keyboardState';
 import { SpriteResolver } from '@containers/GamePlay';
 import { Go, Jump } from '@containers/GamePlay/Canvas/traits';
+import { Matrix } from '@containers/GamePlay/Canvas/core';
+import { EntityName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
 
 const INITIAL_POS = {
   column: 1,
@@ -21,8 +23,14 @@ export class Mario extends Entity {
 
   jump: Jump;
 
-  constructor(canvas, sprite, context, matrix) {
-    super(matrix);
+  constructor(
+    canvas: HTMLCanvasElement,
+    sprite: SpriteResolver,
+    context: CanvasRenderingContext2D,
+    matrix: Matrix,
+    coinMatrix: Matrix,
+  ) {
+    super(matrix, coinMatrix, sprite);
     this.canvas = canvas;
     this.sprite = sprite;
     this.context = context;
@@ -38,7 +46,7 @@ export class Mario extends Entity {
 
   draw(cameraX, cameraY) {
     this.sprite.draw(
-      'mario',
+      EntityName.Mario,
       this.context,
       this.pos.x - cameraX,
       this.pos.y - cameraY,

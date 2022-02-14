@@ -1,6 +1,13 @@
+import { Matrix } from '@containers/GamePlay/Canvas/core';
+import { EventBus } from '@containers/GamePlay/Canvas/EventBus';
 import { TileCollider } from '../collision';
-import { tilesSize } from '../sprite-resolver';
+import { SpriteResolver, tilesSize } from '../sprite-resolver';
 import { Vectors } from './Vectors';
+
+export enum EntityEvents {
+  selectCoin = 'selectCoin',
+  break = 'break',
+}
 
 export class Entity {
   pos: Vectors;
@@ -17,7 +24,15 @@ export class Entity {
 
   traits: any[];
 
-  constructor(matrix) {
+  public spriteResolver: SpriteResolver;
+
+  public eventBus: EventBus;
+
+  constructor(
+    matrix: Matrix,
+    coinMatrix: Matrix,
+    spriteResolver: SpriteResolver,
+  ) {
     this.pos = new Vectors(0, 0);
     this.vel = new Vectors(0, 0);
     this.width = tilesSize.width;
@@ -25,9 +40,11 @@ export class Entity {
 
     this.gravity = 1000;
 
-    this.tileCollider = new TileCollider(matrix);
+    this.tileCollider = new TileCollider(matrix, coinMatrix);
 
     this.traits = [];
+    this.spriteResolver = spriteResolver;
+    this.eventBus = new EventBus();
   }
 
   addTraits(...traits) {

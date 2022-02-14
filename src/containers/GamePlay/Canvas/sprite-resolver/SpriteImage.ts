@@ -1,4 +1,4 @@
-import { tilesSize } from './spriteConfig';
+import { overworldSprite, tilesSize } from './spriteConfig';
 
 export class SpriteResolver {
   public image: HTMLImageElement;
@@ -11,7 +11,7 @@ export class SpriteResolver {
 
   public tiles: Map<string, HTMLCanvasElement>;
 
-  constructor(image: HTMLImageElement, spritesConfig) {
+  constructor(image: HTMLImageElement, spritesConfig: typeof overworldSprite) {
     this.image = image;
     this.config = spritesConfig;
     this.width = tilesSize.width;

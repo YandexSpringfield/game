@@ -1,6 +1,19 @@
+export enum OverworldName {
+  Ground = 'ground',
+  Sky = 'sky',
+  Bricks = 'bricks',
+  Chocolate = 'chocolate',
+  Chance = 'chance',
+  Coin = 'coin',
+}
+
+export enum EntityName {
+  Mario = 'mario',
+}
+
 interface IOverworld {
-  tiles: { name: string; range: number[] }[];
-  entities: { name: string; range: number[] }[];
+  tiles: { name: OverworldName; range: number[] }[];
+  entities: { name: EntityName; range: number[] }[];
 }
 
 interface ITilesSize {
@@ -15,11 +28,12 @@ export const tilesSize: ITilesSize = {
 
 export const overworldSprite: IOverworld = {
   tiles: [
-    { name: 'ground', range: [0, 0] },
-    { name: 'sky', range: [1, 0] },
-    { name: 'bricks', range: [3, 0] },
-    { name: 'chocolate', range: [4, 0] },
-    { name: 'chance', range: [5, 0] },
+    { name: OverworldName.Ground, range: [0, 0] },
+    { name: OverworldName.Sky, range: [1, 0] },
+    { name: OverworldName.Bricks, range: [3, 0] },
+    { name: OverworldName.Chocolate, range: [4, 0] },
+    { name: OverworldName.Chance, range: [5, 0] },
+    { name: OverworldName.Coin, range: [6, 0] },
   ],
-  entities: [{ name: 'mario', range: [2, 0] }],
+  entities: [{ name: EntityName.Mario, range: [2, 0] }],
 };
