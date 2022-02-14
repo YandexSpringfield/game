@@ -7,8 +7,23 @@ import { App } from './App';
 
 import 'styles/styles.module.scss';
 
-if (module && module.hot && module.hot.accept) {
-  module.hot.accept();
+function startServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('SW registered: ', registration);
+        })
+        .catch((registrationError) => {
+          console.warn('SW registration failed: ', registrationError);
+        });
+    });
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  startServiceWorker();
 }
 
 hydrate(
@@ -19,3 +34,12 @@ hydrate(
   </BrowserRouter>,
   document.getElementById('root'),
 );
+
+/**
+ * For hot reloading development
+ */
+// @ts-ignore
+if (import.meta.webpackHot) {
+  // @ts-ignore
+  import.meta.webpackHot.accept();
+}

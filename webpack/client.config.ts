@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
-import webpack, { Configuration as WebpackConfiguration, Entry } from 'webpack';
-import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import webpack, { Configuration, Entry } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
 
@@ -12,14 +11,10 @@ import fileLoader from './loaders/file';
 
 const plugins = [new webpack.HotModuleReplacementPlugin()];
 
-interface Configuration extends WebpackConfiguration {
-  devServer?: WebpackDevServerConfiguration;
-}
-
 if (!IS_DEV) {
   plugins.push(
     new InjectManifest({
-      swSrc: path.join(__dirname, './src/sw.js'),
+      swSrc: path.join(__dirname, '../src/sw.js'),
       swDest: 'sw.js',
       maximumFileSizeToCacheInBytes: 40000000,
       compileSrc: !IS_DEV,
@@ -28,24 +23,24 @@ if (!IS_DEV) {
 }
 
 const config: Configuration = {
+  mode: process.env.NODE_ENV as 'production' | 'development',
+  name: 'client',
   target: 'web',
   plugins,
   entry: [
-    // IS_DEV && 'react-hot-loader/patch',
-    // // Entry для работы HMR
     IS_DEV &&
-      'webpack-hot-middleware/client?path=http://localhost:9001/__what&reload=true',
-    // IS_DEV && 'css-hot-loader/hotModuleReplacement',
-    path.join(SRC_DIR, 'client'),
+      'webpack-hot-middleware/client?path=/__what&reload=true&quiet=true',
+    path.join(SRC_DIR, 'client.tsx'),
   ].filter(Boolean) as unknown as Entry,
   module: {
     rules: [...fileLoader.client, ...cssLoader.client, jsLoader.client],
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js',
-    clean: true,
+    filename: 'js/[name].js',
+    clean: IS_DEV,
     publicPath: '/',
+    assetModuleFilename: 'static/[hash][ext][query]',
   },
   resolve: {
     extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx'],
@@ -58,7 +53,7 @@ const config: Configuration = {
       }),
     ],
   },
-  devtool: 'source-map',
+  devtool: IS_DEV ? 'source-map' : false,
 };
 
 export default config;

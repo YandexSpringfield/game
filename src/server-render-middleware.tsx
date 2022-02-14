@@ -25,7 +25,7 @@ function getHtml(reactHtml: string) {
         </head>
         <body>
             <div id="root" style="height: 100%">${reactHtml}</div>
-            <script src="/main.js"></script>
+            <script src="/js/main.js"></script>
         </body>
         </html>
     `;

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-const { app } = require('./build/server.js');
+const { app } = require('./dist/server.js');
 
 const port = process.env.PORT || 9001;
 
