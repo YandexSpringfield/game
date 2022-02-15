@@ -1,18 +1,21 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
-import { userSlice } from '@store/user';
-import { leaderboardSlice } from '@store/leaderboard';
+import { reducer } from '@store/reducer';
 
-const reducer = combineReducers({
-  user: userSlice.reducer,
-  leaderboard: leaderboardSlice.reducer,
-});
+export const isServer = !(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+);
 
 export const store = configureStore({
+  preloadedState: isServer ? undefined : window.__INITIAL_STATE__,
   reducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(thunkMiddleware),
 });
+
+// delete window.__INITIAL_STATE__;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

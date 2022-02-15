@@ -4,6 +4,7 @@ import path from 'path';
 import webpack from 'webpack';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
+import cookieParser from 'cookie-parser';
 import serverRenderMiddleware from './server-render-middleware';
 import clientConfig from '../webpack/client.config';
 import { IS_DEV } from '../webpack/env';
@@ -29,6 +30,8 @@ function getWebpackMiddlewares(
 
   return [];
 }
+
+app.use(cookieParser());
 
 app.use(express.static(path.resolve(__dirname, '../dist')));
 app.get('/*', [...getWebpackMiddlewares(clientConfig)], serverRenderMiddleware);

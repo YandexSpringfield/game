@@ -1,9 +1,16 @@
 import React from 'react';
 import { StaticRouter } from 'react-router-dom/server';
 import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { Request, Response } from 'express';
+import { RootState } from '@store';
+import { reducer } from '@store/reducer';
+import { configureStore } from '@reduxjs/toolkit';
 import favicon from '@/assets/images/favicon.ico';
 import { App } from './App';
+import {leaderboardAPI} from '@api';
+import {instanceAxios} from '@api/axios';
+import {PATH_API} from '@api/config';
 
 // <script>
 //   // Записываем состояние редакса, сформированное на стороне сервера в window
@@ -11,7 +18,7 @@ import { App } from './App';
 //   window.__INITIAL_STATE__ = ${JSON.stringify(reduxState)}
 // </script>
 
-function getHtml(reactHtml: string) {
+function getHtml(reactHtml: string, preloadedState: RootState) {
   return `
         <!DOCTYPE html>
         <html lang="en">
@@ -26,27 +33,47 @@ function getHtml(reactHtml: string) {
         </head>
         <body>
             <div id="root" style="height: 100%">${reactHtml}</div>
+            <script>
+              window.__PRELOADED_STATE__ = ${JSON.stringify(
+                preloadedState,
+              ).replace(/</g, '\\u003c')}
+            </script>
             <script src="/js/main.js"></script>
         </body>
         </html>
     `;
 }
 
-// В этой middleware мы формируем первичное состояние приложения на стороне сервера
-// Попробуйте её подебажить, чтобы лучше разобраться, как она работает
-// В этой middleware мы формируем первичное состояние приложения на стороне сервера
-// Попробуйте её подебажить, чтобы лучше разобраться, как она работает
-// eslint-disable-next-line react/function-component-definition
-export default function (req: Request, res: Response) {
-  // const context: StaticRouterContext = {};
-  // const { store } = configureStore(getInitialState(location), location);
+export default async function serverRenderMiddleware(
+  req: Request,
+  res: Response,
+) {
+  /**
+   * Пытаюсь получить куки (установил cookie-parser)
+   * Но объект пустой
+   */
+  console.log(req.cookies);
+
+  // const leaderbord = await instanceAxios({
+  //   method: 'get',
+  //   url: PATH_API.LEADERBOARD.GET_ALL_USERS,
+  //   headers: {
+  //     Cookie: `io=${req.cookies?.io}`,
+  //   },
+  //   // headers: req.headers,
+  // });
+  // console.log(leaderbord);
+
+  const store = configureStore({ reducer });
 
   const jsx = (
-    <StaticRouter location={req.url}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.url}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
 
   const reactHtml = renderToString(jsx);
-  res.status(200).send(getHtml(reactHtml));
+  res.status(200).send(getHtml(reactHtml, store.getState()));
 }
