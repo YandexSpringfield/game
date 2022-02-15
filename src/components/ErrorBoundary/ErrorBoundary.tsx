@@ -14,6 +14,7 @@ export class ErrorBoundary extends Component<TProps, TState> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // eslint-disable-next-line no-console
     console.error('Uncaught error:', error, errorInfo);
   }
 

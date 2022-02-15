@@ -1,8 +1,8 @@
 import { Matrix } from '../core/Matrix';
-import { tilesSize } from '../sprite-resolver/spriteConfig';
+import { OverworldName, tilesSize } from '../sprite-resolver/spriteConfig';
 
 export interface ITile {
-  tile: { name: string; type: string | undefined };
+  tile: { name: OverworldName; type: string | undefined };
   x1: number;
   x2: number;
   y1: number;
@@ -12,10 +12,13 @@ export interface ITile {
 export class TileConverter {
   matrix: Matrix;
 
+  coinMatrix: Matrix;
+
   tileSize: number;
 
-  constructor(matrix) {
+  constructor(matrix: Matrix, coinMatrix: Matrix) {
     this.matrix = matrix;
+    this.coinMatrix = coinMatrix;
     this.tileSize = tilesSize.width;
   }
 
@@ -23,8 +26,8 @@ export class TileConverter {
     return Math.floor(pos / this.tileSize);
   }
 
-  getByIndex(indexX, indexY): ITile | undefined {
-    const tile = this.matrix.get(indexX, indexY);
+  getByIndex(matrix, indexX, indexY): ITile | undefined {
+    const tile = matrix.get(indexX, indexY);
 
     if (tile) {
       const x1 = indexX * this.tileSize;
@@ -61,10 +64,15 @@ export class TileConverter {
 
     this.toIndexRange(x1, x2).forEach((indexX) => {
       this.toIndexRange(y1, y2).forEach((indexY) => {
-        const match = this.getByIndex(indexX, indexY);
+        const matchBg = this.getByIndex(this.matrix, indexX, indexY);
+        const matchCoin = this.getByIndex(this.coinMatrix, indexX, indexY);
 
-        if (match) {
-          matches.push(match);
+        if (matchBg) {
+          matches.push(matchBg);
+        }
+
+        if (matchCoin) {
+          matches.push(matchCoin);
         }
       });
     });

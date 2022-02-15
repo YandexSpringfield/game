@@ -1,7 +1,34 @@
 import { Entity } from '@containers/GamePlay/Canvas/entity';
+import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
+import { OverworldName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
 import { TileConverter, ITile } from './TileConverter';
 
+const breaksToEntityPrevent: OverworldName[] = [
+  OverworldName.Chance,
+  OverworldName.Ground,
+  OverworldName.Bricks,
+  OverworldName.Chocolate,
+];
+
 export class TileCollider extends TileConverter {
+  /**
+   * Method for matching a coin and notifying entity about it
+   */
+  private _notifyCoin(match: ITile, entity: Entity) {
+    const indexX = this.toIndex(match.x1);
+    const indexY = this.toIndex(match.y1);
+    entity.eventBus.emit(EntityEvents.selectCoin, indexX, indexY);
+  }
+
+  /**
+   * Method for matching a break and notifying entity about it
+   */
+  private _notifyBreak(match: ITile, entity: Entity) {
+    const indexX = this.toIndex(match.x1);
+    const indexY = this.toIndex(match.y1);
+    entity.eventBus.emit(EntityEvents.break, indexX, indexY);
+  }
+
   checkX(entity: Entity) {
     let x;
 
@@ -21,7 +48,12 @@ export class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.type !== 'ground') {
+      if (match.tile.name === 'coin') {
+        this._notifyCoin(match, entity);
+      }
+
+      if (!breaksToEntityPrevent.includes(match.tile.name)) {
+        this._notifyBreak(match, entity);
         return;
       }
 
@@ -39,7 +71,7 @@ export class TileCollider extends TileConverter {
     });
   }
 
-  checkY(entity) {
+  checkY(entity: Entity) {
     let y;
 
     if (entity.vel.y > 0) {
@@ -58,7 +90,12 @@ export class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.type !== 'ground') {
+      if (match.tile.name === 'coin') {
+        this._notifyCoin(match, entity);
+      }
+
+      if (!breaksToEntityPrevent.includes(match.tile.name)) {
+        this._notifyBreak(match, entity);
         return;
       }
 
@@ -66,7 +103,8 @@ export class TileCollider extends TileConverter {
         if (entity.pos.y + entity.height > match.y1) {
           entity.pos.set(entity.pos.x, match.y1 - entity.height);
           entity.vel.set(entity.vel.x, 0);
-          // eslint-disable-next-line
+          // @ts-ignore
+          // eslint-disable-next-line no-param-reassign
           entity.jump.cancel = false;
         }
       } else if (entity.vel.y < 0) {
