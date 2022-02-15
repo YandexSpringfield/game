@@ -35,7 +35,7 @@
       "@router/*": ["./router/*"],
 
       "@hoc-helpers": ["./hoc-helpers"],
-      "@hoc-helpers/*": ["./hoc-helpers/*"],
+      "@hoc-helpers/*": ["./hoc-helpers/*"]
     }
   }
 }

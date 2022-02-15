@@ -31,6 +31,7 @@ export const leaderboardSlice = createSlice({
     builder.addCase(fetchLeaderboard.rejected, (state) => {
       state.requestStatus = RequestStatus.ERROR;
     });
+
     builder.addCase(fetchLeaderboard.fulfilled, (state, { payload }) => {
       state.requestStatus = RequestStatus.SUCCESS;
       Object.keys(payload).forEach((key) => {
@@ -45,6 +46,7 @@ export const leaderboardSlice = createSlice({
     builder.addCase(addToLeaderboard.rejected, (state) => {
       state.requestStatus = RequestStatus.ERROR;
     });
+
     builder.addCase(addToLeaderboard.fulfilled, (state) => {
       state.requestStatus = RequestStatus.SUCCESS;
     });
