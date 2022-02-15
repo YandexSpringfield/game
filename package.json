@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "test": "jest --updateSnapshot",
     "test:dev": "jest --watch",
-    "server": "nodemon index.js dist/server.js",
+    "server": "nodemon dist/server.js",
     "start:dev": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development npm run server",
     "start:prod": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production npm run server"
   },
@@ -56,6 +56,7 @@
     "eslint-plugin-react": "7.27.1",
     "eslint-plugin-react-hooks": "4.3.0",
     "html-webpack-plugin": "5.5.0",
+    "https": "^1.0.0",
     "husky": "7.0.4",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.4.7",

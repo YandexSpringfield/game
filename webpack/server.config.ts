@@ -15,7 +15,7 @@ const config: Configuration = {
   target: 'node',
   node: { __dirname: false },
   entry: {
-    server: path.join(SRC_DIR, 'server.ts'),
+    server: path.join(SRC_DIR, 'server/server.ts'),
   },
   module: {
     rules: [...fileLoader.server, cssLoader.server, jsLoader.server],

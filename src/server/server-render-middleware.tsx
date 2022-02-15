@@ -2,15 +2,16 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom/server';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { RootState } from '@store';
 import { reducer } from '@store/reducer';
 import { configureStore } from '@reduxjs/toolkit';
+import { instanceAxios } from '@api/axios';
+import { defaultPagination } from '@appConstants';
+import { ServerRequest } from '@server/types';
+// @ts-ignore
 import favicon from '@/assets/images/favicon.ico';
-import { App } from './App';
-import {leaderboardAPI} from '@api';
-import {instanceAxios} from '@api/axios';
-import {PATH_API} from '@api/config';
+import { App } from '../App';
 
 // <script>
 //   // Записываем состояние редакса, сформированное на стороне сервера в window
@@ -44,25 +45,31 @@ function getHtml(reactHtml: string, preloadedState: RootState) {
     `;
 }
 
-export default async function serverRenderMiddleware(
-  req: Request,
+export async function serverRenderMiddleware(
+  req: ServerRequest,
   res: Response,
 ) {
   /**
    * Пытаюсь получить куки (установил cookie-parser)
    * Но объект пустой
    */
-  console.log(req.cookies);
 
-  // const leaderbord = await instanceAxios({
-  //   method: 'get',
-  //   url: PATH_API.LEADERBOARD.GET_ALL_USERS,
-  //   headers: {
-  //     Cookie: `io=${req.cookies?.io}`,
-  //   },
-  //   // headers: req.headers,
-  // });
-  // console.log(leaderbord);
+  const isUserAuth = !!(req.userId && req.userToken);
+  console.log(isUserAuth);
+
+  try {
+    const data = await instanceAxios({
+      method: 'post',
+      url: 'https://ya-praktikum.tech/api/v2/leaderboard/all',
+      headers: {
+        cookie: `authCookie=${req.cookies?.authCookie}; uuid=${req.cookies?.uuid}`,
+      },
+      data: defaultPagination,
+    });
+    console.log('Request lidearbord status', data.status);
+  } catch (err) {
+    console.log(err);
+  }
 
   const store = configureStore({ reducer });
 
