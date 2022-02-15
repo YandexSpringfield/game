@@ -22,6 +22,13 @@ export const Registration: FC<any> = () => {
   const { error, signUp } = useAuth();
   const navigate = useNavigate();
 
+  const handleRegistration = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (isEmpty(fieldsError)) {
+      signUp(omit(fields, 'password_confirm'), routes.game.root);
+    }
+  }
+
   const toLogin = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     navigate(routes.login);
@@ -98,12 +105,7 @@ export const Registration: FC<any> = () => {
             title="Зарегистрироваться"
             type="submit"
             view={ViewButton.main}
-            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault();
-              if (isEmpty(fieldsError)) {
-                signUp(omit(fields, 'password_confirm'), routes.game.root);
-              }
-            }}
+            onClick={handleRegistration}
           />
           <Button
             title="Войти"
