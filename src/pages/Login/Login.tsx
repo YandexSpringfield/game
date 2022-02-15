@@ -1,10 +1,16 @@
-import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { checkInput } from '@utils/utils';
-import { authAPI } from '@api';
-import { useAppDispatch, fetchUserProfile } from '@store';
-import { authError, routes } from '@appConstants';
+import {
+  Button,
+  ViewButton,
+  Form,
+  Input,
+  Logo,
+  Error,
+  YaButton,
+} from '@components';
+import { routes } from '@appConstants';
+import { useAuth, useInput } from '@hooks';
 
 import styles from './Login.module.scss';
 
@@ -14,38 +20,9 @@ const initialFields = {
 };
 
 export const Login: FC<any> = () => {
-  const [fields, setFields] = useState(initialFields);
-  const [fieldsError, setFieldsError] = useState(initialFields);
-  const [errorAuth, setErrorAuth] = useState('');
-
+  const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
+  const { error, signIn, yaGetId } = useAuth();
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
-  const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
-  };
-
-  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const newState = checkInput(name, value);
-    setFieldsError({ ...fieldsError, [name]: newState });
-  };
-
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    authAPI
-      .signIn(fields)
-      .then(() => {
-        setErrorAuth('');
-        dispatch(fetchUserProfile());
-      })
-      .then(() => {
-        navigate(routes.game.root);
-      })
-      .catch(() => setErrorAuth(authError));
-  };
 
   const toRegistration = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -66,8 +43,7 @@ export const Login: FC<any> = () => {
             label="Логин"
             value={fields.login}
             error={fieldsError.login}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="password"
@@ -75,16 +51,26 @@ export const Login: FC<any> = () => {
             label="Пароль"
             value={fields.password}
             error={fieldsError.password}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
-          {errorAuth && <Error title={errorAuth} />}
-          <Button
-            title="Войти"
-            type="submit"
-            view={ViewButton.main}
-            onClick={onClick}
-          />
+          {error && <Error title={error} />}
+          <div className={styles.row}>
+            <Button
+              title="Войти"
+              type="submit"
+              view={ViewButton.main}
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                signIn(fields, routes.game.root);
+              }}
+            />
+            <YaButton
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault();
+                yaGetId();
+              }}
+            />
+          </div>
           <Button
             title="Нет аккаунта?"
             type="button"

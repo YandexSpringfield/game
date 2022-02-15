@@ -3,6 +3,8 @@ import { Navigate } from 'react-router-dom';
 import { Loading } from '@components';
 import { routes, section } from '@appConstants';
 import { authAPI } from '@api';
+import { useAuth } from '@hooks';
+import { parseNumbers } from '@utils/utils';
 
 export const withAuth = (pathname: string) => {
   return (WrappedComponent) =>
@@ -10,8 +12,11 @@ export const withAuth = (pathname: string) => {
     function () {
       const [authed, setAuthed] = useState(false);
       const [loading, setLoading] = useState(true);
+      const { yaSingIn } = useAuth();
 
       useEffect(() => {
+        const { code } = parseNumbers(window.location.search);
+
         authAPI
           .getUserInfo()
           .then(() => {
@@ -22,6 +27,10 @@ export const withAuth = (pathname: string) => {
             setAuthed(false);
             setLoading(false);
           });
+
+        if (code) {
+          yaSingIn(code, routes.game.root);
+        }
       }, []);
 
       return (

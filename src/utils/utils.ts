@@ -20,6 +20,10 @@ export const checkPassword = (
   return '';
 };
 
+export const isEmpty = (obj): boolean => {
+  return Object.values(obj).every((value) => value === '');
+};
+
 export const omit = (obj: {}, omitKey: string): {} => {
   const result = { ...obj };
   delete result[omitKey];
@@ -66,5 +70,21 @@ export const getFullscreenElement = (document: DocumentWithFullscreen) => {
     document.webkitFullscreenElement ||
     document.mozFullscreenElement ||
     document.msFullscreenElement
+  );
+};
+
+export const parseNumbers = (str: string) => {
+  const re = /([a-z]+)=([^&]+)/g;
+  const founded = str.matchAll(re);
+
+  return Array.from(founded).reduce(
+    (obj: { [key: string]: string }, cur: RegExpMatchArray) => {
+      const name = cur[1];
+      const value = cur[2];
+      /* eslint-disable no-param-reassign */
+      obj[name] = value;
+      return obj;
+    },
+    {},
   );
 };

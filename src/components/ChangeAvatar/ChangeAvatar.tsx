@@ -9,6 +9,7 @@ const errorLabel = 'Не удалось загрузить';
 
 export const ChangeAvatar: FC<TProps> = ({ src }) => {
   const [labelVal, setLabelVal] = useState('Имя файла');
+
   const onChange = (e) => {
     const fileName = e.target.value.split('\\').pop();
     setLabelVal(fileName);
