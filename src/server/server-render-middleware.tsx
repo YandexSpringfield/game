@@ -6,8 +6,6 @@ import { Response } from 'express';
 import { RootState } from '@store';
 import { reducer } from '@store/reducer';
 import { configureStore } from '@reduxjs/toolkit';
-import { instanceAxios } from '@api/axios';
-import { defaultPagination } from '@appConstants';
 import { ServerRequest } from '@server/types';
 // @ts-ignore
 import favicon from '@/assets/images/favicon.ico';
@@ -49,28 +47,6 @@ export async function serverRenderMiddleware(
   req: ServerRequest,
   res: Response,
 ) {
-  /**
-   * Пытаюсь получить куки (установил cookie-parser)
-   * Но объект пустой
-   */
-
-  const isUserAuth = !!(req.userId && req.userToken);
-  console.log(isUserAuth);
-
-  try {
-    const data = await instanceAxios({
-      method: 'post',
-      url: 'https://ya-praktikum.tech/api/v2/leaderboard/all',
-      headers: {
-        cookie: `authCookie=${req.cookies?.authCookie}; uuid=${req.cookies?.uuid}`,
-      },
-      data: defaultPagination,
-    });
-    console.log('Request lidearbord status', data.status);
-  } catch (err) {
-    console.log(err);
-  }
-
   const store = configureStore({ reducer });
 
   const jsx = (
