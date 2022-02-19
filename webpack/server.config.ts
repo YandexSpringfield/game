@@ -28,7 +28,7 @@ const config: Configuration = {
     nodeEnv: false,
   },
   module: {
-    rules: [...fileLoader, ...cssLoader, jsLoader.server],
+    rules: [...fileLoader, ...cssLoader, jsLoader],
   },
   output: {
     path: BUILD_DIR,
