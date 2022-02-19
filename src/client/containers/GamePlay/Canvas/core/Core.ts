@@ -7,7 +7,7 @@ import { Camera } from '@containers/GamePlay/Canvas/core/Camera';
 import { Mario } from '@containers/GamePlay/Canvas/entity/Mario';
 import { KEYS } from '@containers/GamePlay/Canvas/keyboardState';
 import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
-import spriteImage from '@/assets/images/sprite.png';
+import spriteImage from '@assets/images/sprite.png';
 import { Timer } from './Timer';
 import { Level } from './Level';
 

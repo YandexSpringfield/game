@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
-import { TProps } from '.';
+import { TProps } from './index';
 
 import styles from './styles.module.scss';
 

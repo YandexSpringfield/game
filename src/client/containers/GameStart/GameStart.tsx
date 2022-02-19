@@ -3,8 +3,8 @@ import { Content, Card, Modal } from '@components';
 import { Button, ViewButton } from '@components/Button';
 import { useNavigate } from 'react-router-dom';
 import { routes, PUBLIC_REPO_URL } from '@appConstants';
-import { articles, Article } from '.';
-import GithubIcon from '@/assets/images/github.svg';
+import GithubIcon from '@assets/images/github.svg';
+import { articles, Article } from './index';
 
 import styles from './styles.module.scss';
 

@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { NextFunction, Response } from 'express';
 import { ServerRequest } from '@server/types';
-import { authAPI } from '@api';
 import { setAuthCookies } from '@server/helpers';
 import { initialState } from '@store/user/userSlice';
 import { RequestStatus } from '@types';
+import { authAPI } from '@api';
 
 export async function authMiddleware(
   req: ServerRequest,

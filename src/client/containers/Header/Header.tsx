@@ -4,7 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { resourcesUrl, routes } from '@appConstants';
 import { Logo, Avatar } from '@components';
 import { fetchUserProfile, useAppDispatch, useUserSelector } from '@store';
-import defaultAvatar from '@/assets/images/default-avatar.png';
+import defaultAvatar from '@assets/images/default-avatar.png';
 
 import styles from './styles.module.scss';
 

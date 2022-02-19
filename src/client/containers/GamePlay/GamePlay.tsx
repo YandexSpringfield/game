@@ -8,7 +8,7 @@ import {
 } from '@utils/utils';
 import { useIsomorphicLayoutEffect } from '@hooks';
 import { EndGameModal } from './EndGameModal';
-import { Core } from '.';
+import { Core } from './index';
 
 import styles from './styles.module.scss';
 

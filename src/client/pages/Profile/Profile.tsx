@@ -5,7 +5,7 @@ import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
 import { authAPI, editProfileAPI } from '@api';
 import { checkInput, checkPassword } from '@utils/utils';
 import { resourcesUrl, routes } from '@appConstants';
-import defaultAvatar from '@/assets/images/default-avatar.png';
+import defaultAvatar from '@assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
 

@@ -7,10 +7,10 @@ import { RootState } from '@store';
 import { reducer } from '@store/reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { ServerRequest } from '@server/types';
-import favicon from '@/assets/images/favicon.ico';
-import { App } from '../App';
+import favicon from '@assets/images/favicon.ico';
+import { App } from '@client/App';
 
-import 'styles/styles.module.scss';
+import '@/client/styles/styles.module.scss';
 
 function getHtml(reactHtml: string, preloadedState: RootState) {
   return `

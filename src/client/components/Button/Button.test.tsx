@@ -1,6 +1,6 @@
 import React from 'react';
 import * as renderer from 'react-test-renderer';
-import { Button, ViewButton } from '.';
+import { Button, ViewButton } from './index';
 
 test('Test render button', () => {
   const component = renderer.create(

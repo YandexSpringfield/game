@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 import { createPortal } from 'react-dom';
-import { Props } from '.';
+import { Props } from './index';
 
 import styles from './styles.module.scss';
 

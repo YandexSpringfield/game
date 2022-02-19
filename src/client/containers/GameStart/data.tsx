@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { ReactNode } from 'react';
-import InfoIcon from '@/assets/images/info.svg';
-import CodeIcon from '@/assets/images/code.svg';
+import InfoIcon from '@assets/images/info.svg';
+import CodeIcon from '@assets/images/code.svg';
 
 import styles from './styles.module.scss';
 

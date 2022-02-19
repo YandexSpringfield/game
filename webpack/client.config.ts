@@ -20,7 +20,7 @@ const plugins = [
 if (!IS_DEV) {
   plugins.push(
     new InjectManifest({
-      swSrc: path.join(__dirname, '../src/sw.js'),
+      swSrc: path.join(__dirname, '../src/client/sw.js'),
       swDest: 'sw.js',
       maximumFileSizeToCacheInBytes: 40000000,
       compileSrc: !IS_DEV,
@@ -36,7 +36,7 @@ const config: Configuration = {
   entry: [
     IS_DEV &&
       'webpack-hot-middleware/client?path=/__what&reload=true&quiet=true',
-    path.join(SRC_DIR, 'client.tsx'),
+    path.join(SRC_DIR, 'client'),
   ].filter(Boolean) as unknown as Entry,
   module: {
     rules: [...fileLoader.client, ...cssLoader, jsLoader.client],

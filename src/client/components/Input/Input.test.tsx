@@ -1,6 +1,6 @@
 import React from 'react';
 import * as renderer from 'react-test-renderer';
-import { Input } from '.';
+import { Input } from './index';
 
 describe('Input', () => {
   test('Input: render error node', () => {
