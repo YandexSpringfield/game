@@ -12,7 +12,7 @@ import { IS_DEV } from '../../webpack/env';
 import { authMiddleware, renderMiddleware, storeMiddleware } from '.';
 
 const app = express();
-const port = process.env.PORT || 9001;
+const port = process.env.PORT || 3000;
 
 function getWebpackMiddlewares(
   config: webpack.Configuration,
