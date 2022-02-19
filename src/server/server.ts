@@ -35,7 +35,11 @@ function getWebpackMiddlewares(
 }
 
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(
+  express.static(path.resolve(__dirname, '../dist'), {
+    maxAge: '1d',
+  }),
+);
 app.use(authMiddleware);
 app.get('/*', [...getWebpackMiddlewares(clientConfig)], serverRenderMiddleware);
 

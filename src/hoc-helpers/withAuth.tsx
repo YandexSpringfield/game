@@ -37,7 +37,7 @@ export const withAuth = (pathname: string) => {
             <WrappedComponent />
           ) : null}
           {authed && !loading && pathname === section.auth ? (
-            <Navigate to={routes.game.root} />
+            <Navigate to={routes.preview} />
           ) : null}
         </>
       );

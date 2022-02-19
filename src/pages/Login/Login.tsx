@@ -42,7 +42,7 @@ export const Login: FC<any> = () => {
         dispatch(fetchUserProfile());
       })
       .then(() => {
-        navigate(routes.game.root);
+        navigate(routes.preview);
       })
       .catch(() => setErrorAuth(authError));
   };

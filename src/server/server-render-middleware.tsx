@@ -7,15 +7,10 @@ import { RootState } from '@store';
 import { reducer } from '@store/reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { ServerRequest } from '@server/types';
-// @ts-ignore
 import favicon from '@/assets/images/favicon.ico';
 import { App } from '../App';
 
-// <script>
-//   // Записываем состояние редакса, сформированное на стороне сервера в window
-//   // На стороне клиента применим это состояние при старте
-//   window.__INITIAL_STATE__ = ${JSON.stringify(reduxState)}
-// </script>
+import 'styles/styles.module.scss';
 
 function getHtml(reactHtml: string, preloadedState: RootState) {
   return `
@@ -27,13 +22,13 @@ function getHtml(reactHtml: string, preloadedState: RootState) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <link rel="shortcut icon" type="image/png" href="${favicon}">
-            <link rel="stylesheet" href="/static/styles.css">
+            <link rel="stylesheet" href="/css/styles.css">
             <title>Springfield game</title>
         </head>
         <body>
             <div id="root" style="height: 100%">${reactHtml}</div>
             <script>
-              window.__PRELOADED_STATE__ = ${JSON.stringify(
+              window.__INITIAL_STATE__ = ${JSON.stringify(
                 preloadedState,
               ).replace(/</g, '\\u003c')}
             </script>
@@ -47,7 +42,12 @@ export async function serverRenderMiddleware(
   req: ServerRequest,
   res: Response,
 ) {
-  const store = configureStore({ reducer });
+  const store = configureStore({
+    reducer,
+    preloadedState: {
+      user: req.user,
+    },
+  });
 
   const jsx = (
     <Provider store={store}>
@@ -57,6 +57,12 @@ export async function serverRenderMiddleware(
     </Provider>
   );
 
-  const reactHtml = renderToString(jsx);
-  res.status(200).send(getHtml(reactHtml, store.getState()));
+  let reactHTML = '';
+
+  try {
+    reactHTML = renderToString(jsx);
+  } catch (err) {
+    console.log(err);
+  }
+  res.status(200).send(getHtml(reactHTML, store.getState()));
 }

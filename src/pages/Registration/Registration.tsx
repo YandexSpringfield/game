@@ -55,7 +55,7 @@ export const Registration: FC<any> = () => {
         dispatch(fetchUserProfile());
       })
       .then(() => {
-        navigate(routes.game.root);
+        navigate(routes.preview);
       })
       .catch(() => setErrorAuth(registrationError));
   };

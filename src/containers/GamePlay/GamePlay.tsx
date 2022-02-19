@@ -1,10 +1,4 @@
-import React, {
-  memo,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
+import React, { memo, useRef, useState, useEffect } from 'react';
 import { Button, Loading, ViewButton } from '@components';
 import { ElementWithFullscreen } from '@types';
 import {
@@ -12,6 +6,7 @@ import {
   deactivateFullscreen,
   getFullscreenElement,
 } from '@utils/utils';
+import { useIsomorphicLayoutEffect } from '@hooks';
 import { EndGameModal } from './EndGameModal';
 import { Core } from '.';
 
@@ -37,9 +32,9 @@ export const GamePlay = memo(() => {
         setIsFull(false);
       }
     });
-  }, [document]);
+  }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
       setLoading(false);
       if (canvasBgRef.current && canvasMarioRef.current) {

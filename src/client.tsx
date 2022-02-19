@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from '@store';
 import { App } from './App';
 
-import 'styles/styles.module.scss';
-
 function startServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -27,11 +25,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 hydrate(
-  <BrowserRouter>
-    <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root'),
 );
 

@@ -13,7 +13,7 @@ import fileLoader from './loaders/file';
 const plugins = [
   new webpack.HotModuleReplacementPlugin(),
   new MiniCssExtractPlugin({
-    filename: 'static/styles.css',
+    filename: 'css/styles.css',
   }),
 ];
 
@@ -39,7 +39,7 @@ const config: Configuration = {
     path.join(SRC_DIR, 'client.tsx'),
   ].filter(Boolean) as unknown as Entry,
   module: {
-    rules: [...fileLoader.client, ...cssLoader.client, jsLoader.client],
+    rules: [...fileLoader.client, ...cssLoader, jsLoader.client],
   },
   output: {
     path: BUILD_DIR,

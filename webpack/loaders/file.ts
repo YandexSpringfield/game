@@ -12,7 +12,7 @@ export default {
   server: [
     {
       test: /\.svg$/,
-      use: 'null-loader',
+      use: ['@svgr/webpack'],
     },
     {
       test: /\.(png|jpg|ico)$/i,

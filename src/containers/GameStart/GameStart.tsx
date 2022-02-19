@@ -21,7 +21,7 @@ export const GameStart = () => {
       <Button
         view={ViewButton.main}
         title="Начать игру"
-        onClick={() => navigate(routes.game.play)}
+        onClick={() => navigate(routes.game)}
       />
       <div className={styles.content}>
         <div className={styles.items}>

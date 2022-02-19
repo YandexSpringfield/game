@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 const navs = [
   {
     label: 'Игра',
-    to: routes.game.root,
+    to: routes.preview,
   },
   {
     label: 'Таблица лидеров',

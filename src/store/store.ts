@@ -8,6 +8,13 @@ export const isServer = !(
   window.document.createElement
 );
 
+declare global {
+  interface Window {
+    // @ts-ignore
+    __INITIAL_STATE__: ReturnType<typeof store.getState> | undefined;
+  }
+}
+
 export const store = configureStore({
   preloadedState: isServer ? undefined : window.__INITIAL_STATE__,
   reducer,
