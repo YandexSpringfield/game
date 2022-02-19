@@ -4,19 +4,26 @@ import {
   useAppDispatch,
   fetchLeaderboard,
   useLeaderboardSelector,
+  leaderboardSlice,
 } from '@store';
+import { initialState } from '@store/user/userSlice';
 import { RequestStatus } from '@types';
 
 import styles from './Leaderboard.module.scss';
 
 export const Leaderboard: FC = () => {
   const dispatch = useAppDispatch();
+  const { data, requestStatus } = useLeaderboardSelector();
 
   useEffect(() => {
-    dispatch(fetchLeaderboard());
-  }, []);
+    if (requestStatus !== RequestStatus.SUCCESS) {
+      dispatch(fetchLeaderboard());
+    }
 
-  const { data, requestStatus } = useLeaderboardSelector();
+    return () => {
+      dispatch(leaderboardSlice.actions.setState(initialState));
+    };
+  }, []);
 
   if (requestStatus === RequestStatus.REQUEST) {
     <Loading />;

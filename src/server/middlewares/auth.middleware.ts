@@ -2,7 +2,6 @@
 import { NextFunction, Response } from 'express';
 import { ServerRequest } from '@server/types';
 import { setAuthCookies } from '@server/helpers';
-import { initialState } from '@store/user/userSlice';
 import { RequestStatus } from '@types';
 import { authAPI } from '@api';
 
@@ -14,7 +13,6 @@ export async function authMiddleware(
   const { cookies } = req;
 
   if (!cookies?.authCookie && !cookies?.uuid) {
-    req.user = initialState;
     next();
   }
 
@@ -27,7 +25,7 @@ export async function authMiddleware(
       requestStatus: RequestStatus.SUCCESS,
     };
   } catch {
-    req.user = initialState;
+    req.user = null;
   }
 
   next();

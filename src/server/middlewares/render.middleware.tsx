@@ -7,6 +7,8 @@ import { RootState } from '@store';
 import { reducer } from '@store/reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { ServerRequest } from '@server/types';
+import { initialState as initialStateUser } from '@store/user/userSlice';
+import { initialState as initialStateLeaderbord } from '@store/leaderboard/leaderboardSlice';
 import favicon from '@assets/images/favicon.ico';
 import { App } from '@client/App';
 
@@ -42,7 +44,8 @@ export async function renderMiddleware(req: ServerRequest, res: Response) {
   const store = configureStore({
     reducer,
     preloadedState: {
-      user: req.user,
+      user: req.user || initialStateUser,
+      leaderboard: req.leaderboard || initialStateLeaderbord,
     },
   });
 

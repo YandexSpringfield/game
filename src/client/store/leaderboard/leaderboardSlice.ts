@@ -8,7 +8,7 @@ export type TLeaderboardState = {
   requestStatus: RequestStatus;
 };
 
-const initialState: TLeaderboardState = {
+export const initialState: TLeaderboardState = {
   data: [],
   requestStatus: RequestStatus.INIT,
 };

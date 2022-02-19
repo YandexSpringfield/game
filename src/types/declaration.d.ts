@@ -7,3 +7,4 @@ declare module '*.json';
 type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T;
 };
+type Maybe<T> = T | null | undefined;
