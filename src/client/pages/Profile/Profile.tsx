@@ -1,7 +1,7 @@
 import React, { FC, FocusEvent, MouseEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
-import { useAppDispatch, fetchUserProfile, useUserSelector } from '@store';
+import { useUserSelector } from '@store';
 import { authAPI, editProfileAPI } from '@api';
 import { checkInput, checkPassword } from '@utils/utils';
 import { resourcesUrl, routes } from '@appConstants';
@@ -27,13 +27,6 @@ export const Profile: FC<any> = () => {
   const [fieldsError, setFieldsError] = useState(initialFields);
 
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, []);
-
   const user = useUserSelector();
 
   useEffect(() => {
