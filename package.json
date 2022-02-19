@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "test": "jest --updateSnapshot",
     "test:dev": "jest --watch",
-    "server": "nodemon dist/server.js",
+    "server": "nodemon index.js",
     "start:dev": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development npm run server",
     "start:prod": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production npm run server"
   },

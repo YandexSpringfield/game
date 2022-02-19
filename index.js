@@ -1,7 +1,3 @@
-const { app } = require('./dist/server');
+const startApp = require('./dist/server').default;
 
-const port = process.env.PORT || 9001;
-
-app.listen(port, () => {
-  console.log('Application is started on localhost:', port);
-});
+startApp();
