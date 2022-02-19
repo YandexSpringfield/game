@@ -1,10 +1,9 @@
-import React, { FC, FocusEvent, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { checkInput, checkPassword, omit } from '@utils/utils';
-import { authAPI, TSignUp } from '@api';
-import { useAppDispatch, fetchUserProfile } from '@store';
-import { registrationError, routes } from '@appConstants';
+import { isEmpty, omit } from '@utils/utils';
+import { routes } from '@appConstants';
+import { useInput, useAuth } from '@hooks';
 
 import styles from './Registration.module.scss';
 
@@ -19,45 +18,15 @@ const initialFields = {
 };
 
 export const Registration: FC<any> = () => {
-  const [fields, setFields] = useState(initialFields);
-  const [fieldsError, setFieldsError] = useState(initialFields);
-  const [errorAuth, setErrorAuth] = useState('');
-
+  const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
+  const { error, signUp } = useAuth();
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
-
-  const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
-  };
-
-  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let newState;
-
-    if (name === 'password_confirm') {
-      newState = checkPassword(name, value, fields.password);
-    } else {
-      newState = checkInput(name, value);
-    }
-
-    setFieldsError({ ...fieldsError, [name]: newState });
-  };
-
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleRegistration = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const data = omit(fields, 'password_confirm') as TSignUp;
-    authAPI
-      .signUp(data)
-      .then(() => {
-        setErrorAuth('');
-        dispatch(fetchUserProfile());
-      })
-      .then(() => {
-        navigate(routes.preview);
-      })
-      .catch(() => setErrorAuth(registrationError));
+    if (isEmpty(fieldsError)) {
+      signUp(omit(fields, 'password_confirm'), routes.preview);
+    }
   };
 
   const toLogin = (e: MouseEvent<HTMLButtonElement>) => {
@@ -80,8 +49,7 @@ export const Registration: FC<any> = () => {
               label="Имя"
               value={fields.first_name}
               error={fieldsError.first_name}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
             <Input
               type="text"
@@ -89,8 +57,7 @@ export const Registration: FC<any> = () => {
               label="Фамилия"
               value={fields.second_name}
               error={fieldsError.second_name}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
           </div>
           <Input
@@ -99,8 +66,7 @@ export const Registration: FC<any> = () => {
             label="Логин"
             value={fields.login}
             error={fieldsError.login}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="email"
@@ -108,8 +74,7 @@ export const Registration: FC<any> = () => {
             label="Почта"
             value={fields.email}
             error={fieldsError.email}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="phone"
@@ -117,8 +82,7 @@ export const Registration: FC<any> = () => {
             label="Телефон"
             value={fields.phone}
             error={fieldsError.phone}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="password"
@@ -126,8 +90,7 @@ export const Registration: FC<any> = () => {
             label="Пароль"
             value={fields.password}
             error={fieldsError.password}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
           <Input
             type="password"
@@ -135,15 +98,14 @@ export const Registration: FC<any> = () => {
             label="Повторите пароль"
             value={fields.password_confirm}
             error={fieldsError.password_confirm}
-            onBlur={onBlur}
-            onChange={onChange}
+            {...rest}
           />
-          {errorAuth && <Error title={errorAuth} />}
+          {error && <Error title={error} />}
           <Button
             title="Зарегистрироваться"
             type="submit"
             view={ViewButton.main}
-            onClick={onClick}
+            onClick={handleRegistration}
           />
           <Button
             title="Войти"

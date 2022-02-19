@@ -19,6 +19,14 @@ class AuthAPI {
   logout = async (config?: AxiosRequestConfig) => {
     await instanceAxios.post(PATH_API.AUTH.LOGOUT, config);
   };
+
+  yaGetId = async (data) => {
+    return await instanceAxios.get(PATH_API.AUTH_YA.ID, data);
+  };
+
+  yaSingIn = async (data) => {
+    await instanceAxios.post(PATH_API.AUTH_YA.SING_IN, data);
+  };
 }
 
 export const authAPI = new AuthAPI();

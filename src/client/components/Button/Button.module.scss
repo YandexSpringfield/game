@@ -45,5 +45,9 @@
     font-weight: bold;
     color: #fff;
     background-color: $main-error;
+
+    &:hover {
+      background-color: $ya-color;
+    }
   }
 }

@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { routes, Layout } from '@appConstants';
 import { useUserSelector } from '@store';
+import { parseNumbers } from '@utils/utils';
+import { useAuth } from '@hooks';
 
 export const withAuth = (layout: Layout) => {
   return (WrappedComponent) =>
     function render() {
+      const { yaSingIn } = useAuth();
       const { id } = useUserSelector();
+
+      useEffect(() => {
+        const { code } = parseNumbers(window.location.search);
+        if (code) {
+          yaSingIn(code, routes.preview);
+        }
+      }, []);
 
       if (id && layout === Layout.Core) {
         return <WrappedComponent />;

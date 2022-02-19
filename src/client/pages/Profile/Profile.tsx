@@ -1,11 +1,10 @@
-import React, { FC, FocusEvent, MouseEvent, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { FC, MouseEvent, useEffect } from 'react';
 import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
 import { useUserSelector } from '@store';
-import { authAPI, editProfileAPI } from '@api';
-import { checkInput, checkPassword } from '@utils/utils';
 import { resourcesUrl, routes } from '@appConstants';
-import defaultAvatar from '@assets/images/default-avatar.png';
+import { useInput, useAuth } from '@hooks';
+import { editProfileAPI } from '@api';
+import defaultAvatar from '@/client/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
 
@@ -23,33 +22,13 @@ const initialFields = {
 };
 
 export const Profile: FC<any> = () => {
-  const [fields, setFields] = useState(initialFields);
-  const [fieldsError, setFieldsError] = useState(initialFields);
-
-  const navigate = useNavigate();
+  const { fields, fieldsError, setFields, ...rest } = useInput(initialFields);
+  const { logout } = useAuth();
   const user = useUserSelector();
 
   useEffect(() => {
     setFields({ ...initialFields, ...user });
   }, [user]);
-
-  const onChange = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFields({ ...fields, [name]: value });
-  };
-
-  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let newState;
-
-    if (name === 'newPasswordConfirm') {
-      newState = checkPassword(name, value, fields.newPassword);
-    } else {
-      newState = checkInput(name, value);
-    }
-
-    setFieldsError({ ...fieldsError, [name]: newState });
-  };
 
   const onEditProfile = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -64,20 +43,13 @@ export const Profile: FC<any> = () => {
     const { oldPassword, newPassword } = fields;
     const data = { oldPassword, newPassword };
 
-    editProfileAPI.editPassword(data).then(() =>
+    editProfileAPI.editPassword(data).then(() => {
       setFields({
         ...fields,
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
-      }),
-    );
-  };
-
-  const onLogout = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    authAPI.logout().then(() => {
-      navigate(routes.login);
+      });
     });
   };
 
@@ -96,8 +68,7 @@ export const Profile: FC<any> = () => {
               label="Имя"
               value={fields.first_name}
               error={fieldsError.first_name}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
             <Input
               type="email"
@@ -105,8 +76,7 @@ export const Profile: FC<any> = () => {
               label="Почта"
               value={fields.email}
               error={fieldsError.email}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
           </div>
           <div className={styles.column}>
@@ -116,8 +86,7 @@ export const Profile: FC<any> = () => {
               label="Фамилия"
               value={fields.second_name}
               error={fieldsError.second_name}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
             <Input
               type="text"
@@ -126,8 +95,7 @@ export const Profile: FC<any> = () => {
               value={fields.login}
               error={fieldsError.login}
               disabled
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
           </div>
         </div>
@@ -150,8 +118,7 @@ export const Profile: FC<any> = () => {
               label="Старый пароль"
               value={fields.oldPassword}
               error={fieldsError.oldPassword}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
             <Input
               type="password"
@@ -159,8 +126,7 @@ export const Profile: FC<any> = () => {
               label="Повторите новый пароль"
               value={fields.newPasswordConfirm}
               error={fieldsError.newPasswordConfirm}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
           </div>
           <div className={styles.column}>
@@ -170,8 +136,7 @@ export const Profile: FC<any> = () => {
               label="Новый пароль"
               value={fields.newPassword}
               error={fieldsError.newPassword}
-              onBlur={onBlur}
-              onChange={onChange}
+              {...rest}
             />
           </div>
         </div>
@@ -184,9 +149,12 @@ export const Profile: FC<any> = () => {
           />
           <Button
             title="Выход"
-            type="submit"
+            type="button"
             view={ViewButton.exit}
-            onClick={onLogout}
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              logout(routes.login);
+            }}
           />
         </div>
       </Form>
