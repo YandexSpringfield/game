@@ -1,45 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { Loading } from '@components';
-import { routes, section } from '@appConstants';
-import { authAPI } from '@api';
+import { routes, Layout } from '@appConstants';
+import { useUserSelector } from '@store';
 
-export const withAuth = (pathname: string) => {
+export const withAuth = (layout: Layout) => {
   return (WrappedComponent) =>
-    // eslint-disable-next-line func-names
-    function () {
-      const [authed, setAuthed] = useState(false);
-      const [loading, setLoading] = useState(true);
+    function render() {
+      const { id } = useUserSelector();
 
-      useEffect(() => {
-        authAPI
-          .getUserInfo()
-          .then(() => {
-            setAuthed(true);
-            setLoading(false);
-          })
-          .catch(() => {
-            setAuthed(false);
-            setLoading(false);
-          });
-      }, []);
+      if (id && layout === Layout.Core) {
+        return <WrappedComponent />;
+      }
 
-      return (
-        <>
-          {loading ? <Loading /> : null}
-          {authed && !loading && pathname === section.core ? (
-            <WrappedComponent />
-          ) : null}
-          {!authed && !loading && pathname === section.core ? (
-            <Navigate to={routes.login} />
-          ) : null}
-          {!authed && !loading && pathname === section.auth ? (
-            <WrappedComponent />
-          ) : null}
-          {authed && !loading && pathname === section.auth ? (
-            <Navigate to={routes.preview} />
-          ) : null}
-        </>
-      );
+      if (!id && layout === Layout.Core) {
+        return <Navigate to={routes.login} />;
+      }
+
+      if (!id && layout === Layout.Auth) {
+        return <WrappedComponent />;
+      }
+
+      if (id && layout === Layout.Auth) {
+        return <Navigate to={routes.preview} />;
+      }
+
+      return null;
     };
 };

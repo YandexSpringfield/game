@@ -8,7 +8,7 @@ export const routes = {
   profile: '/profile',
 };
 
-export const section = {
-  core: 'core',
-  auth: 'auth',
-};
+export enum Layout {
+  Core = 'core',
+  Auth = 'auth',
+}

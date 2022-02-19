@@ -9,15 +9,21 @@ import {
   Skeleton,
 } from '@containers';
 import { ErrorPage, Login, Registration } from '@pages';
-import { routes } from '@appConstants';
+import { routes, Layout } from '@appConstants';
+import { withAuth } from '@hoc-helpers';
+
+const SectionRoutes = {
+  Auth: withAuth(Layout.Auth)(() => <Outlet />),
+  Skeleton: withAuth(Layout.Core)(Skeleton),
+};
 
 export const Router: FC = () => (
   <Routes>
-    <Route element={<Outlet />}>
+    <Route element={<SectionRoutes.Auth />}>
       <Route path={routes.login} element={<Login />} />
       <Route path={routes.registration} element={<Registration />} />
     </Route>
-    <Route element={<Skeleton />}>
+    <Route element={<SectionRoutes.Skeleton />}>
       <Route path={routes.forum} element={<Forum />} />
       <Route path={routes.leaderboard} element={<Leaderboard />} />
       <Route path={routes.profile} element={<Profile />} />
