@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 import https from 'https';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
-import { authMiddleware, serverRenderMiddleware } from '.';
+import { authMiddleware, renderMiddleware } from '.';
 
 const app = express();
 const port = process.env.PORT || 9001;
@@ -41,7 +41,7 @@ app.use(
   }),
 );
 app.use(authMiddleware);
-app.get('/*', [...getWebpackMiddlewares(clientConfig)], serverRenderMiddleware);
+app.get('/*', [...getWebpackMiddlewares(clientConfig)], renderMiddleware);
 
 const startApp = () => {
   if (IS_DEV) {

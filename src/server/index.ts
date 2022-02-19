@@ -1,3 +1,3 @@
-export { authMiddleware } from './auth-middleware';
-export { serverRenderMiddleware } from './server-render-middleware';
+export { authMiddleware } from './middlewares/auth.middleware';
+export { renderMiddleware } from './middlewares/render.middleware';
 export * from './helpers';

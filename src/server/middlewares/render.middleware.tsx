@@ -10,7 +10,7 @@ import { ServerRequest } from '@server/types';
 import favicon from '@assets/images/favicon.ico';
 import { App } from '@client/App';
 
-import '@/client/styles/styles.module.scss';
+import '@client/styles/styles.module.scss';
 
 function getHtml(reactHtml: string, preloadedState: RootState) {
   return `
@@ -38,10 +38,7 @@ function getHtml(reactHtml: string, preloadedState: RootState) {
     `;
 }
 
-export async function serverRenderMiddleware(
-  req: ServerRequest,
-  res: Response,
-) {
+export async function renderMiddleware(req: ServerRequest, res: Response) {
   const store = configureStore({
     reducer,
     preloadedState: {
