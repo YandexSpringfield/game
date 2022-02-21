@@ -3,15 +3,16 @@
 ```bash
 127.0.0.1 my-app.localhost.ya-praktikum.tech
 ```
-Приложение будет доступно по адресу; https://my-app.localhost.ya-praktikum.tech:9001
+Приложение будет доступно по адресу; https://my-app.localhost.ya-praktikum.tech:3000
 
 ### Описание скриптов
-- `dev` - запуск приложения для локальной разработки;
-- `build` - сборка проекта;
-- `start` - запуск сервера node.js;
-- `lint` - запуск eslint, фикс возможных ошибок;
+- `lint` - запуск eslint;
+- `test` - тесты;
+- `test:dev` - тесты в режиме watch;
+- `server` - запуск сервера node.js;
 - `type-check` - проверка типов TypeScript;
-- `prepare` - установка husky для инициализации прекоммитов.
+- `start:dev` - запуск приложения в режиме development;
+- `start:prod` - запуск приложения в режиме production.
 
 ### Структура проекта
 - `@appConstants` - константы. Здесь можно хранить переменные, которые зафиксированы и распространяются на все приложение;
