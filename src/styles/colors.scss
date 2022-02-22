@@ -7,7 +7,7 @@
   --box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
 }
 
-body[data-theme='light'] {
+body[theme='light'] {
   --main-text: #32324D;
   --secondary-text: #A5A5BA;
   --input-text: #8E8EA9;
@@ -21,7 +21,7 @@ body[data-theme='light'] {
   --input-disabled: #DCDCE480;
 }
 
-body[data-theme='dark'] {
+body[theme='dark'] {
   --main-text: #fff;
   --secondary-text: #768c9e;
   --input-text: #768c9e;

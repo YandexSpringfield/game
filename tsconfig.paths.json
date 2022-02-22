@@ -38,7 +38,10 @@
       "@hoc-helpers/*": ["./hoc-helpers/*"],
 
       "@core": ["./core"],
-      "@core/*": ["./core/*"]
+      "@core/*": ["./core/*"],
+
+      "@context": ["./context"],
+      "@context/*": ["./context/*"]
     }
   }
 }

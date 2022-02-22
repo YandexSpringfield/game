@@ -4,15 +4,18 @@ import { ErrorBoundary } from '@components';
 import { store } from '@store';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from '@router';
+import { ThemeProvider } from '@context';
 
 export const App = () => {
   return (
-    <ErrorBoundary>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </Provider>
-    </ErrorBoundary>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </Provider>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 };
