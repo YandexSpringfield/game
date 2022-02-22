@@ -1,5 +1,3 @@
-let accumulatedTime = 0;
-
 export class Timer {
   update: (dt: number, t: number) => void;
 
@@ -11,10 +9,15 @@ export class Timer {
 
   continueAnimating: boolean;
 
+  totalTime: number;
+
+  accumulatedTime: number;
+
   constructor() {
     this.deltaTime = 0;
     this.lastTime = 0;
     this.maxInterval = 40;
+    this.accumulatedTime = 0;
 
     this.continueAnimating = true;
   }
@@ -25,11 +28,12 @@ export class Timer {
     if (this.deltaTime < this.maxInterval) {
       this.update(
         this.deltaTime / 1000,
-        Math.trunc((time - accumulatedTime) / 1000),
+        Math.trunc((time - this.accumulatedTime) / 1000),
       );
     }
 
     this.lastTime = time;
+    this.totalTime = time;
 
     this.enqueue();
   };
@@ -46,7 +50,7 @@ export class Timer {
   }
 
   stop() {
-    accumulatedTime = this.lastTime;
+    this.accumulatedTime = this.totalTime;
     this.continueAnimating = false;
     this.update = () => {};
   }

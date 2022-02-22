@@ -1,2 +1,2 @@
-export { tileCollider } from './TileCollider';
+export { TileCollider } from './TileCollider';
 export { TileConverter } from './TileConverter';

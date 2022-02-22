@@ -1,4 +1,4 @@
-import { Vectors } from '@core/entity/Vectors';
+import { Vectors } from '@containers/GamePlay/Canvas/entity/Vectors';
 
 export class Camera {
   pos: Vectors;

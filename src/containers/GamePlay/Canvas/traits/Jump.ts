@@ -1,4 +1,4 @@
-import { Trait } from './index';
+import { Trait } from '.';
 
 export class Jump extends Trait {
   duration: number;

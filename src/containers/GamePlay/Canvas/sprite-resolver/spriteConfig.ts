@@ -21,15 +21,6 @@ interface ITilesSize {
   height: number;
 }
 
-export const tilesTypes = {
-  sky: { name: 'sky' },
-  coin: { name: 'coin' },
-  ground: { name: 'ground', type: 'ground' },
-  bricks: { name: 'bricks', type: 'ground' },
-  chocolate: { name: 'chocolate', type: 'ground' },
-  chance: { name: 'chance', type: 'ground' },
-};
-
 export const tilesSize: ITilesSize = {
   width: 32,
   height: 32,

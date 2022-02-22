@@ -1,4 +1,4 @@
-class EventBus {
+export class EventBus {
   public listeners: Record<string, Function[]>;
 
   constructor() {
@@ -29,5 +29,3 @@ class EventBus {
     });
   }
 }
-
-export const eventBus = new EventBus();

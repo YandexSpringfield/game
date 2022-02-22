@@ -1,4 +1,4 @@
-import { Trait } from './index';
+import { Trait } from '.';
 
 export class Go extends Trait {
   direction: number;

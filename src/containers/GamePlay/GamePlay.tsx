@@ -12,18 +12,16 @@ import {
   deactivateFullscreen,
   getFullscreenElement,
 } from '@utils/utils';
-import { Core, MODAL } from '@core';
-import { eventBus } from '@core/EventBus';
 import { EndGameModal } from './EndGameModal';
+import { Core } from '.';
 
 import styles from './styles.module.scss';
 
+// TODO где то здесь нужно ловить событие окончании игры и показывать модалку об окончании игры
 export const GamePlay = memo(() => {
   const [isFull, setIsFull] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isEndGameModalOpen, setIsEndGameModalOpen] = useState(false);
-  const [gameStatus, setGameStatus] = useState({});
-
   const canvasBgRef = useRef<HTMLCanvasElement | null>(null);
   const canvasMarioRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -46,15 +44,12 @@ export const GamePlay = memo(() => {
       setLoading(false);
       if (canvasBgRef.current && canvasMarioRef.current) {
         core = new Core(canvasBgRef.current, canvasMarioRef.current);
-        eventBus.on(MODAL, (status, score) => {
-          setGameStatus({ status, score });
-          setIsEndGameModalOpen(true);
-        });
       }
     }, 500);
     return () => {
       if (core instanceof Core) {
-        core.level.destroy();
+        core.mario.keyboardRemove();
+        core.timer.stop();
       }
     };
   }, []);
@@ -98,7 +93,6 @@ export const GamePlay = memo(() => {
             id="mario"
           />
           <EndGameModal
-            gameStatus={gameStatus}
             isOpen={isEndGameModalOpen}
             onClose={() => setIsEndGameModalOpen(false)}
           />
