@@ -27,7 +27,7 @@ export const Registration: FC<any> = () => {
     if (isEmpty(fieldsError)) {
       signUp(omit(fields, 'password_confirm'), routes.game.root);
     }
-  }
+  };
 
   const toLogin = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

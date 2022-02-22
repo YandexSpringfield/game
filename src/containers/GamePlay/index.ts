@@ -1,2 +1,2 @@
 export { GamePlay } from './GamePlay';
-export * from './Canvas';
+export * from '../../core';

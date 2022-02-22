@@ -1,5 +1,8 @@
-import { Matrix } from '../core/Matrix';
-import { OverworldName, tilesSize } from '../sprite-resolver/spriteConfig';
+import {
+  OverworldName,
+  tilesSize,
+  tilesTypes,
+} from '../sprite-resolver/spriteConfig';
 
 export interface ITile {
   tile: { name: OverworldName; type: string | undefined };
@@ -10,15 +13,9 @@ export interface ITile {
 }
 
 export class TileConverter {
-  matrix: Matrix;
-
-  coinMatrix: Matrix;
-
   tileSize: number;
 
-  constructor(matrix: Matrix, coinMatrix: Matrix) {
-    this.matrix = matrix;
-    this.coinMatrix = coinMatrix;
+  constructor() {
     this.tileSize = tilesSize.width;
   }
 
@@ -26,10 +23,12 @@ export class TileConverter {
     return Math.floor(pos / this.tileSize);
   }
 
-  getByIndex(matrix, indexX, indexY): ITile | undefined {
-    const tile = matrix.get(indexX, indexY);
+  getByIndex(level, indexX, indexY): ITile | undefined {
+    const ground = indexY >= 13 ? 'ground' : null;
+    const element = level[`${indexX}.${indexY}`] || ground;
 
-    if (tile) {
+    if (element) {
+      const tile = tilesTypes[element];
       const x1 = indexX * this.tileSize;
       const x2 = x1 + this.tileSize;
       const y1 = indexY * this.tileSize;
@@ -59,20 +58,15 @@ export class TileConverter {
     return range;
   }
 
-  searchByRange(x1, x2, y1, y2) {
+  searchByRange(level, x1, x2, y1, y2) {
     const matches: ITile[] = [];
 
     this.toIndexRange(x1, x2).forEach((indexX) => {
       this.toIndexRange(y1, y2).forEach((indexY) => {
-        const matchBg = this.getByIndex(this.matrix, indexX, indexY);
-        const matchCoin = this.getByIndex(this.coinMatrix, indexX, indexY);
+        const matchBg = this.getByIndex(level, indexX, indexY);
 
         if (matchBg) {
           matches.push(matchBg);
-        }
-
-        if (matchCoin) {
-          matches.push(matchCoin);
         }
       });
     });

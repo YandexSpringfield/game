@@ -1,35 +1,17 @@
-import { Entity } from '@containers/GamePlay/Canvas/entity';
-import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
-import { OverworldName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
-import { TileConverter, ITile } from './TileConverter';
+import { ITile, TileConverter } from '@core/collision/TileConverter';
+import { Entity } from '@core/entity';
+import { EntityEvents } from '@core/entity/Entity';
+import { eventBus } from '@core/EventBus';
 
-const breaksToEntityPrevent: OverworldName[] = [
-  OverworldName.Chance,
-  OverworldName.Ground,
-  OverworldName.Bricks,
-  OverworldName.Chocolate,
-];
-
-export class TileCollider extends TileConverter {
-  /**
-   * Method for matching a coin and notifying entity about it
-   */
-  private _notifyCoin(match: ITile, entity: Entity) {
+class TileCollider extends TileConverter {
+  private _notifyCoin(match: ITile) {
     const indexX = this.toIndex(match.x1);
     const indexY = this.toIndex(match.y1);
-    entity.eventBus.emit(EntityEvents.selectCoin, indexX, indexY);
+
+    eventBus.emit(EntityEvents.selectCoin, indexX, indexY);
   }
 
-  /**
-   * Method for matching a break and notifying entity about it
-   */
-  private _notifyBreak(match: ITile, entity: Entity) {
-    const indexX = this.toIndex(match.x1);
-    const indexY = this.toIndex(match.y1);
-    entity.eventBus.emit(EntityEvents.break, indexX, indexY);
-  }
-
-  checkX(entity: Entity) {
+  checkX(entity: Entity, level) {
     let x;
 
     if (entity.vel.x > 0) {
@@ -41,6 +23,7 @@ export class TileCollider extends TileConverter {
     }
 
     const matches = this.searchByRange(
+      level,
       x,
       x,
       entity.pos.y,
@@ -49,11 +32,10 @@ export class TileCollider extends TileConverter {
 
     matches.forEach((match: ITile) => {
       if (match.tile.name === 'coin') {
-        this._notifyCoin(match, entity);
+        this._notifyCoin(match);
       }
 
-      if (!breaksToEntityPrevent.includes(match.tile.name)) {
-        this._notifyBreak(match, entity);
+      if (!match.tile.type) {
         return;
       }
 
@@ -71,7 +53,7 @@ export class TileCollider extends TileConverter {
     });
   }
 
-  checkY(entity: Entity) {
+  checkY(entity: Entity, level) {
     let y;
 
     if (entity.vel.y > 0) {
@@ -83,6 +65,7 @@ export class TileCollider extends TileConverter {
     }
 
     const matches = this.searchByRange(
+      level,
       entity.pos.x,
       entity.pos.x + entity.width,
       y,
@@ -91,11 +74,10 @@ export class TileCollider extends TileConverter {
 
     matches.forEach((match: ITile) => {
       if (match.tile.name === 'coin') {
-        this._notifyCoin(match, entity);
+        this._notifyCoin(match);
       }
 
-      if (!breaksToEntityPrevent.includes(match.tile.name)) {
-        this._notifyBreak(match, entity);
+      if (!match.tile.type) {
         return;
       }
 
@@ -116,3 +98,5 @@ export class TileCollider extends TileConverter {
     });
   }
 }
+
+export const tileCollider = new TileCollider();

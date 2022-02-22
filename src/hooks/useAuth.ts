@@ -44,13 +44,11 @@ export const useAuth = () => {
   const yaGetId = () => {
     const URI = window.location.origin;
 
-    authAPI
-      .yaGetId({ params: { redirect_uri: URI } })
-      .then(({ data }) => {
-        const service_id = `client_id=${data.service_id}`;
-        const redirect_uri = `redirect_uri=${URI}`;
-        window.location.href = `${BASE_YA_URL}/authorize?response_type=code&${service_id}&${redirect_uri}`;
-      });
+    authAPI.yaGetId({ params: { redirect_uri: URI } }).then(({ data }) => {
+      const service_id = `client_id=${data.service_id}`;
+      const redirect_uri = `redirect_uri=${URI}`;
+      window.location.href = `${BASE_YA_URL}/authorize?response_type=code&${service_id}&${redirect_uri}`;
+    });
   };
 
   const yaSingIn = (code, link) => {

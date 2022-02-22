@@ -15,6 +15,7 @@ export const addToLeaderboard = createAsyncThunk(
           name: userRes.data.first_name || userRes.data.display_name,
         },
         ratingFieldName: 'score',
+        teamName: 'SpringfieldMario',
       });
     } catch (err) {
       rejectWithValue(err.response.data);

@@ -1,9 +1,9 @@
-import { Entity } from '@containers/GamePlay/Canvas/entity';
-import { KeyboardState, KEYS } from '@containers/GamePlay/Canvas/keyboardState';
-import { SpriteResolver } from '@containers/GamePlay';
-import { Go, Jump } from '@containers/GamePlay/Canvas/traits';
-import { Matrix } from '@containers/GamePlay/Canvas/core';
-import { EntityName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
+import { tileCollider } from '@core/collision/TileCollider';
+import { GAME_END, SpriteResolver } from '@core';
+import { KeyboardState, KEYS } from '@core/keyboardState';
+import { Go, Jump } from '@core/traits';
+import { Entity } from '@core/entity';
+import { eventBus } from '@core/EventBus';
 
 const INITIAL_POS = {
   column: 1,
@@ -13,8 +13,6 @@ const INITIAL_POS = {
 export class Mario extends Entity {
   canvas: HTMLCanvasElement;
 
-  sprite: SpriteResolver;
-
   context: CanvasRenderingContext2D;
 
   keyboard: KeyboardState;
@@ -23,30 +21,30 @@ export class Mario extends Entity {
 
   jump: Jump;
 
+  name: string;
+
   constructor(
     canvas: HTMLCanvasElement,
-    sprite: SpriteResolver,
     context: CanvasRenderingContext2D,
-    matrix: Matrix,
-    coinMatrix: Matrix,
+    ...rest: [SpriteResolver, {}]
   ) {
-    super(matrix, coinMatrix, sprite);
+    super(rest);
+    this.name = 'mario';
     this.canvas = canvas;
-    this.sprite = sprite;
     this.context = context;
-
-    this.addTraits(new Jump(), new Go());
-    this.keyboardSetup();
 
     this.pos.set(
       INITIAL_POS.column * this.width,
       INITIAL_POS.row * this.height,
     );
+
+    this.addTraits(new Jump(), new Go());
+    this.keyboardSetup();
   }
 
   draw(cameraX, cameraY) {
-    this.sprite.draw(
-      EntityName.Mario,
+    this.spriteResolver.draw(
+      this.name,
       this.context,
       this.pos.x - cameraX,
       this.pos.y - cameraY,
@@ -88,11 +86,20 @@ export class Mario extends Entity {
 
   checkPosition(deltaTime: number) {
     this.pos.x += this.vel.x * deltaTime;
-    this.tileCollider.checkX(this);
+    tileCollider.checkX(this, this.level);
 
     this.pos.y += this.vel.y * deltaTime;
-    this.tileCollider.checkY(this);
+    tileCollider.checkY(this, this.level);
 
     this.vel.y += this.gravity * deltaTime;
+
+    if (this.pos.y + this.height >= this.canvas.height) {
+      eventBus.emit(GAME_END, 'lost');
+    }
+
+    // TODO: изменить проверку
+    if (this.pos.x >= 149 * 32) {
+      eventBus.emit(GAME_END, 'win');
+    }
   }
 }
