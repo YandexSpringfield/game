@@ -1,4 +1,3 @@
-@import '../../styles/colors';
 @import '../../styles/mixins';
 
 .container {
@@ -13,6 +12,6 @@
 
 .link {
   font-size: 18px;
-  color: $primary-color;
+  color: var(--main-color);
   padding: 10px 0;
 }

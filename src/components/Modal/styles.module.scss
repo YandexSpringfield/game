@@ -1,4 +1,3 @@
-@import "../../styles/colors";
 @import "../../styles/mixins";
 
 .overlay {
@@ -17,7 +16,7 @@
 .modal {
   position: relative;
   padding: 40px 20px;
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 8px;
 }
 
@@ -44,7 +43,7 @@
     width: 16px;
     height: 3px;
     border-radius: 12px;
-    background-color: $main-text;
+    background-color: var(--main-text);
   }
 
   &:before {

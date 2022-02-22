@@ -1,13 +1,12 @@
-@import "../../styles/colors";
 @import "../../styles/mixins";
 
 .container {
 	@include flex(column, flex-start,flex-start);
 	width: 250px;
 	position: relative;
-	background-color: $card-bg;
+	background-color: var(--card-bg);
 	border-radius: 5px;
-	border: 1px solid $border-container;
+	border: 1px solid var(--border-container);
 }
 
 .image {
@@ -29,7 +28,7 @@
 	line-height: 20px;
 	font-weight: bold;
 	padding: 15px;
-	color: $main-text;
+	color: var(--main-text);
 	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -41,21 +40,21 @@
 	top: 10px;
 	right: 10px;
 	border-radius: 5px;
-	border: 1px solid $card-bg;
+	border: 1px solid var(--card-bg);
 	height: 35px;
 	width: 35px;
 	font-size: 14px;
 	line-height: 35px;
 	font-weight: bold;
 	text-align: center;
-	color: $main-text;
-	background-color: $card-bg;
+	color: var(--main-text);
+	background-color: var(--card-bg);
 }
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-	background-color: $border-container;
-	border: 1px solid $border-container;
+	background-color: var(--border-container);
+	border: 1px solid var(--border-container);
 }
 
 .inputfile + label {

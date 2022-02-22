@@ -1,4 +1,3 @@
-@import '../../styles/colors';
 @import '../../styles/mixins';
 
 .content {
@@ -10,7 +9,7 @@
     margin-top: 8px;
     font-size: 16px;
     line-height: 1.2;
-    color: $main-text;
+    color: var(--main-text);
     font-weight: bold;
 }
 

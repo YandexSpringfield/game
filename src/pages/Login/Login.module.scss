@@ -1,5 +1,4 @@
 @import '../../styles/mixins';
-@import '../../styles/colors';
 
 .container {
   @include flex(column, center, center);
@@ -10,9 +9,9 @@
     width: 550px;
     min-height: 400px;
     padding: 20px 55px;
-    border: 0.5px solid $border-container;
+    border: 0.5px solid var(--border-container);
     box-sizing: border-box;
-    box-shadow: $box-shadow;
+    box-shadow: var(--box-shadow);
     border-radius: 4px;
   }
 }
@@ -22,7 +21,6 @@
 }
 
 .login__title {
-  color: $main-text;
   margin: 5px 0 50px 0;
 }
 
