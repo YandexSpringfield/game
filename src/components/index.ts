@@ -12,3 +12,4 @@ export { ChangeAvatar } from './ChangeAvatar';
 export { Modal } from './Modal';
 export { Loading } from './Loading';
 export { YaButton } from '@components/YaButton';
+export { Message } from '@components/Message';

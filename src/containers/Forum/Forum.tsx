@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useInput } from '@hooks';
 import { Button, Card, Content, Input, ViewButton } from '@components';
+import { ForumModal } from '@containers/Forum/ForumModal/ForumModal';
 import { MOCK_DATA } from './mockData';
 
 import styles from './styles.module.scss';
-import { ForumModal } from '@containers/Forum/ForumModal/ForumModal';
 
 const initialFields = {
   topic: '',
@@ -31,9 +31,9 @@ export const Forum = () => {
 
   const openTopic = (e) => {
     setModalOpen(true);
-    const topic = data.find(item => item.id === Number(e.currentTarget.id))
-    setOpenedTopic(topic)
-  }
+    const topic = data.find((item) => item.id === Number(e.currentTarget.id)) || {};
+    setOpenedTopic(topic);
+  };
 
   return (
     <Content title="Форум">
@@ -59,18 +59,29 @@ export const Forum = () => {
           onClick={createTopic}
         />
       </form>
-      {data.sort((a, b) => b.data - a.data).map((item) => {
-        const toDate = new Date(item.data).toUTCString();
+      {data
+        .sort((a, b) => b.data - a.data)
+        .map((item) => {
+          const toDate = new Date(item.data).toUTCString();
 
-        return (
-          <Card key={item.id} id={item.id.toString()} className={styles.card} onClick={openTopic}>
-            <h3 className={styles.title}>{item.title}</h3>
-            <p className={styles.content}>{item.content}</p>
-            <p className={styles.data}>{toDate}</p>
-          </Card>
-        );
-      })}
-      <ForumModal isOpen={modalOpen} onClose={() => setModalOpen(false)} item={openedTopic} />
+          return (
+            <Card
+              key={item.id}
+              id={item.id.toString()}
+              className={styles.card}
+              onClick={openTopic}
+            >
+              <h3 className={styles.title}>{item.title}</h3>
+              <p className={styles.content}>{item.content}</p>
+              <p className={styles.data}>{toDate}</p>
+            </Card>
+          );
+        })}
+      <ForumModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        item={openedTopic}
+      />
     </Content>
   );
 };

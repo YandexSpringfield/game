@@ -1,9 +1,26 @@
+@import 'src/styles/colors';
+@import 'src/styles/mixins';
+
 .modalContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex(column, space-between, normal);
+  position: relative;
+  padding: 20px;
   width: 80%;
   height: calc(100% - 40px);
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.messagesField {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  overflow: auto;
+  border-radius: 5px;
+  border: 1px solid $border-input;
 }
 
 .messageContainer {
