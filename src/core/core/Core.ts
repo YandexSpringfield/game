@@ -51,7 +51,6 @@ export class Core {
   }
 
   startNextLevel() {
-    this.score = this.calculateScore();
     this.loadLevel();
     this.startGame(this.levelMap);
   }
@@ -61,6 +60,7 @@ export class Core {
   }
 
   gameStatusHandler(status) {
+    this.score = status === 'win' ? this.calculateScore() : 0;
     eventBus.emit(MODAL, status, this.score);
     this.level.destroy();
   }
