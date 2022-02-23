@@ -101,7 +101,6 @@ export class Mario extends Entity {
       eventBus.emit(GAME_END, 'lost');
     }
 
-    // TODO: изменить проверку
     if (this.pos.x >= (this.levelSize.COLS - 1) * 32) {
       eventBus.emit(GAME_END, 'win');
     }
