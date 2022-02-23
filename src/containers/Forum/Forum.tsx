@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useInput } from '@hooks';
+import { ForumModal } from '@containers';
 import { Button, Card, Content, Input, ViewButton } from '@components';
-import { ForumModal } from '@containers/Forum/ForumModal/ForumModal';
+import { TInitialFields, TTopic } from './types';
 import { MOCK_DATA } from './mockData';
 
 import styles from './styles.module.scss';
 
-const initialFields = {
+const initialFields: TInitialFields = {
   topic: '',
   content: '',
 };
@@ -19,7 +20,7 @@ export const Forum = () => {
 
   const createTopic = (e) => {
     e.preventDefault();
-    const newTopic = {
+    const newTopic: TTopic = {
       id: data.length + 1,
       data: Date.now(),
       title: fields.topic,
@@ -31,7 +32,8 @@ export const Forum = () => {
 
   const openTopic = (e) => {
     setModalOpen(true);
-    const topic = data.find((item) => item.id === Number(e.currentTarget.id)) || {};
+    const topic =
+      data.find((item) => item.id === Number(e.currentTarget.id)) || {};
     setOpenedTopic(topic);
   };
 

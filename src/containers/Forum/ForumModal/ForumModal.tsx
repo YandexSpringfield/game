@@ -2,25 +2,19 @@ import React, { useState } from 'react';
 import { useInput } from '@hooks';
 import { useUserSelector } from '@store';
 import { Button, Input, Modal, ViewButton, Message } from '@components';
+import { TInitialFields, TMessage } from './types';
 
 import styles from './styles.module.scss';
 
-const initialFields = {
+const initialFields: TInitialFields = {
   message: '',
 };
 
-const initialState: TMessage[] = []
-
-type TMessage = {
-  id: number;
-  login: string;
-  text: string;
-  data: number;
-}
+const initialState: TMessage[] = [];
 
 export const ForumModal = ({ isOpen, onClose, item }) => {
   const { fields, setFields, fieldsError, ...rest } = useInput(initialFields);
-  const [messages, setMessages] = useState(initialState)
+  const [messages, setMessages] = useState(initialState);
   const user = useUserSelector();
 
   const onModalClose = () => {
@@ -34,10 +28,10 @@ export const ForumModal = ({ isOpen, onClose, item }) => {
       login: user.login,
       text: fields.message,
       data: Date.now(),
-    }
-    setMessages([...messages, newMessage])
+    };
+    setMessages([...messages, newMessage]);
     setFields(initialFields);
-  }
+  };
 
   return (
     <Modal
@@ -50,11 +44,24 @@ export const ForumModal = ({ isOpen, onClose, item }) => {
         <p>{item?.content}</p>
       </div>
       <div className={styles.messagesField}>
-        {messages.map(message => <Message key={message.id} message={message} />)}
+        {messages.map((message) => (
+          <Message key={message.id} message={message} />
+        ))}
       </div>
       <form className={styles.messageContainer}>
-        <Input label="Введите сообщение" error="" name="message" value={fields.message} {...rest} />
-        <Button title="Отправить" type="submit" view={ViewButton.main} onClick={sendMessage} />
+        <Input
+          label="Введите сообщение"
+          error=""
+          name="message"
+          value={fields.message}
+          {...rest}
+        />
+        <Button
+          title="Отправить"
+          type="submit"
+          view={ViewButton.main}
+          onClick={sendMessage}
+        />
       </form>
     </Modal>
   );
