@@ -1,13 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Logo, ViewButton } from '@components';
-import {
-  useAppDispatch,
-  addToLeaderboard,
-  useLeaderboardSelector, useUserSelector,
-} from '@store';
+import { useAppDispatch, addToLeaderboard, useUserSelector } from '@store';
 import { routes } from '@appConstants';
-import { RequestStatus } from '@types';
 import { eventBus } from '@core/EventBus';
 import { GAME_STATUS } from '@core';
 
@@ -19,12 +14,15 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getSavedScore = () => {
+  const getSavedScore = (): number | undefined => {
     if (localStorage.getItem('SpringfieldMario')) {
-      const oldItem = JSON.parse(localStorage.getItem('SpringfieldMario') as string)
+      const oldItem = JSON.parse(
+        localStorage.getItem('SpringfieldMario') as string,
+      );
       return oldItem.score + score;
     }
-  }
+    return undefined;
+  };
 
   const dispatchToLeaderboard = () => {
     if (requestStatus === 'SUCCESS') {
@@ -35,13 +33,15 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
           score: updatedScore,
         }),
       );
-      localStorage.removeItem('SpringfieldMario')
+      localStorage.removeItem('SpringfieldMario');
+    } else if (localStorage.getItem('SpringfieldMario')) {
+      const newItem = { login, score: getSavedScore() };
+      localStorage.setItem('SpringfieldMario', JSON.stringify(newItem));
     } else {
-      if (localStorage.getItem('SpringfieldMario')) {
-        const newItem = {login, score: getSavedScore()}
-        return localStorage.setItem('SpringfieldMario', JSON.stringify(newItem));
-      }
-      return localStorage.setItem('SpringfieldMario', JSON.stringify({login, score}))
+      localStorage.setItem(
+        'SpringfieldMario',
+        JSON.stringify({ login, score }),
+      );
     }
   };
 
@@ -68,7 +68,7 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
     <Modal isOpen={isOpen} className={styles.modal} onClose={onModalClose}>
       <h2 className={styles.title}>{GAME_STATUS[status]?.text}</h2>
       <div className={styles.logo}>
-        <Logo width="50" height="50"/>
+        <Logo width="50" height="50" />
       </div>
       <div className={styles.buttons}>
         <Button
