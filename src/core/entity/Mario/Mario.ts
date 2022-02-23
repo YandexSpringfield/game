@@ -21,17 +21,21 @@ export class Mario extends Entity {
 
   jump: Jump;
 
+  levelSize: { ROWS: number; COLS: number };
+
   name: string;
 
   constructor(
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
+    levelSize,
     ...rest: [SpriteResolver, {}]
   ) {
     super(rest);
     this.name = 'mario';
     this.canvas = canvas;
     this.context = context;
+    this.levelSize = levelSize;
 
     this.pos.set(
       INITIAL_POS.column * this.width,
@@ -98,7 +102,7 @@ export class Mario extends Entity {
     }
 
     // TODO: изменить проверку
-    if (this.pos.x >= 149 * 32) {
+    if (this.pos.x >= (this.levelSize.COLS - 1) * 32) {
       eventBus.emit(GAME_END, 'win');
     }
   }

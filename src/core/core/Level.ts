@@ -31,9 +31,7 @@ export class Level {
 
   public coins: number;
 
-  public ROWS: number;
-
-  public COLS: number;
+  public levelSize: { ROWS: number; COLS: number };
 
   constructor(canvasBg, canvasMario, image) {
     this.canvasBg = canvasBg;
@@ -49,9 +47,10 @@ export class Level {
       this.updateBackground();
     });
 
-    // TODO: менять размер при ресайзе (?)
-    this.ROWS = 14;
-    this.COLS = 150;
+    this.levelSize = {
+      ROWS: 14,
+      COLS: 150,
+    };
   }
 
   init(level) {
@@ -62,6 +61,7 @@ export class Level {
     this.mario = new Mario(
       this.canvasMario,
       this.contextMario,
+      this.levelSize,
       this.sprite,
       this.level,
     );
@@ -85,7 +85,7 @@ export class Level {
 
   drawLevel(start, end) {
     for (let x = start; x <= end; x += 1) {
-      for (let y = 0; y <= 14; y += 1) {
+      for (let y = 0; y <= this.levelSize.ROWS; y += 1) {
         const element = this.level[`${x}.${y}`];
 
         if (element) {
@@ -94,7 +94,7 @@ export class Level {
           }
           this.sprite.drawTile(element, this.contextBg, x - start, y);
         } else {
-          const tile = y <= 14 - 2 ? 'sky' : 'ground';
+          const tile = y <= this.levelSize.ROWS - 2 ? 'sky' : 'ground';
           this.sprite.drawTile(tile, this.contextBg, x - start, y);
         }
       }
@@ -109,7 +109,8 @@ export class Level {
       if (
         this.mario.vel.x !== 0 &&
         this.mario.pos.x > 300 &&
-        this.camera.pos.x + this.canvasBg.width < this.COLS * tilesSize.width
+        this.camera.pos.x + this.canvasBg.width <
+          this.levelSize.COLS * tilesSize.width
       ) {
         this.camera.pos.x = this.mario.pos.x - 300;
         this.updateBackground();

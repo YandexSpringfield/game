@@ -21,18 +21,18 @@ interface ITilesSize {
   height: number;
 }
 
-export const tilesTypes = {
-  sky: { name: 'sky' },
-  coin: { name: 'coin' },
-  ground: { name: 'ground', type: 'ground' },
-  bricks: { name: 'bricks', type: 'ground' },
-  chocolate: { name: 'chocolate', type: 'ground' },
-  chance: { name: 'chance', type: 'ground' },
-};
-
 export const tilesSize: ITilesSize = {
   width: 32,
   height: 32,
+};
+
+export const tilesTypes = {
+  sky: { name: OverworldName.Sky },
+  coin: { name: OverworldName.Coin },
+  ground: { name: OverworldName.Ground, type: 'ground' },
+  bricks: { name: OverworldName.Bricks, type: 'ground' },
+  chocolate: { name: OverworldName.Chocolate, type: 'ground' },
+  chance: { name: OverworldName.Chance, type: 'ground' },
 };
 
 export const overworldSprite: IOverworld = {
