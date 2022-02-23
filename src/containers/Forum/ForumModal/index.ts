@@ -1,1 +1,1 @@
-export {ForumModal} from '@containers/Forum/ForumModal/ForumModal';
+export { ForumModal } from '@containers/Forum/ForumModal/ForumModal';

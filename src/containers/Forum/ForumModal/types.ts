@@ -1,6 +1,6 @@
 export type TInitialFields = {
   message: string;
-}
+};
 
 export type TMessage = {
   id: number;
