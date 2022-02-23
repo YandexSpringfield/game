@@ -1,0 +1,1 @@
+export { YaButton } from './YaButton';
