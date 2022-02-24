@@ -19,6 +19,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
+    'no-console': 0,
     'prettier/prettier': 'error',
     '@typescript-eslint/dot-notation': 'off',
     'import/prefer-default-export': 'off',

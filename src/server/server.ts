@@ -1,38 +1,25 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import express, { RequestHandler } from 'express';
+import express from 'express';
 import path from 'path';
 import { readFileSync } from 'fs';
-import webpack from 'webpack';
-import devMiddleware from 'webpack-dev-middleware';
-import hotMiddleware from 'webpack-hot-middleware';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import { connectToDB } from '@server/db/client';
 import https from 'https';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
-import { authMiddleware, renderMiddleware, storeMiddleware } from '.';
+import {
+  authMiddleware,
+  renderMiddleware,
+  storeMiddleware,
+  webpackMiddleware,
+} from '.';
 
+dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
-function getWebpackMiddlewares(
-  config: webpack.Configuration,
-): RequestHandler[] {
-  const compiler = webpack({ ...config, mode: 'development' });
-
-  if (IS_DEV) {
-    return [
-      devMiddleware(compiler, {
-        publicPath: config.output?.publicPath,
-      }),
-      hotMiddleware(compiler, {
-        path: '/__what',
-        log: false,
-      }),
-    ];
-  }
-
-  return [];
-}
+console.log('port from process env', process.env.PORT);
+console.log('env node ', process.env.NODE_ENV);
 
 app.use(cookieParser());
 app.use(
@@ -42,39 +29,41 @@ app.use(
 );
 app.get(
   '/*',
-  [...getWebpackMiddlewares(clientConfig)],
+  [...webpackMiddleware(clientConfig)],
   authMiddleware,
   storeMiddleware,
   renderMiddleware,
 );
 
 const startApp = () => {
-  if (IS_DEV) {
-    const pem = readFileSync(
-      path.resolve(__dirname, '../certificates/cert.pem'),
-      'utf-8',
-    );
+  connectToDB().then(() => {
+    if (IS_DEV) {
+      const pem = readFileSync(
+        path.resolve(__dirname, '../certificates/cert.pem'),
+        'utf-8',
+      );
 
-    const key = readFileSync(
-      path.resolve(__dirname, '../certificates/key.pem'),
-      'utf-8',
-    );
+      const key = readFileSync(
+        path.resolve(__dirname, '../certificates/key.pem'),
+        'utf-8',
+      );
 
-    const server = https.createServer(
-      {
-        key,
-        cert: pem,
-      },
-      app,
-    );
-    server.listen(port, () => {
-      console.log('Application is started on localhost:', port);
-    });
-  } else {
-    app.listen(port, () => {
-      console.log('Application is started on localhost:', port);
-    });
-  }
+      const server = https.createServer(
+        {
+          key,
+          cert: pem,
+        },
+        app,
+      );
+      server.listen(port, () => {
+        console.log('Application is started on localhost:', port);
+      });
+    } else {
+      app.listen(port, () => {
+        console.log('Application is started on localhost:', port);
+      });
+    }
+  });
 };
 
 export default startApp;

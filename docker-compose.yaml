@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      ./.env
+    environment:
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - mongo
+    networks:
+      - awesome
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - awesome
+
+networks:
+  awesome:
+    driver: bridge
