@@ -1,0 +1,30 @@
+@import '../../styles/mixins';
+
+.container {
+  @include flex(column, initial, normal);
+  position: relative;
+  margin: 10px 0;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: var(--body-bg);
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+
+.login {
+  font-size: 14px;
+  color: var(--main-text);
+}
+
+.text {
+  color: var(--main-text);
+  margin: 10px 0;
+}
+
+.data {
+  font-size: 12px;
+  color: var(--input-text);
+  align-self: self-end;
+}
+
+

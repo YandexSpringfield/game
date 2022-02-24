@@ -40,6 +40,9 @@
       "@context": ["./client/context"],
       "@context/*": ["./client/context/*"],
 
+      "@game-core": ["./client/game-core"],
+      "@game-core/*": ["./client/game-core/*"],
+
       "@hoc-helpers": ["./client/hoc-helpers"],
       "@hoc-helpers/*": ["./client/hoc-helpers/*"],
 

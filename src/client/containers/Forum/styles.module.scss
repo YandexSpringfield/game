@@ -1,7 +1,13 @@
 .card {
-  margin-bottom: 30px;
+  cursor: pointer;
+  margin: 30px 0;
+
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:hover {
+    background-color: var(--body-bg);
   }
 }
 
@@ -12,6 +18,21 @@
 }
 
 .content {
-  color: var(--secondary-text);
+  color: var(--main-text);
   font-size: 14px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  & button {
+    margin: 5px 0;
+  }
+}
+
+.data {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--secondary-text);
 }
