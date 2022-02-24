@@ -1,12 +1,9 @@
-import { Entity } from 'src/client/containers/GamePlay/Canvas/entity/index';
-import {
-  KeyboardState,
-  KEYS,
-} from 'src/client/containers/GamePlay/Canvas/keyboardState';
-import { SpriteResolver } from 'src/client/containers/GamePlay/index';
-import { Go, Jump } from 'src/client/containers/GamePlay/Canvas/traits';
-import { Matrix } from 'src/client/containers/GamePlay/Canvas/core';
-import { EntityName } from 'src/client/containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
+import { Entity } from '@containers/GamePlay/Canvas/entity';
+import { KeyboardState, KEYS } from '@containers/GamePlay/Canvas/keyboardState';
+import { SpriteResolver } from '@containers/GamePlay';
+import { Go, Jump } from '@containers/GamePlay/Canvas/traits';
+import { Matrix } from '@containers/GamePlay/Canvas/core';
+import { EntityName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
 
 const INITIAL_POS = {
   column: 1,

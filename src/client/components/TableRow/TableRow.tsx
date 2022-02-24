@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Avatar } from '@components';
-import { TProps } from 'src/client/components/TableRow/types';
+import { TProps } from '@components/TableRow/types';
 import { resourcesUrl } from '@appConstants';
 import defaultAvatar from '../../assets/images/default-avatar.png';
 import styles from './TableRow.module.scss';

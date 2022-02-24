@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src/client",
+    "baseUrl": "src",
     "paths": {
       "@/*": ["./*"],
 
@@ -36,6 +36,9 @@
 
       "@router": ["./client/router"],
       "@router/*": ["./client/router/*"],
+
+      "@context": ["./client/context"],
+      "@context/*": ["./client/context/*"],
 
       "@hoc-helpers": ["./client/hoc-helpers"],
       "@hoc-helpers/*": ["./client/hoc-helpers/*"],

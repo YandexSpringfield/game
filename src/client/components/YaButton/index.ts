@@ -1,1 +1,1 @@
-export { YaButton } from './YaButton';
+export { YaButton } from '@components/YaButton/YaButton';

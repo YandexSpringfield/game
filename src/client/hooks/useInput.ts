@@ -1,5 +1,5 @@
 import { FocusEvent, useState } from 'react';
-import { checkInput, checkPassword } from 'src/client/utils/utils';
+import { checkInput, checkPassword } from '@utils/utils';
 
 export const useInput = (initialFields) => {
   const [fields, setFields] = useState(initialFields);

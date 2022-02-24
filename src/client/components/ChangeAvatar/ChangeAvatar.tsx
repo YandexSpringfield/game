@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
+import { editProfileAPI } from '@api';
 import { Form } from '@components';
-import { editProfileAPI } from '../../../api';
 import { TProps } from './types';
 import styles from './ChangeAvatar.module.scss';
 

@@ -1,1 +1,1 @@
-export { authAPI } from 'src/api/auth/auth';
+export { authAPI } from '@api/auth/auth';
