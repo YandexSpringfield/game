@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { withAuth } from 'src/client/hoc-helpers/withAuth';
+import { withAuth } from '@hoc-helpers/withAuth';
 import '@testing-library/jest-dom/extend-expect';
 
 test('withAuth HOC should return component', async () => {

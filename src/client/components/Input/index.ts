@@ -1,1 +1,1 @@
-export { Input } from 'src/client/components/Input/Input';
+export { Input } from '@components/Input/Input';

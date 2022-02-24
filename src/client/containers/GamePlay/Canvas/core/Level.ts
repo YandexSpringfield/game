@@ -1,4 +1,4 @@
-import { level1 } from 'src/client/containers/GamePlay/Canvas/core/level-1';
+import { level1 } from '@containers/GamePlay/Canvas/core/level-1';
 import { Matrix } from './index';
 
 const ROWS = 14;

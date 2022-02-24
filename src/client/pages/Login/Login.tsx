@@ -61,7 +61,7 @@ export const Login: FC<any> = () => {
               view={ViewButton.main}
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
-                signIn(fields, routes.game.root);
+                signIn(fields, routes.preview);
               }}
             />
             <YaButton

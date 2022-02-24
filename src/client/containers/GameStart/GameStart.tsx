@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Content, Card, Modal } from '@components';
-import { Button, ViewButton } from 'src/client/components/Button';
+import { Button, ViewButton } from '@components/Button';
 import { useNavigate } from 'react-router-dom';
 import { routes, PUBLIC_REPO_URL } from '@appConstants';
-import GithubIcon from 'src/client/assets/images/github.svg';
+import GithubIcon from '@assets/images/github.svg';
 import { articles, Article } from './index';
 
 import styles from './styles.module.scss';
@@ -21,7 +21,7 @@ export const GameStart = () => {
       <Button
         view={ViewButton.main}
         title="Начать игру"
-        onClick={() => navigate(routes.game.play)}
+        onClick={() => navigate(routes.game)}
       />
       <div className={styles.content}>
         <div className={styles.items}>

@@ -1,1 +1,1 @@
-export { Leaderboard } from 'src/client/pages/Leaderboard/Leaderboard';
+export { Leaderboard } from '@pages/Leaderboard/Leaderboard';

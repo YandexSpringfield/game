@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { Router } from 'src/client/router/Router';
+import { Router } from '@router/Router';
 import { create, ReactTestRenderer } from 'react-test-renderer';
 import { render, screen } from '@testing-library/react';
 import { store } from '@store';

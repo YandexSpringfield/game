@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import thunkMiddleware from 'redux-thunk';
-import { userSlice } from 'src/client/store/user';
-import { leaderboardSlice } from 'src/client/store/leaderboard';
+import { userSlice } from '@store/user';
+import { leaderboardSlice } from '@store/leaderboard';
 
 const reducer = combineReducers({
   user: userSlice.reducer,

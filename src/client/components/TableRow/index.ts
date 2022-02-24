@@ -1,1 +1,1 @@
-export { TableRow } from 'src/client/components/TableRow/TableRow';
+export { TableRow } from '@components/TableRow/TableRow';

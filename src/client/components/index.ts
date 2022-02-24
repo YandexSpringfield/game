@@ -11,5 +11,5 @@ export { ErrorBoundary } from './ErrorBoundary';
 export { ChangeAvatar } from './ChangeAvatar';
 export { Modal } from './Modal';
 export { Loading } from './Loading';
-export { YaButton } from 'src/client/components/YaButton';
-export { Message } from 'src/client/components/Message';
+export { Message } from './Message';
+export { YaButton } from './YaButton';

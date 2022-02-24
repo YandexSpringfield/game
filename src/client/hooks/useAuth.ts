@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { fetchUserProfile, useAppDispatch } from '@store';
+import { fetchUserProfile, useAppDispatch, userSlice } from '@store';
+import { authAPI, BASE_YA_URL } from '@api';
 import { authError, registrationError } from '@appConstants';
 import { useNavigate } from 'react-router-dom';
-import { authAPI, BASE_YA_URL } from '../../api';
+import { initialState } from '@store/user/userSlice';
 
 export const useAuth = () => {
   const [error, setError] = useState('');
@@ -37,6 +38,7 @@ export const useAuth = () => {
 
   const logout = (link) => {
     authAPI.logout().then(() => {
+      dispatch(userSlice.actions.setState(initialState));
       navigate(link);
     });
   };

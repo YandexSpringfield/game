@@ -22,7 +22,7 @@ export const EndGameModal = ({ isOpen, onClose }) => {
     );
   }, []);
   const navigate = useNavigate();
-  const goToNewGame = () => navigate(routes.game.play);
+  const goToNewGame = () => navigate(routes.game);
   const goToLeaderboard = () => navigate(routes.leaderboard);
   const onModalClose = () => {
     onClose();

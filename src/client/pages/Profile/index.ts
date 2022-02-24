@@ -1,1 +1,1 @@
-export { Profile } from 'src/client/pages/Profile/Profile';
+export { Profile } from '@pages/Profile/Profile';

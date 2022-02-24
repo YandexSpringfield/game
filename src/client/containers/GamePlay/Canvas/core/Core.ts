@@ -1,16 +1,13 @@
 import {
   overworldSprite,
   tilesSize,
-} from 'src/client/containers/GamePlay/Canvas/sprite-resolver';
-import {
-  loadImage,
-  SpriteResolver,
-} from 'src/client/containers/GamePlay/Canvas/index';
-import { Camera } from 'src/client/containers/GamePlay/Canvas/core/Camera';
-import { Mario } from 'src/client/containers/GamePlay/Canvas/entity/Mario';
-import { KEYS } from 'src/client/containers/GamePlay/Canvas/keyboardState';
-import { EntityEvents } from 'src/client/containers/GamePlay/Canvas/entity/Entity';
-import spriteImage from 'src/client/assets/images/sprite.png';
+} from '@containers/GamePlay/Canvas/sprite-resolver';
+import { loadImage, SpriteResolver } from '@containers/GamePlay/Canvas';
+import { Camera } from '@containers/GamePlay/Canvas/core/Camera';
+import { Mario } from '@containers/GamePlay/Canvas/entity/Mario';
+import { KEYS } from '@containers/GamePlay/Canvas/keyboardState';
+import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
+import spriteImage from '@assets/images/sprite.png';
 import { Timer } from './Timer';
 import { Level } from './Level';
 

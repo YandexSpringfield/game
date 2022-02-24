@@ -1,1 +1,1 @@
-export { Error } from 'src/client/components/Error/Error';
+export { Error } from '@components/Error/Error';

@@ -3,8 +3,8 @@ import { Button, Form, Input, ChangeAvatar, ViewButton } from '@components';
 import { useUserSelector } from '@store';
 import { resourcesUrl, routes } from '@appConstants';
 import { useInput, useAuth } from '@hooks';
-import defaultAvatar from 'src/client/assets/images/default-avatar.png';
-import { editProfileAPI } from '../../../api';
+import { editProfileAPI } from '@api';
+import defaultAvatar from '@/client/assets/images/default-avatar.png';
 
 import styles from './Profile.module.scss';
 

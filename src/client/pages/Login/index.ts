@@ -1,1 +1,1 @@
-export { Login } from 'src/client/pages/Login/Login';
+export { Login } from '@pages/Login/Login';

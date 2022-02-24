@@ -1,1 +1,1 @@
-export { Form } from 'src/client/components/Form/Form';
+export { Form } from '@components/Form/Form';

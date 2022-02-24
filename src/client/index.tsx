@@ -1,8 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { hydrate } from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { store } from '@store';
 import { App } from './App';
-
-import 'src/client/styles/styles.module.scss';
 
 function startServiceWorker() {
   if ('serviceWorker' in navigator) {
@@ -19,6 +20,24 @@ function startServiceWorker() {
   }
 }
 
-startServiceWorker();
+if (process.env.NODE_ENV === 'production') {
+  startServiceWorker();
+}
 
-ReactDOM.render(<App />, document.getElementById('root'));
+hydrate(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('root'),
+);
+
+/**
+ * For hot reloading development
+ */
+// @ts-ignore
+if (import.meta.webpackHot) {
+  // @ts-ignore
+  import.meta.webpackHot.accept();
+}

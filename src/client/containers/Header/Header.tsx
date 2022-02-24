@@ -3,15 +3,22 @@ import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
 import { resourcesUrl, routes } from '@appConstants';
 import { Logo, Avatar } from '@components';
-import { fetchUserProfile, useAppDispatch, useUserSelector } from '@store';
-import defaultAvatar from 'src/client/assets/images/default-avatar.png';
+import {
+  fetchUserProfile,
+  useAppDispatch,
+  userSlice,
+  useUserSelector,
+} from '@store';
+import defaultAvatar from '@assets/images/default-avatar.png';
 
+import { RequestStatus } from '@types';
+import { initialState } from '@store/user/userSlice';
 import styles from './styles.module.scss';
 
 const navs = [
   {
     label: 'Игра',
-    to: routes.game.root,
+    to: routes.preview,
   },
   {
     label: 'Таблица лидеров',
@@ -26,12 +33,17 @@ const navs = [
 export const Header = () => {
   const [avatar, setAvatar] = useState('');
   const dispatch = useAppDispatch();
+  const user = useUserSelector();
 
   useEffect(() => {
-    dispatch(fetchUserProfile());
-  }, []);
+    if (user.requestStatus !== RequestStatus.SUCCESS) {
+      dispatch(fetchUserProfile());
+    }
 
-  const user = useUserSelector();
+    return () => {
+      userSlice.actions.setState(initialState);
+    };
+  }, []);
 
   useEffect(() => {
     setAvatar(user.avatar);

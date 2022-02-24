@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { TProps } from 'src/client/components/YaButton/types';
-import YandexIcon from 'src/client/assets/images/yandex.svg';
+import { TProps } from '@components/YaButton/types';
+import YandexIcon from '@assets/images/yandex.svg';
 
 import styles from './YaButton.module.scss';
 

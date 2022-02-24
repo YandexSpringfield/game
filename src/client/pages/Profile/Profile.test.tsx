@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { store } from '@store';
 import { Profile } from '@pages';
@@ -7,9 +8,11 @@ import { Profile } from '@pages';
 describe('Profile', () => {
   it('Profile: render input value after dispatch', () => {
     const component: ReactTestRenderer = create(
-      <Provider store={store}>
-        <Profile />
-      </Provider>,
+      <BrowserRouter>
+        <Provider store={store}>
+          <Profile />
+        </Provider>
+      </BrowserRouter>,
     );
 
     const payload = {

@@ -1,1 +1,1 @@
-export { Registration } from 'src/client/pages/Registration/Registration';
+export { Registration } from '@pages/Registration/Registration';

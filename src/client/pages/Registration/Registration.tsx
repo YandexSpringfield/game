@@ -25,7 +25,7 @@ export const Registration: FC<any> = () => {
   const handleRegistration = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isEmpty(fieldsError)) {
-      signUp(omit(fields, 'password_confirm'), routes.game.root);
+      signUp(omit(fields, 'password_confirm'), routes.preview);
     }
   };
 

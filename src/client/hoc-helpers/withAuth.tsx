@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { Loading } from '@components';
 import { routes, section } from '@appConstants';
 import { useAuth } from '@hooks';
-import { parseNumbers } from 'src/client/utils/utils';
+import { parseNumbers } from '@utils/utils';
 import { authAPI } from '../../api';
 
 export const withAuth = (pathname: string) => {

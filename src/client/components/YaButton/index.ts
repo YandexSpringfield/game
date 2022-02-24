@@ -1,1 +1,1 @@
-export { YaButton } from 'src/client/components/YaButton/YaButton';
+export { YaButton } from './YaButton';

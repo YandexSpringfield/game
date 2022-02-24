@@ -14,7 +14,7 @@ export type TUserState = {
   requestStatus: RequestStatus;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   id: 0,
   first_name: '',
   second_name: '',
