@@ -1,0 +1,38 @@
+.card {
+  cursor: pointer;
+  margin: 30px 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    background-color: var(--body-bg);
+  }
+}
+
+.title {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.content {
+  color: var(--main-text);
+  font-size: 14px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  & button {
+    margin: 5px 0;
+  }
+}
+
+.data {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--secondary-text);
+}

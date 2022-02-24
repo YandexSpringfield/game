@@ -4,26 +4,29 @@
     "paths": {
       "@/*": ["./*"],
 
-      "@appConstants": ["./appConstants"],
-      "@appConstants/*": ["./appConstants/*"],
+      "@appConstants": ["./client/appConstants"],
+      "@appConstants/*": ["./client/appConstants/*"],
 
-      "@utils": ["./utils"],
-      "@utils/*": ["./utils/*"],
+      "@assets": ["./client/assets"],
+      "@assets/*": ["./client/assets/*"],
 
-      "@hooks": ["./hooks"],
-      "@hooks/*": ["./hooks/*"],
+      "@utils": ["./client/utils"],
+      "@utils/*": ["./client/utils/*"],
 
-      "@components": ["./components"],
-      "@components/*": ["./components/*"],
+      "@hooks": ["./client/hooks"],
+      "@hooks/*": ["./client/hooks/*"],
 
-      "@containers": ["./containers"],
-      "@containers/*": ["./containers/*"],
+      "@components": ["./client/components"],
+      "@components/*": ["./client/components/*"],
 
-      "@pages": ["./pages"],
-      "@pages/*": ["./pages/*"],
+      "@containers": ["./client/containers"],
+      "@containers/*": ["./client/containers/*"],
 
-      "@store": ["./store"],
-      "@store/*": ["./store/*"],
+      "@pages": ["./client/pages"],
+      "@pages/*": ["./client/pages/*"],
+
+      "@store": ["./client/store"],
+      "@store/*": ["./client/store/*"],
 
       "@types": ["./types"],
       "@types/*": ["./types/*"],
@@ -31,14 +34,23 @@
       "@api": ["./api"],
       "@api/*": ["./api/*"],
 
-      "@router": ["./router"],
-      "@router/*": ["./router/*"],
+      "@router": ["./client/router"],
+      "@router/*": ["./client/router/*"],
 
-      "@hoc-helpers": ["./hoc-helpers"],
-      "@hoc-helpers/*": ["./hoc-helpers/*"],
+      "@context": ["./client/context"],
+      "@context/*": ["./client/context/*"],
 
-      "@core": ["./core"],
-      "@core/*": ["./core/*"]
+      "@game-core": ["./client/game-core"],
+      "@game-core/*": ["./client/game-core/*"],
+
+      "@hoc-helpers": ["./client/hoc-helpers"],
+      "@hoc-helpers/*": ["./client/hoc-helpers/*"],
+
+      "@client": ["./client"],
+      "@client/*": ["./client/*"],
+
+      "@server": ["./server"],
+      "@server/*": ["./server/*"]
     }
   }
 }

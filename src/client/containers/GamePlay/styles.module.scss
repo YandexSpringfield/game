@@ -1,0 +1,36 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 69px);
+}
+
+.button {
+  position: absolute;
+  padding: 5px 5px 1px 5px;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  font-size: 28px;
+  border-radius: 5px;
+  color: #FFF;
+  background-color: var(--border-input);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--main-color-hover);
+  }
+}
+
+.canvasContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  display: block;
+  position: absolute;
+  margin: 0 auto;
+}

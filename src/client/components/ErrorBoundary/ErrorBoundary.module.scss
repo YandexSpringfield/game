@@ -1,0 +1,15 @@
+@import '../../styles/mixins';
+
+.content {
+    @include flex(column, space-around, center);
+    padding: 20px;
+}
+
+.title {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.2;
+    color: var(--main-text);
+    font-weight: bold;
+}
+

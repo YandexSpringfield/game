@@ -1,0 +1,31 @@
+@import '../../styles/mixins';
+
+.container {
+  @include flex(column, center, center);
+
+  &__registration {
+    width: 550px;
+    min-height: 400px;
+    margin: 20px 0;
+    padding: 30px 55px;
+    border: 0.5px solid var(--border-container);
+    box-sizing: border-box;
+    box-shadow: var(--box-shadow);
+    border-radius: 4px;
+  }
+}
+
+.registration__header {
+  @include flex(column, space-around, center);
+}
+
+.registration__title {
+  margin: 5px 0 50px 0;
+}
+
+.form__username {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 15px;
+  width: 100%;
+}

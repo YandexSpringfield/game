@@ -1,0 +1,30 @@
+.row {
+  display: grid;
+  grid-template-columns: 100px 1fr 150px 110px;
+  grid-column-gap: 30px;
+  padding: 20px 0;
+  align-items: center;
+  border-bottom: 1px solid var(--border-container);
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+
+  & div:first-child {
+    text-align: center;
+    font-weight: bold;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--border-container);
+  }
+}
+
+.player {
+  display: grid;
+  grid-template-columns: 35px 1fr;
+  grid-column-gap: 20px;
+  align-items: center;
+}
