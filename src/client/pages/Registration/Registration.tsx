@@ -1,7 +1,7 @@
 import React, { FC, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, ViewButton, Form, Input, Logo, Error } from '@components';
-import { isEmpty, omit } from '@utils/utils';
+import { isEmpty, omit } from 'src/client/utils/utils';
 import { routes } from '@appConstants';
 import { useInput, useAuth } from '@hooks';
 

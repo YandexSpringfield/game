@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TProps } from '@components/Logo/types';
+import { TProps } from 'src/client/components/Logo/types';
 
 export const Logo: FC<TProps> = ({ width, height }) => {
   return (

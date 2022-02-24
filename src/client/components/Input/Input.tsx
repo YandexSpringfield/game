@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
-import { TProps } from '@components/Input/types';
+import { TProps } from 'src/client/components/Input/types';
 
 import styles from './Input.module.scss';
 

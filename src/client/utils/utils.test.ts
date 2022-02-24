@@ -1,4 +1,4 @@
-import { checkInput, checkPassword, omit } from '@utils/utils';
+import { checkInput, checkPassword, omit } from 'src/client/utils/utils';
 import { VALIDATION_DATA } from '@appConstants';
 
 describe('Utils', () => {

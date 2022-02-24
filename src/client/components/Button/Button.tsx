@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TProps, ViewButton } from '@components/Button/types';
+import { TProps, ViewButton } from 'src/client/components/Button/types';
 import cn from 'classnames';
 
 import styles from './Button.module.scss';

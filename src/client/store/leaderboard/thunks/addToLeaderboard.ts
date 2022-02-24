@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { leaderboardAPI } from '@api/leaderboard';
-import { authAPI } from '@api/auth';
+import { leaderboardAPI } from 'src/client/api/leaderboard';
+import { authAPI } from 'src/client/api/auth';
 
 export const addToLeaderboard = createAsyncThunk(
   'leaderboard/addToLeaderboard',
