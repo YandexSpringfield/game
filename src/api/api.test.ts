@@ -1,6 +1,6 @@
-import { authAPI } from 'src/client/api/auth';
-import { leaderboardAPI } from 'src/client/api/leaderboard';
-import { editProfileAPI } from 'src/client/api/editProfile';
+import { authAPI } from '@api/auth';
+import { leaderboardAPI } from '@api/leaderboard';
+import { editProfileAPI } from '@api/editProfile';
 
 describe('API', () => {
   test('AuthAPI should log in', async () => {

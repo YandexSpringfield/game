@@ -1,5 +1,5 @@
-import { Matrix } from 'src/client/containers/GamePlay/Canvas/core';
-import { EventBus } from 'src/client/containers/GamePlay/Canvas/EventBus';
+import { Matrix } from '@containers/GamePlay/Canvas/core';
+import { EventBus } from '@containers/GamePlay/Canvas/EventBus';
 import { TileCollider } from '../collision';
 import { SpriteResolver, tilesSize } from '../sprite-resolver';
 import { Vectors } from './Vectors';

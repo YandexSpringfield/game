@@ -1,5 +1,3 @@
-@import '../../styles/colors';
-
 .yaButton {
   text-align: center;
   font-size: 16px;
@@ -9,9 +7,9 @@
   cursor: pointer;
   height: 35px;
   border-radius: 4px;
-  background-color: $ya-color;
+  background-color: var(--ya-color);
 
   &:hover {
-    background-color: $main-error;
+    background-color: var(--main-error);
   }
 }

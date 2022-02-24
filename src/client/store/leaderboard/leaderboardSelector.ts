@@ -1,4 +1,4 @@
-import { useAppSelector } from 'src/client/store/hooks';
+import { useAppSelector } from '@store/hooks';
 
 export const useLeaderboardSelector = () =>
   useAppSelector((store) => store.leaderboard);

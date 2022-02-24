@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '@types';
-import { TLeaderboardUser } from '../../../api';
+import { TLeaderboardUser } from '@api';
 import { fetchLeaderboard, addToLeaderboard } from './thunks';
 
 export type TLeaderboardState = {

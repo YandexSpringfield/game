@@ -1,8 +1,6 @@
-@import "../../styles/colors";
 @import "../../styles/mixins";
 
 .container {
-  max-width: 1080px;
   padding: 100px 0;
   text-align: center;
   font-size: 22px;
@@ -49,7 +47,7 @@
 }
 
 .articleDescription {
-  color: $input-text;
+  color: var(--input-text);
   font-size: 14px;
   line-height: 20px;
 }
@@ -62,7 +60,7 @@
 
 .communityDescription {
   margin-bottom: 35px;
-  color: $input-text;
+  color: var(--input-text);
   font-size: 14px;
   line-height: 20px;
 }
@@ -70,14 +68,14 @@
 .communityLink {
   @include inlineFlex(row, flex-start, center);
   padding: 8px 10px;
-  color: $header-table;
+  color: var(--main-text);
   font-size: 14px;
   font-weight: bold;
   transition: background-color 0.2s;
   border-radius: 5px;
 
   &:hover {
-    background-color: $body-bg;
+    background-color: var(--border-input);
   }
 }
 
@@ -90,7 +88,7 @@
 }
 
 .modalContent {
-  color: $input-text;
+  color: var(--input-text);
   font-size: 16px;
   line-height: 24px;
 

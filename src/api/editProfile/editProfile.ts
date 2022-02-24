@@ -1,6 +1,6 @@
-import { instanceAxios } from 'src/api/axios';
-import { PATH_API } from 'src/api/config';
-import { TChangePasswordRequest, TUserRequest } from '..';
+import { instanceAxios } from '@api/axios';
+import { PATH_API } from '@api/config';
+import { TChangePasswordRequest, TUserRequest } from '@api';
 
 class EditProfileAPI {
   editAvatar = async (data: unknown) => {

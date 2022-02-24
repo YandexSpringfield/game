@@ -1,3 +1,3 @@
-import { useAppSelector } from 'src/client/store/hooks';
+import { useAppSelector } from '@store/hooks';
 
 export const useUserSelector = () => useAppSelector((store) => store.user);

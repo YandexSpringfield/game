@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
 import { resourcesUrl, routes } from '@appConstants';
@@ -9,10 +9,12 @@ import {
   userSlice,
   useUserSelector,
 } from '@store';
-import defaultAvatar from '@assets/images/default-avatar.png';
-
-import { RequestStatus } from '@types';
 import { initialState } from '@store/user/userSlice';
+import { RequestStatus } from '@types';
+import { Theme, ThemeContext } from '@context';
+import defaultAvatar from '@assets/images/default-avatar.png';
+import { IoMoonSharp, IoSunnyOutline } from 'react-icons/io5';
+
 import styles from './styles.module.scss';
 
 const navs = [
@@ -31,6 +33,7 @@ const navs = [
 ];
 
 export const Header = () => {
+  const { theme, updateTheme } = useContext(ThemeContext);
   const [avatar, setAvatar] = useState('');
   const dispatch = useAppDispatch();
   const user = useUserSelector();
@@ -67,6 +70,10 @@ export const Header = () => {
           </NavLink>
         ))}
       </nav>
+      {/* eslint-disable-next-line */}
+      <span className={styles.toggle} onClick={updateTheme}>
+        {theme === Theme.light ? <IoSunnyOutline /> : <IoMoonSharp />}
+      </span>
       <Link to={routes.profile} className={styles.avatar}>
         <Avatar src={avatar ? resourcesUrl + avatar : defaultAvatar} />
       </Link>

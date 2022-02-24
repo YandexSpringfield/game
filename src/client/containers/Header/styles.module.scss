@@ -1,15 +1,14 @@
-@import "../../styles/colors";
 @import "../../styles/mixins";
 
 .header {
   @include flex(row, flex-start, center);
   padding-right: 20px;
-  background-color: $card-bg;
+  background-color: var(--card-bg);
 }
 
 .logo {
   padding: 10px 16px;
-  border-right: 1px solid $border-container;
+  border-right: 1px solid var(--border-container);
 }
 
 .navs {
@@ -20,7 +19,7 @@
   text-transform: uppercase;
   font-size: 16px;
   font-weight: 700;
-  color: $main-text;
+  color: var(--main-text);
   margin-right: 25px;
 
   &:last-child {
@@ -28,10 +27,19 @@
   }
 
   &.active {
-    color: $main-color;
+    color: var(--main-color);
   }
 }
 
 .avatar {
+  margin-left: 25px;
+}
+
+.toggle {
+  text-transform: uppercase;
+  padding-top: 5px;
+  font-size: 28px;
+  color: var(--main-text);
   margin-left: auto;
+  cursor: pointer;
 }

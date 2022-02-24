@@ -1,54 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Loading } from '@components';
-import { routes, section } from '@appConstants';
-import { useAuth } from '@hooks';
+import { routes, Layout } from '@appConstants';
+import { useUserSelector } from '@store';
 import { parseNumbers } from '@utils/utils';
-import { authAPI } from '../../api';
+import { useAuth } from '@hooks';
 
-export const withAuth = (pathname: string) => {
+export const withAuth = (layout: Layout) => {
   return (WrappedComponent) =>
-    // eslint-disable-next-line func-names
-    function () {
-      const [authed, setAuthed] = useState(false);
-      const [loading, setLoading] = useState(true);
+    function render() {
       const { yaSingIn } = useAuth();
+      const { id } = useUserSelector();
 
       useEffect(() => {
         const { code } = parseNumbers(window.location.search);
-
-        authAPI
-          .getUserInfo()
-          .then(() => {
-            setAuthed(true);
-            setLoading(false);
-          })
-          .catch(() => {
-            setAuthed(false);
-            setLoading(false);
-          });
-
         if (code) {
-          yaSingIn(code, routes.game.root);
+          yaSingIn(code, routes.preview);
         }
       }, []);
 
-      return (
-        <>
-          {loading ? <Loading /> : null}
-          {authed && !loading && pathname === section.core ? (
-            <WrappedComponent />
-          ) : null}
-          {!authed && !loading && pathname === section.core ? (
-            <Navigate to={routes.login} />
-          ) : null}
-          {!authed && !loading && pathname === section.auth ? (
-            <WrappedComponent />
-          ) : null}
-          {authed && !loading && pathname === section.auth ? (
-            <Navigate to={routes.game.root} />
-          ) : null}
-        </>
-      );
+      if (id && layout === Layout.Core) {
+        return <WrappedComponent />;
+      }
+
+      if (!id && layout === Layout.Core) {
+        return <Navigate to={routes.login} />;
+      }
+
+      if (!id && layout === Layout.Auth) {
+        return <WrappedComponent />;
+      }
+
+      if (id && layout === Layout.Auth) {
+        return <Navigate to={routes.preview} />;
+      }
+
+      return null;
     };
 };

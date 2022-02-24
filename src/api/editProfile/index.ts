@@ -1,1 +1,1 @@
-export { editProfileAPI } from 'src/api/editProfile/editProfile';
+export { editProfileAPI } from '@api/editProfile/editProfile';

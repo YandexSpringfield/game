@@ -1,6 +1,6 @@
-import { Entity } from 'src/client/containers/GamePlay/Canvas/entity';
-import { EntityEvents } from 'src/client/containers/GamePlay/Canvas/entity/Entity';
-import { OverworldName } from 'src/client/containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
+import { Entity } from '@containers/GamePlay/Canvas/entity';
+import { EntityEvents } from '@containers/GamePlay/Canvas/entity/Entity';
+import { OverworldName } from '@containers/GamePlay/Canvas/sprite-resolver/spriteConfig';
 import { TileConverter, ITile } from './TileConverter';
 
 const breaksToEntityPrevent: OverworldName[] = [
