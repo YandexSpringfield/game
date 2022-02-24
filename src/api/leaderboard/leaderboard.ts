@@ -1,7 +1,7 @@
-import { instanceAxios } from '@api/axios';
-import { PATH_API } from '@api/config';
-import { TLeaderboardNewLeaderRequest, TLeaderboardRequest } from '@api';
-import { defaultPagination } from '@appConstants/leaderboard';
+import { instanceAxios } from 'src/api/axios';
+import { PATH_API } from 'src/api/config';
+import { defaultPagination } from 'src/client/appConstants/leaderboard';
+import { TLeaderboardNewLeaderRequest, TLeaderboardRequest } from '..';
 
 class LeaderboardAPI {
   addUser = async (data: TLeaderboardNewLeaderRequest) => {

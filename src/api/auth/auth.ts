@@ -1,6 +1,6 @@
-import { instanceAxios } from '@api/axios';
-import { PATH_API } from '@api/config';
-import { TSignIn, TSignUp } from '@api';
+import { instanceAxios } from 'src/api/axios';
+import { PATH_API } from 'src/api/config';
+import { TSignIn, TSignUp } from '..';
 
 class AuthAPI {
   signUp = async (data: TSignUp) => {
