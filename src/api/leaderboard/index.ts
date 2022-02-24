@@ -1,1 +1,1 @@
-export { leaderboardAPI } from '@api/leaderboard/leaderboard';
+export { leaderboardAPI } from 'src/api/leaderboard/leaderboard';
