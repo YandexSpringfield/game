@@ -68,7 +68,7 @@ export const GamePlay = memo(() => {
       if (canvasBgRef.current && canvasMarioRef.current) {
         core = new Core(canvasBgRef.current, canvasMarioRef.current);
         eventBus.on(MODAL, (status, score) => {
-          if (isFull) {
+          if (getFullscreenElement(document)) {
             deactivateFullscreen();
           }
           setGameStatus({ status, score });
