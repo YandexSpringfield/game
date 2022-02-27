@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import { readFileSync } from 'fs';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
+
 import { connectToDB } from '@server/db/client';
 import https from 'https';
 import clientConfig from '../../webpack/client.config';
@@ -11,25 +12,18 @@ import {
   authMiddleware,
   renderMiddleware,
   storeMiddleware,
-  webpackMiddleware,
+  webpackClientMiddleware,
 } from '.';
 
-dotenv.config();
 const app = express();
-const port = process.env.PORT || 80;
-
-console.log('port from process env', process.env.PORT);
-console.log('env node ', process.env.NODE_ENV);
+const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
-app.use(
-  express.static(path.resolve(__dirname, '../dist'), {
-    maxAge: '1d',
-  }),
-);
+app.use(express.static(path.resolve(__dirname, '../dist')));
+
 app.get(
   '/*',
-  [...webpackMiddleware(clientConfig)],
+  [...webpackClientMiddleware(clientConfig)],
   authMiddleware,
   storeMiddleware,
   renderMiddleware,
@@ -66,4 +60,4 @@ const startApp = () => {
   });
 };
 
-export default startApp;
+startApp();

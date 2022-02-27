@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
+import 'dotenv/config';
 import webpack, { Configuration, Entry } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
@@ -29,7 +30,7 @@ if (!IS_DEV) {
 }
 
 const config: Configuration = {
-  mode: process.env.NODE_ENV as 'production' | 'development',
+  mode: (process.env.NODE_ENV as 'production' | 'development') || 'development',
   name: 'client',
   target: 'web',
   plugins,

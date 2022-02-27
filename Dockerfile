@@ -1,6 +1,7 @@
 FROM node:16-alpine
 
 WORKDIR /var/www
+
 COPY package*.json ./
 
 # Disable Husky https://typicode.github.io/husky/#/?id=disable-husky-in-cidocker

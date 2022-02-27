@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import path from 'path';
+import 'dotenv/config';
 import nodeExternals from 'webpack-node-externals';
 import { Configuration } from 'webpack';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
@@ -11,7 +12,7 @@ import cssLoader from './loaders/css';
 import jsLoader from './loaders/js';
 
 const config: Configuration = {
-  mode: process.env.NODE_ENV as 'production' | 'development',
+  mode: (process.env.NODE_ENV as 'production' | 'development') || 'development',
   name: 'server',
   dependencies: ['client'],
   target: 'node',
