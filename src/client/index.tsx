@@ -1,5 +1,6 @@
+/* eslint-disable import/no-import-module-exports */
 import * as React from 'react';
-import { hydrate } from 'react-dom';
+import { hydrate, render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from '@store';
@@ -24,7 +25,10 @@ if (process.env.NODE_ENV === 'production') {
   startServiceWorker();
 }
 
-hydrate(
+// @ts-ignore
+const renderMethod = module.hot ? render : hydrate;
+
+renderMethod(
   <Provider store={store}>
     <BrowserRouter>
       <App />

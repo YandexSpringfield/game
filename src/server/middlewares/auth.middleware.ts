@@ -4,6 +4,7 @@ import { ServerRequest } from '@server/types';
 import { setAuthCookies } from '@server/helpers';
 import { RequestStatus } from '@types';
 import { authAPI } from '@api';
+import { collections } from '@server/db/collections';
 
 export async function authMiddleware(
   req: ServerRequest,
@@ -20,6 +21,7 @@ export async function authMiddleware(
     const response = await authAPI.getUserInfo({
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
+    collections.users?.insertOne({ uuid: cookies.uuid });
     req.user = {
       ...response.data,
       requestStatus: RequestStatus.SUCCESS,
