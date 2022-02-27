@@ -10,7 +10,9 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "extends": "./tsconfig.paths.json",
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],

@@ -1,15 +1,24 @@
-import { MongoClient } from 'mongodb';
-import { collections } from '@server/db/collections';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import { UserModel } from '@server/models';
 
-export const client = new MongoClient(process.env.MONGO_URL as string);
+const sequelizeOptions: SequelizeOptions = {
+  host: process.env.POSTGRES_HOST,
+  port: Number(process.env.POSTGRES_PORT),
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
+  dialect: 'postgres',
+  models: [UserModel],
+};
 
-export async function connectToDB() {
+export const sequelize = new Sequelize(sequelizeOptions);
+
+export const connectToDBClient = async () => {
   try {
-    await client.connect();
-    const db = client.db(process.env.MONGO_DB_NAME);
-    collections.users = db.collection('users');
-    console.log(`Successfully connected to ${db.databaseName}`);
-  } catch (err) {
-    console.log('err connect to database', err);
+    await sequelize.authenticate();
+    await sequelize.sync({ force: true });
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
   }
-}
+};

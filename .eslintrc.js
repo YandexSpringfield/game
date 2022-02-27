@@ -42,7 +42,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['state'] },
+      { props: true, ignorePropertyModificationsFor: ['state', 'req'] },
     ],
     'react/function-component-definition': [
       2,

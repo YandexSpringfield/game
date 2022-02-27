@@ -4,7 +4,7 @@ import path from 'path';
 import { readFileSync } from 'fs';
 import cookieParser from 'cookie-parser';
 
-import { connectToDB } from '@server/db/client';
+import { connectToDBClient } from '@server/db/client';
 import https from 'https';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
@@ -29,35 +29,35 @@ app.get(
   renderMiddleware,
 );
 
-const startApp = () => {
-  connectToDB().then(() => {
-    if (IS_DEV) {
-      const pem = readFileSync(
-        path.resolve(__dirname, '../certificates/cert.pem'),
-        'utf-8',
-      );
+const startApp = async () => {
+  await connectToDBClient();
 
-      const key = readFileSync(
-        path.resolve(__dirname, '../certificates/key.pem'),
-        'utf-8',
-      );
+  if (IS_DEV) {
+    const pem = readFileSync(
+      path.resolve(__dirname, '../certificates/cert.pem'),
+      'utf-8',
+    );
 
-      const server = https.createServer(
-        {
-          key,
-          cert: pem,
-        },
-        app,
-      );
-      server.listen(port, () => {
-        console.log('Application is started on localhost:', port);
-      });
-    } else {
-      app.listen(port, () => {
-        console.log('Application is started on localhost:', port);
-      });
-    }
-  });
+    const key = readFileSync(
+      path.resolve(__dirname, '../certificates/key.pem'),
+      'utf-8',
+    );
+
+    const server = https.createServer(
+      {
+        key,
+        cert: pem,
+      },
+      app,
+    );
+    server.listen(port, () => {
+      console.log('Application is started on localhost:', port);
+    });
+  } else {
+    app.listen(port, () => {
+      console.log('Application is started on localhost:', port);
+    });
+  }
 };
 
 startApp();

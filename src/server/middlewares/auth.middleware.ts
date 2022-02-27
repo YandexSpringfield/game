@@ -1,10 +1,9 @@
-/* eslint-disable no-param-reassign */
 import { NextFunction, Response } from 'express';
 import { ServerRequest } from '@server/types';
 import { setAuthCookies } from '@server/helpers';
 import { RequestStatus } from '@types';
 import { authAPI } from '@api';
-import { collections } from '@server/db/collections';
+import { userService } from '@server/services';
 
 export async function authMiddleware(
   req: ServerRequest,
@@ -21,12 +20,16 @@ export async function authMiddleware(
     const response = await authAPI.getUserInfo({
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
-    collections.users?.insertOne({ uuid: cookies.uuid });
+
+    const [user] = await userService.findOrCreate(cookies.uuid);
+
+    console.log(user.uuid);
+
     req.user = {
       ...response.data,
       requestStatus: RequestStatus.SUCCESS,
     };
-  } catch {
+  } catch (err) {
     req.user = null;
   }
 

@@ -1,1 +1,1 @@
-export { client } from './client';
+export { sequelize } from './client';

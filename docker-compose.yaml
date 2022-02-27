@@ -2,6 +2,7 @@ version: "3"
 
 services:
   app:
+    container_name: app
     build:
       context: .
     env_file:
@@ -12,17 +13,21 @@ services:
       - "3000:3000"
     restart: always
     depends_on:
-      - mongo
+      - postgres
     networks:
       - awesome
     volumes:
       - .:/var/www
-  mongo:
-    image: mongo
+  postgres:
+    container_name: database
+    image: postgres:12
     ports:
-      - "27017:27017"
+      - "5423:5432"
+    env_file:
+      ./.env
     volumes:
-      - ./data:/data/db
+      - ./postgresdata:/var/lib/postgresql/data
+    restart: always
     networks:
       - awesome
 
