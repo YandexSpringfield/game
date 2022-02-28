@@ -1,4 +1,5 @@
 export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
+export const BASE_SERVER_API_URL = '/api/v1';
 
 export const BASE_YA_URL = 'https://oauth.yandex.ru';
 
@@ -17,6 +18,7 @@ export const PATH_API = {
     PROFILE: '/user/profile',
     AVATAR: '/user/profile/avatar',
     PASSWORD: '/user/password',
+    UPDATE_THEME: '/theme',
   },
   LEADERBOARD: {
     ADD_USER: '/leaderboard',

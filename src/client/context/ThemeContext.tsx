@@ -1,16 +1,17 @@
 import React, { FC, createContext, useState, useEffect, useMemo } from 'react';
-import { TThemeContext, Theme } from '@context/types';
+import { TThemeContext } from '@context/types';
+import { Theme } from '@types';
 
 export const ThemeContext = createContext<TThemeContext>({
-  theme: Theme.light,
+  theme: Theme.Light,
   updateTheme: () => {},
 });
 
 export const ThemeProvider: FC<React.ReactNode> = ({ children }) => {
-  const [theme, setTheme] = useState(Theme.light);
+  const [theme, setTheme] = useState(Theme.Light);
 
   const updateTheme = () => {
-    setTheme(theme === Theme.light ? Theme.dark : Theme.light);
+    setTheme(theme === Theme.Light ? Theme.Dark : Theme.Light);
     document.body.setAttribute('theme', theme);
   };
 

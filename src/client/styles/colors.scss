@@ -1,4 +1,4 @@
-:root{
+:root {
   --main-color: #0ba6d7;
   --main-color-hover: #0b9bd7;
   --main-error: #D02B20;
@@ -7,7 +7,7 @@
   --box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
 }
 
-body[theme='light'] {
+body[data-theme="Light"] {
   --main-text: #32324D;
   --secondary-text: #A5A5BA;
   --input-text: #8E8EA9;
@@ -21,7 +21,7 @@ body[theme='light'] {
   --input-disabled: #DCDCE480;
 }
 
-body[theme='dark'] {
+body[data-theme="Dark"] {
   --main-text: #fff;
   --secondary-text: #768c9e;
   --input-text: #768c9e;

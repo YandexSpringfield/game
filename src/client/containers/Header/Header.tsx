@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
 import { resourcesUrl, routes } from '@appConstants';
 import { Logo, Avatar } from '@components';
 import {
   fetchUserProfile,
+  updateUserThemeThunk,
   useAppDispatch,
   userSlice,
   useUserSelector,
 } from '@store';
 import { initialState } from '@store/user/userSlice';
-import { RequestStatus } from '@types';
-import { Theme, ThemeContext } from '@context';
+import { RequestStatus, Theme } from '@types';
 import defaultAvatar from '@assets/images/default-avatar.png';
 import { IoMoonSharp, IoSunnyOutline } from 'react-icons/io5';
 
@@ -33,7 +33,6 @@ const navs = [
 ];
 
 export const Header = () => {
-  const { theme, updateTheme } = useContext(ThemeContext);
   const [avatar, setAvatar] = useState('');
   const dispatch = useAppDispatch();
   const user = useUserSelector();
@@ -51,6 +50,18 @@ export const Header = () => {
   useEffect(() => {
     setAvatar(user.avatar);
   }, [user.avatar]);
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', user.theme);
+  }, [user.theme]);
+
+  const handleUpdateTheme = useCallback(async () => {
+    await dispatch(
+      updateUserThemeThunk(
+        user.theme === Theme.Light ? Theme.Dark : Theme.Light,
+      ),
+    );
+  }, [user.theme]);
 
   return (
     <header className={styles.header}>
@@ -71,8 +82,8 @@ export const Header = () => {
         ))}
       </nav>
       {/* eslint-disable-next-line */}
-      <span className={styles.toggle} onClick={updateTheme}>
-        {theme === Theme.light ? <IoSunnyOutline /> : <IoMoonSharp />}
+      <span className={styles.toggle} onClick={handleUpdateTheme}>
+        {user.theme === Theme.Light ? <IoSunnyOutline /> : <IoMoonSharp />}
       </span>
       <Link to={routes.profile} className={styles.avatar}>
         <Avatar src={avatar ? resourcesUrl + avatar : defaultAvatar} />

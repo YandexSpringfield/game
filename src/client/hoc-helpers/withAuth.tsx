@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { routes, Layout } from '@appConstants';
+import { Navigate } from 'react-router-dom';
 import { useUserSelector } from '@store';
 import { parseNumbers } from '@utils/utils';
 import { useAuth } from '@hooks';
-import { Login } from '@pages';
-import { GameStart } from '@containers';
 
 export const withAuth = (layout: Layout) => {
   return (WrappedComponent) =>
@@ -24,7 +23,7 @@ export const withAuth = (layout: Layout) => {
       }
 
       if (!id && layout === Layout.Core) {
-        return <Login />;
+        return <Navigate to={routes.login} />;
       }
 
       if (!id && layout === Layout.Auth) {
@@ -32,7 +31,7 @@ export const withAuth = (layout: Layout) => {
       }
 
       if (id && layout === Layout.Auth) {
-        return <GameStart />;
+        return <Navigate to={routes.preview} />;
       }
 
       return null;

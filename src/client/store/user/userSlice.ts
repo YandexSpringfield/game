@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, Theme } from '@types';
-import { fetchUserProfile } from './thunks';
+import { fetchUserProfile, updateUserThemeThunk } from './thunks';
 
 export type TUserState = {
   id: number;
@@ -52,6 +52,10 @@ export const userSlice = createSlice({
       Object.keys(payload).forEach((key) => {
         state[key] = payload[key];
       });
+    });
+
+    builder.addCase(updateUserThemeThunk.fulfilled, (state, { payload }) => {
+      state.theme = payload.data.theme;
     });
   },
 });
