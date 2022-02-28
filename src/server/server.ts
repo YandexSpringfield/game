@@ -6,13 +6,13 @@ import cookieParser from 'cookie-parser';
 
 import { connectToDBClient } from '@server/db/client';
 import https from 'https';
-import clientConfig from '../../webpack/client.config';
+// import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
 import {
   authMiddleware,
   renderMiddleware,
   storeMiddleware,
-  webpackClientMiddleware,
+  // webpackClientMiddleware,
 } from '.';
 
 const app = express();
@@ -23,7 +23,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.get(
   '/*',
-  [...webpackClientMiddleware(clientConfig)],
+  // [...webpackClientMiddleware(clientConfig)],
   authMiddleware,
   storeMiddleware,
   renderMiddleware,

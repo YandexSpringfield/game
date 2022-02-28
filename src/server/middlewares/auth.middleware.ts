@@ -3,7 +3,7 @@ import { ServerRequest } from '@server/types';
 import { setAuthCookies } from '@server/helpers';
 import { RequestStatus } from '@types';
 import { authAPI } from '@api';
-import { userService } from '@server/services';
+import { userService, userThemeService } from '@server/services';
 
 export async function authMiddleware(
   req: ServerRequest,
@@ -21,15 +21,15 @@ export async function authMiddleware(
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
 
-    const [user] = await userService.findOrCreate(cookies.uuid);
-
-    console.log(user.uuid);
+    await userService.findOrCreate(cookies.uuid);
+    await userThemeService.findOrCreate(cookies.uuid);
 
     req.user = {
       ...response.data,
       requestStatus: RequestStatus.SUCCESS,
     };
   } catch (err) {
+    console.log(err);
     req.user = null;
   }
 

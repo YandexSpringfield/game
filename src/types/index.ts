@@ -26,3 +26,8 @@ export interface DocumentWithFullscreen extends HTMLDocument {
   mozCancelFullScreen?: () => void;
   webkitExitFullscreen?: () => void;
 }
+
+export enum Theme {
+  Dark = 'Dark',
+  Light = 'Light',
+}
