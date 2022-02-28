@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RequestStatus } from '@types';
+import { RequestStatus, Theme } from '@types';
 import { fetchUserProfile } from './thunks';
 
 export type TUserState = {
@@ -12,6 +12,7 @@ export type TUserState = {
   phone: string;
   avatar: string;
   requestStatus: RequestStatus;
+  theme: Theme;
 };
 
 export const initialState: TUserState = {
@@ -24,6 +25,7 @@ export const initialState: TUserState = {
   phone: '',
   avatar: '',
   requestStatus: RequestStatus.INIT,
+  theme: Theme.Light,
 };
 
 export const userSlice = createSlice({

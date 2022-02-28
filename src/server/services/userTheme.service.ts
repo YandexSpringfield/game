@@ -9,12 +9,12 @@ class UserThemeService {
         theme: theme || Theme.Light,
         ownerId: uuid,
       },
-      raw: true,
     });
   }
 
   public async updateOrCreate(uuid: string, theme: Theme) {
-    const [data, created] = await this.findOrCreate(uuid);
+    const [data, created] = await this.findOrCreate(uuid, theme);
+
     if (!created) {
       return data.update({
         theme,

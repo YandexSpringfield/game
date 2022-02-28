@@ -10,6 +10,13 @@ class UserService {
       raw: true,
     });
   }
+
+  public async find(uuid: string) {
+    return UserModel.findOne({
+      where: { uuid },
+      raw: true,
+    });
+  }
 }
 
 export const userService = new UserService();

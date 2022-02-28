@@ -22,11 +22,12 @@ export async function authMiddleware(
     });
 
     await userService.findOrCreate(cookies.uuid);
-    await userThemeService.findOrCreate(cookies.uuid);
+    const [data] = await userThemeService.findOrCreate(cookies.uuid);
 
     req.user = {
       ...response.data,
       requestStatus: RequestStatus.SUCCESS,
+      theme: data.getDataValue('theme'),
     };
   } catch (err) {
     console.log(err);
