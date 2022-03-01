@@ -11,6 +11,7 @@ import { initialState as initialStateUser } from '@store/user/userSlice';
 import { initialState as initialStateLeaderbord } from '@store/leaderboard/leaderboardSlice';
 import favicon from '@assets/images/favicon.ico';
 import { App } from '@client/App';
+import { IS_DEV } from '../../../webpack/env';
 
 import '@client/styles/styles.module.scss';
 
@@ -24,7 +25,7 @@ function getHtml(reactHtml: string, preloadedState: RootState) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <link rel="shortcut icon" type="image/png" href="${favicon}">
-            <link rel="stylesheet" href="/css/styles.css">
+            ${!IS_DEV ? '<link rel="stylesheet" href="/css/styles.css">' : ''}
             <title>Springfield game</title>
         </head>
         <body>

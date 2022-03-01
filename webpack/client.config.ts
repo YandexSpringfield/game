@@ -40,7 +40,7 @@ const config: Configuration = {
     path.join(SRC_DIR, 'client'),
   ].filter(Boolean) as unknown as Entry,
   module: {
-    rules: [...fileLoader, ...cssLoader, jsLoader],
+    rules: [...fileLoader, ...cssLoader.client, jsLoader],
   },
   output: {
     path: BUILD_DIR,

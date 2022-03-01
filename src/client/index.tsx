@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from '@store';
 import { App } from './App';
 
+import '@client/styles/styles.module.scss';
+
 function startServiceWorker() {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
