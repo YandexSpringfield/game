@@ -3,6 +3,7 @@
     "outDir": "./dist/",
     "noImplicitAny": false,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "module": "commonjs",
     "target": "esnext",
     "jsx": "react",

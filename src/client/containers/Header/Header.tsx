@@ -51,10 +51,6 @@ export const Header = () => {
     setAvatar(user.avatar);
   }, [user.avatar]);
 
-  useEffect(() => {
-    document.body.setAttribute('data-theme', user.theme);
-  }, [user.theme]);
-
   const handleUpdateTheme = useCallback(async () => {
     await dispatch(
       updateUserThemeThunk(
