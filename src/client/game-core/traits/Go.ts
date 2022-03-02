@@ -5,11 +5,11 @@ export class Go extends Trait {
 
   speed: number;
 
-  constructor() {
+  constructor(speed?) {
     super('go');
 
     this.direction = 0;
-    this.speed = 7000;
+    this.speed = speed || 7000;
   }
 
   update(entity, deltaTime) {

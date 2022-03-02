@@ -1,6 +1,7 @@
 import { Vectors } from '@game-core/entity/Vectors';
 import { SpriteResolver } from '@game-core';
 import { tilesSize } from '@game-core/sprite-resolver';
+import { TLevel } from '@game-core/levels/level-1';
 
 export enum EntityEvents {
   selectCoin = 'selectCoin',
@@ -11,6 +12,8 @@ export class Entity {
 
   vel: Vectors;
 
+  name: string;
+
   width: number;
 
   height: number;
@@ -19,15 +22,16 @@ export class Entity {
 
   traits: any[];
 
-  level: {};
+  level: TLevel;
 
   spriteResolver: SpriteResolver;
 
-  constructor([spriteResolver, level]) {
+  constructor([spriteResolver, level], name) {
     this.pos = new Vectors(0, 0);
     this.vel = new Vectors(0, 0);
     this.width = tilesSize.width;
     this.height = tilesSize.height;
+    this.name = name;
 
     this.gravity = 1000;
 

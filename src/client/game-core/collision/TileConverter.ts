@@ -1,11 +1,7 @@
-import {
-  OverworldName,
-  tilesSize,
-  tilesTypes,
-} from '../sprite-resolver/spriteConfig';
+import { tilesSize, tilesTypes } from '../sprite-resolver/spriteConfig';
 
 export interface ITile {
-  tile: { name: OverworldName; type: string | undefined };
+  tile: { name: string; type: string | undefined };
   x1: number;
   x2: number;
   y1: number;
@@ -23,10 +19,20 @@ export class TileConverter {
     return Math.floor(pos / this.tileSize);
   }
 
-  getByIndex(level, indexX, indexY): ITile | undefined {
-    const ground = indexY >= 13 ? 'ground' : null;
-    const element = level[`${indexX}.${indexY}`] || ground;
+  getEnemies(level, indexX, indexY): string | undefined {
+    if (level.goomba[0] === indexX && level.goomba[1] === indexY) {
+      return 'goomba';
+    }
 
+    return undefined;
+  }
+
+  getTiles(level, indexX, indexY): string | undefined {
+    const ground = indexY >= 13 ? 'ground' : undefined;
+    return level[`${indexX}.${indexY}`] || ground;
+  }
+
+  getByIndex(element, indexX, indexY): ITile | undefined {
     if (element) {
       const tile = tilesTypes[element];
       const x1 = indexX * this.tileSize;
@@ -63,10 +69,23 @@ export class TileConverter {
 
     this.toIndexRange(x1, x2).forEach((indexX) => {
       this.toIndexRange(y1, y2).forEach((indexY) => {
-        const matchBg = this.getByIndex(level, indexX, indexY);
+        const matchBg = this.getByIndex(
+          this.getTiles(level, indexX, indexY),
+          indexX,
+          indexY,
+        );
+        const matchEnemies = this.getByIndex(
+          this.getEnemies(level, indexX, indexY),
+          indexX,
+          indexY,
+        );
 
         if (matchBg) {
           matches.push(matchBg);
+        }
+
+        if (matchEnemies) {
+          matches.push(matchEnemies);
         }
       });
     });

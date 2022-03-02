@@ -7,6 +7,8 @@ import { eventBus } from '@game-core/EventBus';
 import { tileCollider } from '@game-core/collision/TileCollider';
 import { drawCoinsStatus, drawTimerStatus } from '@game-core/core/drawText';
 import { SpriteResolver } from '@game-core';
+import { Goomba } from '@game-core/entity/Goomba';
+import { musicPlayer } from '@game-core/core/MusicPlayer';
 
 export class Level {
   public canvasBg: HTMLCanvasElement;
@@ -18,6 +20,8 @@ export class Level {
   public contextMario: CanvasRenderingContext2D;
 
   public mario: Mario;
+
+  public goomba: Goomba;
 
   public camera: Camera;
 
@@ -45,6 +49,7 @@ export class Level {
     eventBus.on(EntityEvents.selectCoin, (indexX, indexY) => {
       this.deleteCoin(indexX, indexY);
       this.updateBackground();
+      musicPlayer.playTrack('coin', false);
     });
 
     this.levelSize = {
@@ -54,11 +59,19 @@ export class Level {
   }
 
   init(level) {
+    musicPlayer.playTrack('theme', true);
     this.coins = 0;
     this.level = { ...level };
     this.camera = new Camera();
     this.timer = new Timer();
     this.mario = new Mario(
+      this.canvasMario,
+      this.contextMario,
+      this.levelSize,
+      this.sprite,
+      this.level,
+    );
+    this.goomba = new Goomba(
       this.canvasMario,
       this.contextMario,
       this.levelSize,
@@ -102,9 +115,10 @@ export class Level {
   }
 
   timerStart() {
-    this.timer.update = (deltaTime, time) => {
+    this.timer.update = (deltaTime, time, animateTime) => {
       this.time = time;
       this.mario.update(deltaTime);
+      this.goomba.update(deltaTime, animateTime);
 
       if (
         this.mario.vel.x !== 0 &&
@@ -117,6 +131,7 @@ export class Level {
       }
 
       this.mario.draw(this.camera.pos.x, this.camera.pos.y);
+      this.goomba.draw(this.camera.pos.x, this.camera.pos.y);
 
       drawTimerStatus(this.contextMario, this.canvasMario, time);
       drawCoinsStatus(this.contextMario, this.canvasMario, this.coins);
@@ -131,6 +146,7 @@ export class Level {
   }
 
   destroy() {
+    musicPlayer.stopTracks();
     this.timer.stop();
     this.mario.keyboardRemove();
   }

@@ -1,7 +1,7 @@
 let accumulatedTime = 0;
 
 export class Timer {
-  update: (dt: number, t: number) => void;
+  update: (dt: number, t: number, aT: number) => void;
 
   deltaTime: number;
 
@@ -26,6 +26,7 @@ export class Timer {
       this.update(
         this.deltaTime / 1000,
         Math.trunc((time - accumulatedTime) / 1000),
+        Math.trunc((time - accumulatedTime) / 200),
       );
     }
 

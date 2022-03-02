@@ -2,6 +2,7 @@ import { ITile, TileConverter } from '@game-core/collision/TileConverter';
 import { Entity } from '@game-core/entity';
 import { EntityEvents } from '@game-core/entity/Entity';
 import { eventBus } from '@game-core/EventBus';
+import { GAME_END } from '@game-core';
 
 class TileCollider extends TileConverter {
   private _notifyCoin(match: ITile) {
@@ -31,8 +32,12 @@ class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.name === 'coin') {
+      if (match.tile.name === 'coin' && entity.name === 'mario') {
         this._notifyCoin(match);
+      }
+
+      if (match.tile.name === 'goomba' && entity.name === 'mario') {
+        eventBus.emit(GAME_END, 'lost');
       }
 
       if (!match.tile.type) {
@@ -43,11 +48,17 @@ class TileCollider extends TileConverter {
         if (entity.pos.x + entity.width > match.x1) {
           entity.pos.set(match.x1 - entity.width, entity.pos.y);
           entity.vel.set(0, entity.vel.y);
+          // @ts-ignore
+          // eslint-disable-next-line no-param-reassign
+          entity.direction = -1;
         }
       } else if (entity.vel.x < 0) {
         if (entity.pos.x < match.x2) {
           entity.pos.set(match.x2, entity.pos.y);
           entity.vel.set(0, entity.vel.y);
+          // @ts-ignore
+          // eslint-disable-next-line no-param-reassign
+          entity.direction = 1;
         }
       }
     });
@@ -77,6 +88,13 @@ class TileCollider extends TileConverter {
         this._notifyCoin(match);
       }
 
+      if (
+        (match.tile.name === 'goomba' && entity.name === 'mario') ||
+        entity.name === 'marioLeft'
+      ) {
+        eventBus.emit('kill');
+      }
+
       if (!match.tile.type) {
         return;
       }
@@ -87,7 +105,11 @@ class TileCollider extends TileConverter {
           entity.vel.set(entity.vel.x, 0);
           // @ts-ignore
           // eslint-disable-next-line no-param-reassign
-          entity.jump.cancel = false;
+          if (entity.jump) {
+            // @ts-ignore
+            // eslint-disable-next-line no-param-reassign
+            entity.jump.cancel = false;
+          }
         }
       } else if (entity.vel.y < 0) {
         if (entity.pos.y < match.y2) {

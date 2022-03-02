@@ -1,4 +1,6 @@
-export const level1: Record<string, string> = {
+export type TLevel = { [index: string]: string | [] | [number, number] };
+
+export const level1: TLevel = {
   '9.10': 'coin',
   '8.11': 'ground',
   '9.11': 'ground',
@@ -170,4 +172,6 @@ export const level1: Record<string, string> = {
   '129.10': 'bricks',
   '130.10': 'bricks',
   '131.10': 'bricks',
+
+  goomba: [],
 };
