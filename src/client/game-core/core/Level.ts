@@ -1,14 +1,18 @@
-import { Camera } from '@game-core/core/Camera';
-import { Mario } from '@game-core/entity';
-import { Timer } from '@game-core/core/Timer';
-import { overworldSprite, tilesSize } from '@game-core/sprite-resolver';
-import { EntityEvents } from '@game-core/entity/Entity';
-import { eventBus } from '@game-core/EventBus';
+import {
+  Camera,
+  Timer,
+  musicPlayer,
+  drawCoinsStatus,
+  drawTimerStatus,
+} from '@game-core/core';
+import { Mario, Goomba, EntityEvents } from '@game-core/entity';
+import {
+  overworldSprite,
+  tilesSize,
+  OverworldTiles,
+} from '@game-core/sprite-resolver';
 import { tileCollider } from '@game-core/collision/TileCollider';
-import { drawCoinsStatus, drawTimerStatus } from '@game-core/core/drawText';
-import { SpriteResolver } from '@game-core';
-import { Goomba } from '@game-core/entity/Goomba';
-import { musicPlayer } from '@game-core/core/MusicPlayer';
+import { SpriteResolver, eventBus } from '@game-core';
 import { TLevel } from '@game-core/levels/level-1';
 import cloneDeep from '@utils/utils';
 
@@ -31,9 +35,9 @@ export class Level {
 
   public sprite: SpriteResolver;
 
-  public time: number;
-
   public level: TLevel;
+
+  public time: number;
 
   public coins: number;
 
@@ -62,6 +66,7 @@ export class Level {
 
   init(level) {
     musicPlayer.playTrack('theme', true);
+
     this.coins = 0;
     this.level = cloneDeep(level);
     this.camera = new Camera();
@@ -105,12 +110,20 @@ export class Level {
         const element = this.level.tiles[`${x}.${y}`];
 
         if (element) {
-          if (element === 'coin') {
-            this.sprite.drawTile('sky', this.contextBg, x - start, y);
+          if (element === OverworldTiles.Coin) {
+            this.sprite.drawTile(
+              OverworldTiles.Sky,
+              this.contextBg,
+              x - start,
+              y,
+            );
           }
           this.sprite.drawTile(element, this.contextBg, x - start, y);
         } else {
-          const tile = y <= this.levelSize.ROWS - 2 ? 'sky' : 'ground';
+          const tile =
+            y <= this.levelSize.ROWS - 2
+              ? OverworldTiles.Sky
+              : OverworldTiles.Ground;
           this.sprite.drawTile(tile, this.contextBg, x - start, y);
         }
       }
@@ -144,7 +157,7 @@ export class Level {
   }
 
   deleteCoin(x, y) {
-    this.level.tiles[`${x}.${y}`] = 'sky';
+    this.level.tiles[`${x}.${y}`] = OverworldTiles.Sky;
     this.coins += 1;
   }
 

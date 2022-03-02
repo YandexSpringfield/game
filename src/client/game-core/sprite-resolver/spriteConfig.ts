@@ -1,4 +1,4 @@
-export enum OverworldName {
+export enum OverworldTiles {
   Ground = 'ground',
   Sky = 'sky',
   Bricks = 'bricks',
@@ -7,17 +7,18 @@ export enum OverworldName {
   Coin = 'coin',
 }
 
-export enum EntityName {
+export enum OverworldEntity {
   Mario = 'mario',
   MarioLeft = 'marioLeft',
+  Goomba = 'goomba',
   GoombaRight = 'goombaRight',
   GoombaLeft = 'goombaLeft',
   GoombaKilled = 'goombaKilled',
 }
 
 interface IOverworld {
-  tiles: { name: OverworldName; range: number[] }[];
-  entities: { name: EntityName; range: number[] }[];
+  tiles: { name: OverworldTiles; range: number[] }[];
+  entities: { name: OverworldEntity; range: number[] }[];
 }
 
 interface ITilesSize {
@@ -31,29 +32,29 @@ export const tilesSize: ITilesSize = {
 };
 
 export const tilesTypes = {
-  sky: { name: OverworldName.Sky },
-  coin: { name: OverworldName.Coin },
-  goomba: { name: 'goomba' },
-  ground: { name: OverworldName.Ground, type: 'ground' },
-  bricks: { name: OverworldName.Bricks, type: 'ground' },
-  chocolate: { name: OverworldName.Chocolate, type: 'ground' },
-  chance: { name: OverworldName.Chance, type: 'ground' },
+  sky: { name: OverworldTiles.Sky },
+  coin: { name: OverworldTiles.Coin },
+  goomba: { name: OverworldEntity.Goomba },
+  ground: { name: OverworldTiles.Ground, type: 'ground' },
+  bricks: { name: OverworldTiles.Bricks, type: 'ground' },
+  chocolate: { name: OverworldTiles.Chocolate, type: 'ground' },
+  chance: { name: OverworldTiles.Chance, type: 'ground' },
 };
 
 export const overworldSprite: IOverworld = {
   tiles: [
-    { name: OverworldName.Ground, range: [0, 0] },
-    { name: OverworldName.Sky, range: [1, 0] },
-    { name: OverworldName.Bricks, range: [2, 0] },
-    { name: OverworldName.Chocolate, range: [3, 0] },
-    { name: OverworldName.Chance, range: [4, 0] },
-    { name: OverworldName.Coin, range: [5, 0] },
+    { name: OverworldTiles.Ground, range: [0, 0] },
+    { name: OverworldTiles.Sky, range: [1, 0] },
+    { name: OverworldTiles.Bricks, range: [2, 0] },
+    { name: OverworldTiles.Chocolate, range: [3, 0] },
+    { name: OverworldTiles.Chance, range: [4, 0] },
+    { name: OverworldTiles.Coin, range: [5, 0] },
   ],
   entities: [
-    { name: EntityName.Mario, range: [0, 1] },
-    { name: EntityName.MarioLeft, range: [1, 1] },
-    { name: EntityName.GoombaRight, range: [0, 2] },
-    { name: EntityName.GoombaLeft, range: [1, 2] },
-    { name: EntityName.GoombaKilled, range: [2, 2] },
+    { name: OverworldEntity.Mario, range: [0, 1] },
+    { name: OverworldEntity.MarioLeft, range: [1, 1] },
+    { name: OverworldEntity.GoombaRight, range: [0, 2] },
+    { name: OverworldEntity.GoombaLeft, range: [1, 2] },
+    { name: OverworldEntity.GoombaKilled, range: [2, 2] },
   ],
 };

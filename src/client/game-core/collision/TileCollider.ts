@@ -1,8 +1,7 @@
 import { ITile, TileConverter } from '@game-core/collision/TileConverter';
-import { Entity } from '@game-core/entity';
-import { EntityEvents } from '@game-core/entity/Entity';
-import { eventBus } from '@game-core/EventBus';
-import { GAME_END } from '@game-core';
+import { OverworldEntity } from '@game-core/sprite-resolver/spriteConfig';
+import { Entity, EntityEvents } from '@game-core/entity';
+import { GAME_END, eventBus } from '@game-core';
 
 class TileCollider extends TileConverter {
   private _notifyCoin(match: ITile) {
@@ -32,11 +31,14 @@ class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
-      if (match.tile.name === 'coin' && entity.name === 'mario') {
+      if (match.tile.name === 'coin' && entity.name === OverworldEntity.Mario) {
         this._notifyCoin(match);
       }
 
-      if (match.tile.name === 'goomba' && entity.name === 'mario') {
+      if (
+        match.tile.name === OverworldEntity.Goomba &&
+        entity.name === OverworldEntity.Mario
+      ) {
         eventBus.emit(GAME_END, 'lost');
       }
 
@@ -89,8 +91,8 @@ class TileCollider extends TileConverter {
       }
 
       if (
-        (match.tile.name === 'goomba' && entity.name === 'mario') ||
-        entity.name === 'marioLeft'
+        match.tile.name === OverworldEntity.Goomba &&
+        entity.name === OverworldEntity.Mario
       ) {
         eventBus.emit('kill');
       }

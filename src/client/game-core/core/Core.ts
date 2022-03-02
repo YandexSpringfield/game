@@ -1,15 +1,14 @@
-import { Level } from '@game-core/core/Level';
+import { Level, musicPlayer } from '@game-core/core';
 import {
   GAME_END,
   GAME_NEXT,
   GAME_RESTART,
   MODAL,
   loadImage,
+  eventBus,
 } from '@game-core';
-import { eventBus } from '@game-core/EventBus';
 import { level1, TLevel } from '@game-core/levels/level-1';
 import spriteImage from '@assets/images/sprite.png';
-import { musicPlayer } from '@game-core/core/MusicPlayer';
 import coin from '@assets/music/coin.ogg';
 import jump from '@assets/music/jump.ogg';
 import lost from '@assets/music/thwomp.ogg';

@@ -1,7 +1,12 @@
-import { tilesSize, tilesTypes } from '../sprite-resolver/spriteConfig';
+import {
+  OverworldEntity,
+  OverworldTiles,
+  tilesSize,
+  tilesTypes,
+} from '@game-core/sprite-resolver';
 
 export interface ITile {
-  tile: { name: string; type: string | undefined };
+  tile: { name: OverworldTiles | OverworldEntity; type: string | undefined };
   x1: number;
   x2: number;
   y1: number;
@@ -21,14 +26,14 @@ export class TileConverter {
 
   getEnemies(level, indexX, indexY): string | undefined {
     if (level.goomba.pos[0] === indexX && level.goomba.pos[1] === indexY) {
-      return 'goomba';
+      return OverworldEntity.Goomba;
     }
 
     return undefined;
   }
 
   getTiles(level, indexX, indexY): string | undefined {
-    const ground = indexY >= 13 ? 'ground' : undefined;
+    const ground = indexY >= 13 ? OverworldTiles.Ground : undefined;
     return level.tiles[`${indexX}.${indexY}`] || ground;
   }
 

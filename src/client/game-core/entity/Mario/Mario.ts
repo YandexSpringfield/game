@@ -1,10 +1,10 @@
+import { SpriteResolver, OverworldEntity } from '@game-core/sprite-resolver';
 import { tileCollider } from '@game-core/collision/TileCollider';
-import { GAME_END, SpriteResolver } from '@game-core';
 import { KeyboardState, KEYS } from '@game-core/keyboardState';
+import { musicPlayer } from '@game-core/core/MusicPlayer';
+import { GAME_END, eventBus } from '@game-core';
 import { Go, Jump } from '@game-core/traits';
 import { Entity } from '@game-core/entity';
-import { eventBus } from '@game-core/EventBus';
-import { musicPlayer } from '@game-core/core/MusicPlayer';
 
 const INITIAL_POS = {
   column: 1,
@@ -32,8 +32,8 @@ export class Mario extends Entity {
     levelSize,
     ...rest: [SpriteResolver, {}]
   ) {
-    super(rest, 'mario');
-    this.tileName = 'mario';
+    super(rest, OverworldEntity.Mario);
+    this.tileName = OverworldEntity.Mario;
     this.canvas = canvas;
     this.context = context;
     this.levelSize = levelSize;
@@ -76,12 +76,12 @@ export class Mario extends Entity {
     });
 
     this.keyboard.addKey(KEYS.ARROW_RIGHT, (keyState) => {
-      this.tileName = 'mario';
+      this.tileName = OverworldEntity.Mario;
       this.go.direction = keyState;
     });
 
     this.keyboard.addKey(KEYS.ARROW_LEFT, (keyState) => {
-      this.tileName = 'marioLeft';
+      this.tileName = OverworldEntity.MarioLeft;
       this.go.direction = -keyState;
     });
 

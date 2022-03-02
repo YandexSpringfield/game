@@ -1,7 +1,7 @@
 let accumulatedTime = 0;
 
 export class Timer {
-  update: (dt: number, t: number, aT: number) => void;
+  update: (dt: number, t: number, at: number) => void;
 
   deltaTime: number;
 

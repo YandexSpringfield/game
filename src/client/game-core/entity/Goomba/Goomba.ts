@@ -1,8 +1,8 @@
+import { SpriteResolver, OverworldEntity } from '@game-core/sprite-resolver';
+import { tileCollider } from '@game-core/collision';
 import { Entity } from '@game-core/entity';
 import { Go } from '@game-core/traits';
-import { SpriteResolver } from '@game-core';
-import { tileCollider } from '@game-core/collision';
-import { eventBus } from '@game-core/EventBus';
+import { eventBus } from '@game-core';
 
 export class Goomba extends Entity {
   canvas: HTMLCanvasElement;
@@ -28,8 +28,8 @@ export class Goomba extends Entity {
     initialPos,
     ...rest: [SpriteResolver, {}]
   ) {
-    super(rest, 'goomba');
-    this.tileName = 'goombaRight';
+    super(rest, OverworldEntity.Goomba);
+    this.tileName = OverworldEntity.GoombaRight;
     this.initialPos = initialPos;
     this.canvas = canvas;
     this.context = context;
@@ -47,7 +47,7 @@ export class Goomba extends Entity {
   }
 
   killed() {
-    this.tileName = 'goombaKilled';
+    this.tileName = OverworldEntity.GoombaKilled;
     this.level.goomba.pos = [];
     this.update = () => null;
 
@@ -68,7 +68,9 @@ export class Goomba extends Entity {
   update(deltaTime, time) {
     if (time !== this.time) {
       this.tileName =
-        this.tileName === 'goombaRight' ? 'goombaLeft' : 'goombaRight';
+        this.tileName === OverworldEntity.GoombaRight
+          ? OverworldEntity.GoombaLeft
+          : OverworldEntity.GoombaRight;
     }
     this.time = time;
     this.level.goomba.pos = [
