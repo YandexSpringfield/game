@@ -1,12 +1,20 @@
-import { Camera } from '@game-core/core/Camera';
-import { Mario } from '@game-core/entity';
-import { Timer } from '@game-core/core/Timer';
-import { overworldSprite, tilesSize } from '@game-core/sprite-resolver';
-import { EntityEvents } from '@game-core/entity/Entity';
-import { eventBus } from '@game-core/EventBus';
+import {
+  Camera,
+  Timer,
+  musicPlayer,
+  drawCoinsStatus,
+  drawTimerStatus,
+} from '@game-core/core';
+import { Mario, Goomba, EntityEvents } from '@game-core/entity';
+import {
+  overworldSprite,
+  tilesSize,
+  OverworldTiles,
+} from '@game-core/sprite-resolver';
 import { tileCollider } from '@game-core/collision/TileCollider';
-import { drawCoinsStatus, drawTimerStatus } from '@game-core/core/drawText';
-import { SpriteResolver } from '@game-core';
+import { SpriteResolver, eventBus } from '@game-core';
+import { TLevel } from '@game-core/levels/level-1';
+import cloneDeep from '@utils/utils';
 
 export class Level {
   public canvasBg: HTMLCanvasElement;
@@ -19,15 +27,17 @@ export class Level {
 
   public mario: Mario;
 
+  public goomba: Goomba;
+
   public camera: Camera;
 
   public timer: Timer;
 
   public sprite: SpriteResolver;
 
-  public time: number;
+  public level: TLevel;
 
-  public level: {};
+  public time: number;
 
   public coins: number;
 
@@ -45,6 +55,7 @@ export class Level {
     eventBus.on(EntityEvents.selectCoin, (indexX, indexY) => {
       this.deleteCoin(indexX, indexY);
       this.updateBackground();
+      musicPlayer.playTrack('coin', false);
     });
 
     this.levelSize = {
@@ -54,14 +65,24 @@ export class Level {
   }
 
   init(level) {
+    musicPlayer.playTrack('theme', true);
+
     this.coins = 0;
-    this.level = { ...level };
+    this.level = cloneDeep(level);
     this.camera = new Camera();
     this.timer = new Timer();
     this.mario = new Mario(
       this.canvasMario,
       this.contextMario,
       this.levelSize,
+      this.sprite,
+      this.level,
+    );
+    this.goomba = new Goomba(
+      this.canvasMario,
+      this.contextMario,
+      this.levelSize,
+      this.level.goomba.initial,
       this.sprite,
       this.level,
     );
@@ -86,15 +107,23 @@ export class Level {
   drawLevel(start, end) {
     for (let x = start; x <= end; x += 1) {
       for (let y = 0; y <= this.levelSize.ROWS; y += 1) {
-        const element = this.level[`${x}.${y}`];
+        const element = this.level.tiles[`${x}.${y}`];
 
         if (element) {
-          if (element === 'coin') {
-            this.sprite.drawTile('sky', this.contextBg, x - start, y);
+          if (element === OverworldTiles.Coin) {
+            this.sprite.drawTile(
+              OverworldTiles.Sky,
+              this.contextBg,
+              x - start,
+              y,
+            );
           }
           this.sprite.drawTile(element, this.contextBg, x - start, y);
         } else {
-          const tile = y <= this.levelSize.ROWS - 2 ? 'sky' : 'ground';
+          const tile =
+            y <= this.levelSize.ROWS - 2
+              ? OverworldTiles.Sky
+              : OverworldTiles.Ground;
           this.sprite.drawTile(tile, this.contextBg, x - start, y);
         }
       }
@@ -102,9 +131,10 @@ export class Level {
   }
 
   timerStart() {
-    this.timer.update = (deltaTime, time) => {
+    this.timer.update = (deltaTime, time, animateTime) => {
       this.time = time;
       this.mario.update(deltaTime);
+      this.goomba.update(deltaTime, animateTime);
 
       if (
         this.mario.vel.x !== 0 &&
@@ -117,6 +147,7 @@ export class Level {
       }
 
       this.mario.draw(this.camera.pos.x, this.camera.pos.y);
+      this.goomba.draw(this.camera.pos.x, this.camera.pos.y);
 
       drawTimerStatus(this.contextMario, this.canvasMario, time);
       drawCoinsStatus(this.contextMario, this.canvasMario, this.coins);
@@ -126,11 +157,12 @@ export class Level {
   }
 
   deleteCoin(x, y) {
-    this.level[`${x}.${y}`] = 'sky';
+    this.level.tiles[`${x}.${y}`] = OverworldTiles.Sky;
     this.coins += 1;
   }
 
   destroy() {
+    musicPlayer.stopTracks();
     this.timer.stop();
     this.mario.keyboardRemove();
   }

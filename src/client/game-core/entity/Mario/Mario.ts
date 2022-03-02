@@ -1,9 +1,10 @@
+import { SpriteResolver, OverworldEntity } from '@game-core/sprite-resolver';
 import { tileCollider } from '@game-core/collision/TileCollider';
-import { GAME_END, SpriteResolver } from '@game-core';
 import { KeyboardState, KEYS } from '@game-core/keyboardState';
+import { musicPlayer } from '@game-core/core/MusicPlayer';
+import { GAME_END, eventBus } from '@game-core';
 import { Go, Jump } from '@game-core/traits';
 import { Entity } from '@game-core/entity';
-import { eventBus } from '@game-core/EventBus';
 
 const INITIAL_POS = {
   column: 1,
@@ -23,7 +24,7 @@ export class Mario extends Entity {
 
   levelSize: { ROWS: number; COLS: number };
 
-  name: string;
+  tileName: string;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -31,8 +32,8 @@ export class Mario extends Entity {
     levelSize,
     ...rest: [SpriteResolver, {}]
   ) {
-    super(rest);
-    this.name = 'mario';
+    super(rest, OverworldEntity.Mario);
+    this.tileName = OverworldEntity.Mario;
     this.canvas = canvas;
     this.context = context;
     this.levelSize = levelSize;
@@ -48,7 +49,7 @@ export class Mario extends Entity {
 
   draw(cameraX, cameraY) {
     this.spriteResolver.draw(
-      this.name,
+      this.tileName,
       this.context,
       this.pos.x - cameraX,
       this.pos.y - cameraY,
@@ -66,6 +67,7 @@ export class Mario extends Entity {
 
     this.keyboard.addKey(KEYS.SPACE, (keyState) => {
       if (keyState && !this.jump.cancel) {
+        musicPlayer.playTrack('jump', false);
         this.jump.start();
         this.jump.cancel = true;
       } else {
@@ -74,10 +76,12 @@ export class Mario extends Entity {
     });
 
     this.keyboard.addKey(KEYS.ARROW_RIGHT, (keyState) => {
+      this.tileName = OverworldEntity.Mario;
       this.go.direction = keyState;
     });
 
     this.keyboard.addKey(KEYS.ARROW_LEFT, (keyState) => {
+      this.tileName = OverworldEntity.MarioLeft;
       this.go.direction = -keyState;
     });
 

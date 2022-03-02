@@ -1,14 +1,19 @@
-import { Level } from '@game-core/core/Level';
+import { Level, musicPlayer } from '@game-core/core';
 import {
   GAME_END,
   GAME_NEXT,
   GAME_RESTART,
   MODAL,
   loadImage,
+  eventBus,
 } from '@game-core';
-import { eventBus } from '@game-core/EventBus';
-import { level1 } from '@game-core/levels/level-1';
+import { level1, TLevel } from '@game-core/levels/level-1';
 import spriteImage from '@assets/images/sprite.png';
+import coin from '@assets/music/coin.ogg';
+import jump from '@assets/music/jump.ogg';
+import stomp from '@assets/music/stomp.ogg';
+import lost from '@assets/music/thwomp.ogg';
+import theme from '@assets/music/overworld.ogg';
 
 export class Core {
   public static _instance: Core;
@@ -21,13 +26,14 @@ export class Core {
 
   public level: Level;
 
-  public levelMap: {};
+  public levelMap: TLevel;
 
   public gameStatus: string;
 
   constructor(canvasBg: HTMLCanvasElement, canvasMario: HTMLCanvasElement) {
     this.canvasBg = canvasBg;
     this.canvasMario = canvasMario;
+    this.addAudio();
 
     eventBus.on(GAME_END, this.gameStatusHandler.bind(this));
     eventBus.on(GAME_RESTART, this.restartLevel.bind(this));
@@ -62,12 +68,28 @@ export class Core {
   }
 
   restartLevel() {
+    this.loadLevel();
     this.startGame(this.levelMap);
   }
 
   gameStatusHandler(status) {
-    this.score = status === 'win' ? this.calculateScore() : 0;
-    eventBus.emit(MODAL, status, this.score);
     this.level.destroy();
+    if (status === 'win') {
+      this.score = this.calculateScore();
+    } else {
+      musicPlayer.playTrack('lost', false);
+      this.score = 0;
+    }
+    setTimeout(() => {
+      eventBus.emit(MODAL, status, this.score);
+    }, 100);
+  }
+
+  addAudio() {
+    musicPlayer.addTrack('coin', coin);
+    musicPlayer.addTrack('jump', jump);
+    musicPlayer.addTrack('lost', lost);
+    musicPlayer.addTrack('stomp', stomp);
+    musicPlayer.addTrack('theme', theme);
   }
 }
