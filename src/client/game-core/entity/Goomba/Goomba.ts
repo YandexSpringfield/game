@@ -4,11 +4,6 @@ import { SpriteResolver } from '@game-core';
 import { tileCollider } from '@game-core/collision';
 import { eventBus } from '@game-core/EventBus';
 
-const INITIAL_POS = {
-  column: 35,
-  row: 11,
-};
-
 export class Goomba extends Entity {
   canvas: HTMLCanvasElement;
 
@@ -24,22 +19,26 @@ export class Goomba extends Entity {
 
   time: number;
 
+  initialPos: { column: number; row: number };
+
   constructor(
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
     levelSize,
+    initialPos,
     ...rest: [SpriteResolver, {}]
   ) {
     super(rest, 'goomba');
     this.tileName = 'goombaRight';
+    this.initialPos = initialPos;
     this.canvas = canvas;
     this.context = context;
     this.levelSize = levelSize;
     this.direction = 1;
 
     this.pos.set(
-      INITIAL_POS.column * this.width,
-      INITIAL_POS.row * this.height,
+      this.initialPos.column * this.width,
+      this.initialPos.row * this.height,
     );
 
     this.addTraits(new Go(5000));
@@ -49,8 +48,9 @@ export class Goomba extends Entity {
 
   killed() {
     this.tileName = 'goombaKilled';
-    this.level.goomba = [];
+    this.level.goomba.pos = [];
     this.update = () => null;
+
     setTimeout(() => {
       this.pos.set(-100, -100);
     }, 1000);
@@ -71,7 +71,7 @@ export class Goomba extends Entity {
         this.tileName === 'goombaRight' ? 'goombaLeft' : 'goombaRight';
     }
     this.time = time;
-    this.level.goomba = [
+    this.level.goomba.pos = [
       Math.floor(this.pos.x / 32),
       Math.floor(this.pos.y / 32),
     ];
@@ -93,8 +93,8 @@ export class Goomba extends Entity {
 
     if (this.pos.y + this.height >= this.canvas.height) {
       this.pos.set(
-        INITIAL_POS.column * this.width,
-        INITIAL_POS.row * this.height,
+        this.initialPos.column * this.width,
+        this.initialPos.row * this.height,
       );
       this.direction *= -1;
     }

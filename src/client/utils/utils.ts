@@ -88,3 +88,54 @@ export const parseNumbers = (str: string) => {
     {},
   );
 };
+
+export default function cloneDeep<T extends object = object>(obj: T) {
+  return (function _cloneDeep(
+    item: T,
+  ): T | Date | Set<unknown> | Map<unknown, unknown> | object | T[] {
+    if (item === null || typeof item !== 'object') {
+      return item;
+    }
+
+    if (item instanceof Date) {
+      return new Date(item.valueOf());
+    }
+
+    if (item instanceof Array) {
+      const copy: any[] = [];
+      // eslint-disable-next-line
+      item.forEach((_, i) => (copy[i] = _cloneDeep(item[i])));
+
+      return copy;
+    }
+
+    if (item instanceof Set) {
+      const copy = new Set();
+      // eslint-disable-next-line
+      item.forEach((v) => copy.add(_cloneDeep(v)));
+
+      return copy;
+    }
+
+    if (item instanceof Map) {
+      const copy = new Map();
+      item.forEach((v, k) => copy.set(k, _cloneDeep(v)));
+
+      return copy;
+    }
+
+    if (item instanceof Object) {
+      const copy: object = {};
+      Object.getOwnPropertySymbols(item).forEach(
+        // eslint-disable-next-line
+        (s) => (copy[s] = _cloneDeep(item[s])),
+      );
+      // eslint-disable-next-line
+      Object.keys(item).forEach((k) => (copy[k] = _cloneDeep(item[k])));
+
+      return copy;
+    }
+
+    throw new Error(`Unable to copy object: ${item}`);
+  })(obj);
+}

@@ -9,6 +9,8 @@ import { drawCoinsStatus, drawTimerStatus } from '@game-core/core/drawText';
 import { SpriteResolver } from '@game-core';
 import { Goomba } from '@game-core/entity/Goomba';
 import { musicPlayer } from '@game-core/core/MusicPlayer';
+import { TLevel } from '@game-core/levels/level-1';
+import cloneDeep from '@utils/utils';
 
 export class Level {
   public canvasBg: HTMLCanvasElement;
@@ -31,7 +33,7 @@ export class Level {
 
   public time: number;
 
-  public level: {};
+  public level: TLevel;
 
   public coins: number;
 
@@ -61,7 +63,7 @@ export class Level {
   init(level) {
     musicPlayer.playTrack('theme', true);
     this.coins = 0;
-    this.level = { ...level };
+    this.level = cloneDeep(level);
     this.camera = new Camera();
     this.timer = new Timer();
     this.mario = new Mario(
@@ -75,6 +77,7 @@ export class Level {
       this.canvasMario,
       this.contextMario,
       this.levelSize,
+      this.level.goomba.initial,
       this.sprite,
       this.level,
     );
@@ -99,7 +102,7 @@ export class Level {
   drawLevel(start, end) {
     for (let x = start; x <= end; x += 1) {
       for (let y = 0; y <= this.levelSize.ROWS; y += 1) {
-        const element = this.level[`${x}.${y}`];
+        const element = this.level.tiles[`${x}.${y}`];
 
         if (element) {
           if (element === 'coin') {
@@ -141,7 +144,7 @@ export class Level {
   }
 
   deleteCoin(x, y) {
-    this.level[`${x}.${y}`] = 'sky';
+    this.level.tiles[`${x}.${y}`] = 'sky';
     this.coins += 1;
   }
 

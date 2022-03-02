@@ -7,7 +7,7 @@ import {
   loadImage,
 } from '@game-core';
 import { eventBus } from '@game-core/EventBus';
-import { level1 } from '@game-core/levels/level-1';
+import { level1, TLevel } from '@game-core/levels/level-1';
 import spriteImage from '@assets/images/sprite.png';
 import { musicPlayer } from '@game-core/core/MusicPlayer';
 import coin from '@assets/music/coin.ogg';
@@ -26,14 +26,14 @@ export class Core {
 
   public level: Level;
 
-  public levelMap: {};
+  public levelMap: TLevel;
 
   public gameStatus: string;
 
   constructor(canvasBg: HTMLCanvasElement, canvasMario: HTMLCanvasElement) {
     this.canvasBg = canvasBg;
     this.canvasMario = canvasMario;
-    this.addTracks();
+    this.addAudio();
 
     eventBus.on(GAME_END, this.gameStatusHandler.bind(this));
     eventBus.on(GAME_RESTART, this.restartLevel.bind(this));
@@ -68,6 +68,7 @@ export class Core {
   }
 
   restartLevel() {
+    this.loadLevel();
     this.startGame(this.levelMap);
   }
 
@@ -84,7 +85,7 @@ export class Core {
     }, 100);
   }
 
-  addTracks() {
+  addAudio() {
     musicPlayer.addTrack('coin', coin);
     musicPlayer.addTrack('jump', jump);
     musicPlayer.addTrack('lost', lost);

@@ -20,7 +20,7 @@ export class TileConverter {
   }
 
   getEnemies(level, indexX, indexY): string | undefined {
-    if (level.goomba[0] === indexX && level.goomba[1] === indexY) {
+    if (level.goomba.pos[0] === indexX && level.goomba.pos[1] === indexY) {
       return 'goomba';
     }
 
@@ -29,7 +29,7 @@ export class TileConverter {
 
   getTiles(level, indexX, indexY): string | undefined {
     const ground = indexY >= 13 ? 'ground' : undefined;
-    return level[`${indexX}.${indexY}`] || ground;
+    return level.tiles[`${indexX}.${indexY}`] || ground;
   }
 
   getByIndex(element, indexX, indexY): ITile | undefined {
