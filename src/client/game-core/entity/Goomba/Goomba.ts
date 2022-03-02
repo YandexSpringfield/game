@@ -3,6 +3,7 @@ import { tileCollider } from '@game-core/collision';
 import { Entity } from '@game-core/entity';
 import { Go } from '@game-core/traits';
 import { eventBus } from '@game-core';
+import { musicPlayer } from '@game-core/core';
 
 export class Goomba extends Entity {
   canvas: HTMLCanvasElement;
@@ -47,6 +48,7 @@ export class Goomba extends Entity {
   }
 
   killed() {
+    musicPlayer.playTrack('stomp', false);
     this.tileName = OverworldEntity.GoombaKilled;
     this.level.goomba.pos = [];
     this.update = () => null;

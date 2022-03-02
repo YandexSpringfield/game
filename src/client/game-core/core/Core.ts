@@ -11,6 +11,7 @@ import { level1, TLevel } from '@game-core/levels/level-1';
 import spriteImage from '@assets/images/sprite.png';
 import coin from '@assets/music/coin.ogg';
 import jump from '@assets/music/jump.ogg';
+import stomp from '@assets/music/stomp.ogg';
 import lost from '@assets/music/thwomp.ogg';
 import theme from '@assets/music/overworld.ogg';
 
@@ -88,6 +89,7 @@ export class Core {
     musicPlayer.addTrack('coin', coin);
     musicPlayer.addTrack('jump', jump);
     musicPlayer.addTrack('lost', lost);
+    musicPlayer.addTrack('stomp', stomp);
     musicPlayer.addTrack('theme', theme);
   }
 }
