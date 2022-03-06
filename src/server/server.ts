@@ -26,7 +26,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.get(
   '/*',
-  // [...webpackClientMiddleware(clientConfig)],
+  [...webpackClientMiddleware(clientConfig)],
   authMiddleware,
   storeMiddleware,
   renderMiddleware,
