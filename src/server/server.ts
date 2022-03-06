@@ -1,54 +1,42 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import express, { RequestHandler } from 'express';
+import 'dotenv/config';
+import express from 'express';
 import path from 'path';
 import { readFileSync } from 'fs';
-import webpack from 'webpack';
-import devMiddleware from 'webpack-dev-middleware';
-import hotMiddleware from 'webpack-hot-middleware';
 import cookieParser from 'cookie-parser';
+
+import { connectToDBClient } from '@server/db/client';
 import https from 'https';
+import { userThemeRoute } from '@server/controllers';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
-import { authMiddleware, renderMiddleware, storeMiddleware } from '.';
+import {
+  authMiddleware,
+  renderMiddleware,
+  storeMiddleware,
+  privateMiddleware,
+  webpackClientMiddleware,
+} from '.';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-function getWebpackMiddlewares(
-  config: webpack.Configuration,
-): RequestHandler[] {
-  const compiler = webpack({ ...config, mode: 'development' });
-
-  if (IS_DEV) {
-    return [
-      devMiddleware(compiler, {
-        publicPath: config.output?.publicPath,
-      }),
-      hotMiddleware(compiler, {
-        path: '/__what',
-        log: false,
-      }),
-    ];
-  }
-
-  return [];
-}
-
 app.use(cookieParser());
-app.use(
-  express.static(path.resolve(__dirname, '../dist'), {
-    maxAge: '1d',
-  }),
-);
+app.use(express.json());
+app.use(express.static(path.resolve(__dirname, '../dist')));
+
 app.get(
   '/*',
-  [...getWebpackMiddlewares(clientConfig)],
+  [...webpackClientMiddleware(clientConfig)],
   authMiddleware,
   storeMiddleware,
   renderMiddleware,
 );
 
-const startApp = () => {
+app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
+
+const startApp = async () => {
+  await connectToDBClient();
+
   if (IS_DEV) {
     const pem = readFileSync(
       path.resolve(__dirname, '../certificates/cert.pem'),
@@ -77,4 +65,4 @@ const startApp = () => {
   }
 };
 
-export default startApp;
+startApp();

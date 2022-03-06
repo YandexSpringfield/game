@@ -1,7 +1,8 @@
 import { instanceAxios } from '@api/axios';
-import { PATH_API } from '@api/config';
+import { BASE_SERVER_API_URL, PATH_API } from '@api/config';
 import { TSignIn, TSignUp } from '@api';
 import { AxiosRequestConfig } from 'axios';
+import { Theme } from '@types';
 
 class AuthAPI {
   signUp = async (data: TSignUp, config?: AxiosRequestConfig) => {
@@ -26,6 +27,18 @@ class AuthAPI {
 
   yaSingIn = async (data) => {
     await instanceAxios.post(PATH_API.AUTH_YA.SING_IN, data);
+  };
+
+  updateTheme = async (theme: Theme) => {
+    return await instanceAxios.put(
+      PATH_API.USER.UPDATE_THEME,
+      {
+        theme,
+      },
+      {
+        baseURL: BASE_SERVER_API_URL,
+      },
+    );
   };
 }
 

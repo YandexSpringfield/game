@@ -5,21 +5,31 @@
 ```
 Приложение будет доступно по адресу; https://my-app.localhost.ya-praktikum.tech:3000
 
+### Запуск докер контейнера
+```
+docker-compose build
+docker-compose up
+```
+
+### Переменные окружения
+Для запуска докер контейнера необходимо добавить env файл в корень проекта. Пример содержимого env-файла:
+```
+NODE_ENV=development
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=some_password
+POSTGRES_HOST=postgres
+POSTGRES_DATABASE=postgres
+POSTGRES_PORT=5432
+PORT=3000
+```
+
 ### Описание скриптов
 - `lint` - запуск eslint;
+- `type-check` - проверка типов TypeScript;
 - `test` - тесты;
 - `test:dev` - тесты в режиме watch;
-- `server` - запуск сервера node.js;
-- `type-check` - проверка типов TypeScript;
-- `start:dev` - запуск приложения в режиме development;
-- `start:prod` - запуск приложения в режиме production.
-
-### Структура проекта
-- `@appConstants` - константы. Здесь можно хранить переменные, которые зафиксированы и распространяются на все приложение;
-- `@types` - файлы с общими типами;
-- `@pages` - страницы приложения;
-- `@containers` - контейнеры (умные компоненты);
-- `@components` - "глупые" компоненты, которые никак не влияют на бизнес-логику.
+- `serve` - запуск только сервера node.js;
+- `start` - запуск приложения;
 
 ### Алиасы
 В проекте используются алиасы. Конфигурация алиасов доступа в `tsonfig.paths.json`.

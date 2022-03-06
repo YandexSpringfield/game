@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+    env_file:
+      ./.env
+    environment:
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - awesome
+    volumes:
+      - .:/var/www
+  postgres:
+    container_name: database
+    image: postgres:12
+    ports:
+      - "5423:5432"
+    env_file:
+      ./.env
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - awesome
+
+networks:
+  awesome:
+    driver: bridge

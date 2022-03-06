@@ -19,6 +19,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
+    'no-console': 0,
+    'import/no-extraneous-dependencies': 0,
     'prettier/prettier': 'error',
     '@typescript-eslint/dot-notation': 'off',
     'import/prefer-default-export': 'off',
@@ -40,7 +42,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['state'] },
+      { props: true, ignorePropertyModificationsFor: ['state', 'req'] },
     ],
     'react/function-component-definition': [
       2,

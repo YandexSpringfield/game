@@ -9,9 +9,9 @@
     "prepare": "husky install",
     "test": "jest --updateSnapshot",
     "test:dev": "jest --watch",
-    "server": "nodemon index.js",
-    "start:dev": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development npm run server",
-    "start:prod": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production npm run server"
+    "server": "wait-on -l file:dist/server.js && nodemon --watch dist/server.js dist/server.js",
+    "start": "webpack && npm run server",
+    "serve": "concurrently \"webpack  --watch --config webpack/server.config.ts\" \"npm run server\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/YandexSpringfield/game#readme",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "7.16.7",
+    "@babel/plugin-proposal-decorators": "7.17.2",
     "@babel/plugin-transform-runtime": "7.16.5",
     "@babel/preset-env": "7.16.5",
     "@babel/preset-react": "7.16.5",
@@ -45,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "5.7.0",
     "@typescript-eslint/parser": "5.7.0",
     "babel-loader": "8.2.3",
+    "concurrently": "7.0.0",
     "cross-env": "7.0.3",
     "css-loader": "6.5.1",
     "eslint": "8.4.1",
@@ -77,24 +80,32 @@
     "ts-node": "10.5.0",
     "tsconfig-paths-webpack-plugin": "3.5.2",
     "typescript": "4.5.4",
+    "wait-on": "6.0.1",
     "webpack": "5.65.0",
     "webpack-cli": "4.9.1",
     "webpack-dev-middleware": "5.3.1",
     "webpack-hot-middleware": "2.25.1",
+    "webpack-hot-server-middleware": "0.6.1",
     "webpack-node-externals": "3.0.0",
     "workbox-webpack-plugin": "6.4.2"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.7.1",
+    "@types/pg": "8.6.4",
     "axios": "0.24.0",
     "classnames": "2.3.1",
     "cookie-parser": "1.4.6",
+    "dotenv": "16.0.0",
     "express": "4.17.1",
+    "pg": "8.7.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "4.3.1",
     "react-redux": "7.2.6",
     "react-router-dom": "6.1.1",
-    "redux-thunk": "2.4.1"
+    "redux-thunk": "2.4.1",
+    "reflect-metadata": "0.1.13",
+    "sequelize": "6.17.0",
+    "sequelize-typescript": "2.1.3"
   }
 }

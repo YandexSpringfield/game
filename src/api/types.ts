@@ -1,3 +1,5 @@
+import { Theme } from '@types';
+
 export type TSignUp = {
   first_name: string;
   second_name: string;
@@ -44,5 +46,12 @@ export type TLeaderboardUser = {
     city?: string;
     name?: string;
     score: number;
+  };
+};
+
+export type TUpdateThemeResponse = {
+  success: boolean;
+  data: {
+    theme: Theme;
   };
 };
