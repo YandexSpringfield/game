@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { TopicModel } from '@server/models';
+import { TopicModel, UserModel } from '@server/models';
 import { reqErrorHandler } from '@server';
 import { PrivateRequest } from '@server/types';
 
@@ -23,4 +23,25 @@ async function create(req: PrivateRequest, res: Response) {
   }
 }
 
-topicRoute.route('/').post(create);
+async function get(req: PrivateRequest, res: Response) {
+  try {
+    const data = await TopicModel.findAll({
+      include: [
+        {
+          model: UserModel,
+          nested: true,
+        },
+      ],
+    });
+    res.send({
+      success: true,
+      data,
+    });
+  } catch (err) {
+    console.log('ERROR', err);
+    reqErrorHandler(err, res);
+  }
+}
+
+topicRoute.route('/create').post(create);
+topicRoute.route('/').get(get);

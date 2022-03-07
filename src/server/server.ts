@@ -24,6 +24,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../dist')));
 
+app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
+app.use('/api/v1/topics', [privateMiddleware, topicRoute]);
+
 app.get(
   '/*',
   [...webpackClientMiddleware(clientConfig)],
@@ -31,9 +34,6 @@ app.get(
   storeMiddleware,
   renderMiddleware,
 );
-
-app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
-app.use('/api/v1/topic', [privateMiddleware, topicRoute]);
 
 const startApp = async () => {
   await connectToDBClient();

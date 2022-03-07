@@ -2,13 +2,13 @@ import {
   AllowNull,
   Column,
   DataType,
-  ForeignKey,
   Model,
   Table,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { UserModel } from '@server/models/user.model';
 
-export type Topic = {
+type Topic = {
   ownerId: number;
   title: string;
   description?: string;
@@ -26,11 +26,9 @@ export class TopicModel extends Model<Topic> {
   @Column(DataType.STRING)
   description: string;
 
-  @ForeignKey(() => UserModel)
-  @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    field: 'owner_id',
+  @BelongsTo(() => UserModel, {
+    foreignKey: 'ownerId',
+    as: 'owner',
   })
   ownerId: number;
 }
