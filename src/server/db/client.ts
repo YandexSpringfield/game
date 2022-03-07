@@ -1,5 +1,10 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { UserModel, UserThemeModel, TopicModel } from '@server/models';
+import {
+  UserModel,
+  UserThemeModel,
+  TopicModel,
+  TopicCommentModel,
+} from '@server/models';
 
 const sequelizeOptions: SequelizeOptions = {
   host: process.env.POSTGRES_HOST,
@@ -8,7 +13,7 @@ const sequelizeOptions: SequelizeOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
   dialect: 'postgres',
-  models: [UserModel, UserThemeModel, TopicModel],
+  models: [UserModel, UserThemeModel, TopicModel, TopicCommentModel],
 };
 
 export const sequelize = new Sequelize(sequelizeOptions);
