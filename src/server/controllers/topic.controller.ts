@@ -1,15 +1,16 @@
-import { Router, Response, Request } from 'express';
-import { topicService } from '@server/services';
+import { Router, Response } from 'express';
+import { TopicModel } from '@server/models';
 import { reqErrorHandler } from '@server';
+import { PrivateRequest } from '@server/types';
 
 export const topicRoute = Router();
 
-async function create(req: Request, res: Response) {
+async function create(req: PrivateRequest, res: Response) {
   try {
-    const { cookies, body } = req;
+    const { body, user } = req;
     const { title, description } = body;
-    const data = await topicService.create({
-      uuid: cookies.uuid,
+    const data = await TopicModel.create({
+      ownerId: user.id,
       title,
       description,
     });

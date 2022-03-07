@@ -9,7 +9,7 @@ import {
 import { UserModel } from '@server/models/user.model';
 
 export type Topic = {
-  ownerId: string;
+  ownerId: number;
   title: string;
   description?: string;
 };
@@ -29,8 +29,8 @@ export class TopicModel extends Model<Topic> {
   @ForeignKey(() => UserModel)
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     field: 'owner_id',
   })
-  ownerId: string;
+  ownerId: number;
 }

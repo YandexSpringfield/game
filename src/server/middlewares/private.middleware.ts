@@ -1,9 +1,11 @@
 import { NextFunction, Response } from 'express';
-import { ServerRequest } from '@server/types';
+import { PrivateRequest } from '@server/types';
 import { userService } from '@server/services';
+import { authAPI } from '@api';
+import { setAuthCookies } from '@server';
 
 export async function privateMiddleware(
-  req: ServerRequest,
+  req: PrivateRequest,
   res: Response,
   next: NextFunction,
 ) {
@@ -14,12 +16,24 @@ export async function privateMiddleware(
     return;
   }
 
-  const user = await userService.find(cookies.uuid);
+  try {
+    const response = await authAPI.getUserInfo({
+      headers: setAuthCookies(cookies.authCookie, cookies.uuid),
+    });
+    const user = await userService.findById(response.data.id);
 
-  if (!user) {
+    if (!user) {
+      res.sendStatus(401);
+      return;
+    }
+
+    req.user = {
+      id: user.getDataValue('id'),
+      login: user.getDataValue('login'),
+    };
+
+    next();
+  } catch (err) {
     res.sendStatus(401);
-    return;
   }
-
-  next();
 }

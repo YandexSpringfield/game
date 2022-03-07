@@ -1,20 +1,21 @@
-import { UserModel } from '@server/models';
+import { UserModel, User } from '@server/models/user.model';
 
 class UserService {
-  public async findOrCreate(uuid: string) {
+  public async findOrCreate(data: User) {
     return UserModel.findOrCreate({
-      where: { uuid },
-      defaults: {
-        uuid,
+      where: {
+        id: data.id,
       },
-      raw: true,
+      defaults: {
+        id: data.id,
+        login: data.login,
+      },
     });
   }
 
-  public async find(uuid: string) {
+  public async findById(id: number) {
     return UserModel.findOne({
-      where: { uuid },
-      raw: true,
+      where: { id },
     });
   }
 }

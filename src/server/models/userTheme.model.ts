@@ -12,7 +12,7 @@ import { ENUM } from 'sequelize';
 
 type Data = {
   theme: Theme;
-  ownerId: string;
+  ownerId: number;
 };
 
 @Table({
@@ -26,8 +26,8 @@ export class UserThemeModel extends Model<Data> {
   @ForeignKey(() => UserModel)
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     field: 'owner_id',
   })
-  ownerId: string;
+  ownerId: number;
 }

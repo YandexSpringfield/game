@@ -1,21 +1,20 @@
-import { Router, Response, Request } from 'express';
+import { Router, Response } from 'express';
 import { userThemeService } from '@server/services';
 import { reqErrorHandler } from '@server';
+import { PrivateRequest } from '@server/types';
 
 export const userThemeRoute = Router();
 
-async function update(req: Request, res: Response) {
-  const { cookies, body } = req;
+async function update(req: PrivateRequest, res: Response) {
+  const { body } = req;
 
   if (!body.theme) {
     res.sendStatus(400);
+    return;
   }
 
   try {
-    const data = await userThemeService.updateOrCreate(
-      cookies.uuid,
-      body.theme,
-    );
+    const data = await userThemeService.updateOrCreate(req.user.id, body.theme);
     res.status(200).send({
       success: true,
       data,
