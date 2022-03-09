@@ -1,6 +1,6 @@
 import { AxiosRequestHeaders } from 'axios';
 import { Response } from 'express';
-import { DatabaseError } from 'sequelize';
+import { DatabaseError, ValidationError } from 'sequelize';
 
 export const setAuthCookies = (
   authCookie: string,
@@ -12,7 +12,7 @@ export const setAuthCookies = (
 };
 
 export const reqErrorHandler = (err: Error, res: Response) => {
-  if (err instanceof DatabaseError) {
+  if (err instanceof DatabaseError || err instanceof ValidationError) {
     res.status(400).json({
       success: false,
       msg: err.message,

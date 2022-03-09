@@ -3,21 +3,19 @@ import {
   Table,
   Column,
   DataType,
-  PrimaryKey,
+  AllowNull,
 } from 'sequelize-typescript';
 
-type User = {
-  uuid: string;
+export type User = {
+  id: number;
+  login: string;
 };
 
 @Table({
   tableName: 'users',
 })
 export class UserModel extends Model<User> {
-  @PrimaryKey
-  @Column({
-    type: DataType.STRING,
-    field: 'id',
-  })
-  uuid: string;
+  @AllowNull(false)
+  @Column(DataType.STRING)
+  login: string;
 }

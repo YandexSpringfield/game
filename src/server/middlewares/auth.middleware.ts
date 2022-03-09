@@ -21,8 +21,12 @@ export async function authMiddleware(
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
 
-    await userService.findOrCreate(cookies.uuid);
-    const [data] = await userThemeService.findOrCreate(cookies.uuid);
+    await userService.findOrCreate({
+      id: response.data.id,
+      login: response.data.login,
+    });
+
+    const [data] = await userThemeService.findOrCreate(response.data.id);
 
     req.user = {
       ...response.data,

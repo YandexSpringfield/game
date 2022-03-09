@@ -5,6 +5,9 @@
 ```
 Приложение будет доступно по адресу; https://my-app.localhost.ya-praktikum.tech:3000
 
+### Документация к API
+https://documenter.getpostman.com/view/5766242/UVsEUTpW
+
 ### Запуск докер контейнера
 ```
 docker-compose build
