@@ -24,4 +24,10 @@ export const PATH_API = {
     ADD_USER: '/leaderboard',
     GET_ALL_USERS: '/leaderboard/all',
   },
+  FORUM: {
+    CREATE_TOPIC: 'topics/create',
+    CREATE_COMMENT: (id) => `topics/${id}/comments`,
+    GET_TOPICS: 'topics',
+    GET_COMMENTS: (id) => `topics/${id}/comments`,
+  },
 };

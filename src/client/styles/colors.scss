@@ -19,6 +19,9 @@ body[data-theme="Light"] {
   --card-bg: #FFF;
   --input-bg: #FFF;
   --input-disabled: #DCDCE480;
+
+  --sent-message: #EAEAEF;
+  --received-message: #F6F6F9;
 }
 
 body[data-theme="Dark"] {
@@ -33,4 +36,7 @@ body[data-theme="Dark"] {
   --card-bg: #242f3d;
   --input-bg: #242f3d;
   --input-disabled: #7676765c;
+
+  --sent-message: #2B5378;
+  --received-message: #0e1621;
 }

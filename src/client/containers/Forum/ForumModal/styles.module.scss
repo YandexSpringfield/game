@@ -21,9 +21,14 @@
   height: 100%;
   padding: 10px;
   margin: 20px 0;
-  overflow: auto;
   border-radius: 5px;
   border: 1px solid var(--border-input);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 .messageContainer {

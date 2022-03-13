@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInput } from '@hooks';
-import { useUserSelector } from '@store';
 import { Button, Input, Modal, ViewButton, Message } from '@components';
+import { forumAPI } from '@api';
 import { TInitialFields, TMessage } from './types';
 
 import styles from './styles.module.scss';
@@ -15,21 +15,31 @@ const initialState: TMessage[] = [];
 export const ForumModal = ({ isOpen, onClose, item }) => {
   const { fields, setFields, fieldsError, ...rest } = useInput(initialFields);
   const [messages, setMessages] = useState(initialState);
-  const user = useUserSelector();
+
+  useEffect(() => {
+    if (isOpen) {
+      forumAPI.getComments(item.id).then((data) => {
+        setMessages(data.data.data);
+      });
+    }
+  }, [isOpen]);
 
   const onModalClose = () => {
+    setMessages([]);
     onClose();
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     const newMessage: TMessage = {
-      id: messages.length + 1,
-      login: user.login,
-      text: fields.message,
-      data: Date.now(),
+      message: fields.message,
+      parentId: item.id,
     };
-    setMessages([...messages, newMessage]);
+    forumAPI.createComment(newMessage).then(() => {
+      forumAPI.getComments(item.id).then((data) => {
+        setMessages(data.data.data);
+      });
+    });
     setFields(initialFields);
   };
 
@@ -41,7 +51,7 @@ export const ForumModal = ({ isOpen, onClose, item }) => {
     >
       <div>
         <h3 className={styles.title}>{item?.title}</h3>
-        <p className={styles.content}>{item?.content}</p>
+        <p className={styles.content}>{item?.description}</p>
       </div>
       <div className={styles.messagesField}>
         {messages.map((message) => (

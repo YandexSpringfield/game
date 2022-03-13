@@ -3,8 +3,11 @@ export type TInitialFields = {
 };
 
 export type TMessage = {
-  id: number;
-  login: string;
-  text: string;
-  data: number;
+  createdAt?: string;
+  message: string;
+  id?: number;
+  ownerId?: number;
+  parentId: number;
+  topicId?: number;
+  updatedAt?: string;
 };

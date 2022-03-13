@@ -13,7 +13,7 @@ type Comment = {
   topicId: number;
   parentId: number | null;
   ownerId: number;
-  data: string;
+  message: string;
 };
 
 @Table({
@@ -40,5 +40,5 @@ export class TopicCommentModel extends Model<Comment> {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  data: string;
+  message: string;
 }

@@ -6,9 +6,16 @@
   margin: 10px 0;
   padding: 10px 15px;
   width: 100%;
-  background-color: var(--body-bg);
   border-radius: 10px;
   word-wrap: break-word;
+}
+
+.sentMessage {
+  background-color: var(--sent-message);
+}
+
+.receivedMessage {
+  background-color: var(--received-message);
 }
 
 .login {
@@ -21,7 +28,7 @@
   margin: 10px 0;
 }
 
-.data {
+.date {
   font-size: 12px;
   color: var(--input-text);
   align-self: self-end;

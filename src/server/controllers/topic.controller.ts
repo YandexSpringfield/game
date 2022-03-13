@@ -43,7 +43,11 @@ async function get(req: PrivateRequest, res: Response) {
 }
 
 async function createComment(
-  req: PrivateRequest<{ id: number }, any, { parentId?: number; data: string }>,
+  req: PrivateRequest<
+    { id: number },
+    any,
+    { parentId?: number; message: string }
+  >,
   res: Response,
 ) {
   try {
@@ -53,7 +57,7 @@ async function createComment(
       ownerId: req.user.id,
       topicId: params.id,
       parentId: body.parentId || null,
-      data: body.data,
+      message: body.message,
     });
 
     res.send({
