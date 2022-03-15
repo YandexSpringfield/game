@@ -1,13 +1,15 @@
 export type TInitialFields = {
-  message: string;
+  comment: string;
 };
 
-export type TMessage = {
-  createdAt?: string;
-  message: string;
+export type TComment = {
   id?: number;
+  comment: string;
   ownerId?: number;
-  parentId: number;
-  topicId?: number;
+  owner?: {};
+  parentId?: number | null;
+  parent?: {};
+  topicId: number;
+  createdAt?: string;
   updatedAt?: string;
 };

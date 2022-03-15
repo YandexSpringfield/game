@@ -1,0 +1,67 @@
+@import '../../styles/mixins';
+
+.container {
+  @include flex(column, initial, normal);
+  position: relative;
+  margin: 10px 0;
+  padding: 10px 15px;
+  width: 100%;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+
+.sentComment {
+  background-color: var(--sent-comment);
+}
+
+.receivedComment {
+  background-color: var(--received-comment);
+}
+
+.login {
+  font-size: 14px;
+  color: var(--main-text);
+}
+
+.text {
+  color: var(--main-text);
+  margin: 10px 0;
+}
+
+.answer_wrapper {
+  @include flex(row, space-between, center);
+}
+
+.date {
+  font-size: 12px;
+  color: var(--input-text);
+}
+
+.answer {
+  font-size: 14px;
+  color: var(--input-text);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-color);
+  }
+}
+
+.answer_label {
+  font-size: 12px;
+  color: var(--input-text);
+  padding-bottom: 10px;
+}
+
+
+.deleteIcon {
+  position: absolute;
+  color: var(--input-text);
+  align-self: self-end;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--main-error);
+  }
+}
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { useInput } from '@hooks';
 import { ForumModal } from '@containers';
 import { Button, Card, Content, Input, ViewButton } from '@components';
@@ -24,17 +24,15 @@ export const Forum = () => {
     dispatch(fetchForumTopics());
   }, []);
 
-  const createTopic = (e) => {
+  const createTopic = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     forumAPI.createTopic(fields).then(() => {
       dispatch(fetchForumTopics());
     });
-
     setFields(initialFields);
   };
 
-  const openTopic = (e) => {
+  const openTopic = (e: MouseEvent<HTMLElement>) => {
     setModalOpen(true);
     const topic =
       data.find((item) => item.id === Number(e.currentTarget.id)) || {};
@@ -84,7 +82,7 @@ export const Forum = () => {
       <ForumModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        item={openedTopic}
+        topic={openedTopic}
       />
     </Content>
   );

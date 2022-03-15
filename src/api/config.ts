@@ -26,8 +26,9 @@ export const PATH_API = {
   },
   FORUM: {
     CREATE_TOPIC: 'topics/create',
-    CREATE_COMMENT: (id) => `topics/${id}/comments`,
+    CREATE_COMMENT: (topicId) => `topics/${topicId}/comments`,
     GET_TOPICS: 'topics',
-    GET_COMMENTS: (id) => `topics/${id}/comments`,
+    GET_COMMENTS: (topicId) => `topics/${topicId}/comments`,
+    DELETE_COMMENT: (topicId, id) => `topics/${topicId}/comments/${id}`,
   },
 };

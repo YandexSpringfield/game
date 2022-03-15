@@ -12,7 +12,7 @@ class ForumAPI {
 
   createComment = async ({ ...data }) => {
     await instanceAxios.post(
-      PATH_API.FORUM.CREATE_COMMENT(data.parentId),
+      PATH_API.FORUM.CREATE_COMMENT(data.topicId),
       { ...data },
       { baseURL: BASE_SERVER_API_URL },
     );
@@ -24,8 +24,14 @@ class ForumAPI {
     });
   };
 
-  getComments = async (id) => {
-    return await instanceAxios.get(PATH_API.FORUM.GET_COMMENTS(id), {
+  getComments = async (topicId) => {
+    return await instanceAxios.get(PATH_API.FORUM.GET_COMMENTS(topicId), {
+      baseURL: BASE_SERVER_API_URL,
+    });
+  };
+
+  deleteComment = async ({ topicId, id }) => {
+    await instanceAxios.delete(PATH_API.FORUM.DELETE_COMMENT(topicId, id), {
       baseURL: BASE_SERVER_API_URL,
     });
   };
