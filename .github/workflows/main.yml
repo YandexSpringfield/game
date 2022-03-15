@@ -1,7 +1,7 @@
 name: CI-CD
 on:
   push:
-    branches: [ feauture/deploy ]
+    branches: [ feature/deploy ]
 
 push_to_hub:
   runs-on: ubuntu-latest
