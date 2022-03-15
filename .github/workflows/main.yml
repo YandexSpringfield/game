@@ -33,4 +33,4 @@ jobs:
             context: ./
             file: ./Dockerfile
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/from-github:latest
+            tags: cr.yandex/${{ secrets.DOCKERHUB_USERNAME }}/from-github:latest
