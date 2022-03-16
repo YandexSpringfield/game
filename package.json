@@ -10,7 +10,7 @@
     "test": "jest --updateSnapshot",
     "test:dev": "jest --watch",
     "server": "wait-on -l file:dist/server.js && nodemon --watch dist/server.js dist/server.js",
-    "start": "./node_modules/.bin/webpack && npm run server",
+    "start": "webpack && npm run server",
     "serve": "concurrently \"webpack  --watch --config webpack/server.config.ts\" \"npm run server\""
   },
   "repository": {
