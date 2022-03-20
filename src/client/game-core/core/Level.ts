@@ -13,7 +13,7 @@ import {
 } from '@game-core/sprite-resolver';
 import { tileCollider } from '@game-core/collision/TileCollider';
 import { SpriteResolver, eventBus } from '@game-core';
-import { TLevel } from '@game-core/levels/level-1';
+import { TLevel } from '@game-core/levels';
 import cloneDeep from '@utils/utils';
 
 export class Level {
