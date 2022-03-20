@@ -7,7 +7,7 @@ import {
   loadImage,
   eventBus,
 } from '@game-core';
-import { level1, TLevel } from '@game-core/levels/level-1';
+import { level1, level2, TLevel } from '@game-core/levels';
 import spriteImage from '@assets/images/sprite.png';
 import coin from '@assets/music/coin.ogg';
 import jump from '@assets/music/jump.ogg';
