@@ -35,7 +35,6 @@ export const Login: FC<any> = () => {
         <div className={styles.login__header}>
           <Logo width="50" height="100%" />
           <h1 className={styles.login__title}>Авторизация</h1>
-          <p>Привет от авторизации</p>
         </div>
         <Form name="login">
           <Input
