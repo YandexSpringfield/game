@@ -13,7 +13,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using ssh key
+    - name: Start remote server script
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
