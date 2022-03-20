@@ -1,11 +1,4 @@
-export type TInitialFields = {
-  topic: string;
-  content: string;
-};
-
-export type TItem = {
-  id: number;
-  data: number;
+export type TTopicItem = {
   title: string;
-  content: string;
+  description: string;
 };

@@ -1,4 +1,5 @@
 export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
-export { useAuth } from '@hooks/useAuth';
-export { useInput } from '@hooks/useInput';
-export { usePosition } from '@hooks/usePosition';
+export { useAuth } from './useAuth';
+export { useInput } from './useInput';
+export { usePosition } from './usePosition';
+export { useForumComments } from './useForumComments';

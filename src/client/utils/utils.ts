@@ -30,12 +30,8 @@ export const omit = (obj: {}, omitKey: string): {} => {
   return result;
 };
 
-export const random = (a = 2, b = 0) => {
-  return Math.floor(Math.random() * a) + b;
-};
-
-export const middle = (a, b) => {
-  return b / 2 + a;
+export const sliceString = (str, length = 50) => {
+  return str.length > length ? `${str.slice(0, length)}...` : str;
 };
 
 export const activateFullscreen = (element: ElementWithFullscreen) => {

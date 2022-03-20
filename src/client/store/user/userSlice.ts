@@ -11,8 +11,8 @@ export type TUserState = {
   email: string;
   phone: string;
   avatar: string;
-  requestStatus: RequestStatus;
   theme: Theme;
+  requestStatus: RequestStatus;
 };
 
 export const initialState: TUserState = {
@@ -24,8 +24,8 @@ export const initialState: TUserState = {
   email: '',
   phone: '',
   avatar: '',
-  requestStatus: RequestStatus.INIT,
   theme: Theme.Light,
+  requestStatus: RequestStatus.INIT,
 };
 
 export const userSlice = createSlice({

@@ -1,36 +1,38 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { useInput } from '@hooks';
 import { ForumModal } from '@containers';
 import { Button, Card, Content, Input, ViewButton } from '@components';
-import { TInitialFields, TItem } from './types';
-import { MOCK_DATA } from './mockData';
+import { forumAPI } from '@api';
+import { fetchForumTopics, useAppDispatch, useForumSelector } from '@store';
+import { TTopicItem } from './types';
 
 import styles from './styles.module.scss';
 
-const initialFields: TInitialFields = {
-  topic: '',
-  content: '',
+const initialFields: TTopicItem = {
+  title: '',
+  description: '',
 };
 
 export const Forum = () => {
+  const dispatch = useAppDispatch();
+  const { data } = useForumSelector();
   const [modalOpen, setModalOpen] = useState(false);
   const [openedTopic, setOpenedTopic] = useState({});
   const { fields, setFields, fieldsError, ...rest } = useInput(initialFields);
-  const [data, setData] = useState(MOCK_DATA);
 
-  const createTopic = (e) => {
+  useEffect(() => {
+    dispatch(fetchForumTopics());
+  }, []);
+
+  const createTopic = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const newTopic: TItem = {
-      id: data.length + 1,
-      data: Date.now(),
-      title: fields.topic,
-      content: fields.content,
-    };
-    setData([...data, newTopic]);
+    forumAPI.createTopic(fields).then(() => {
+      dispatch(fetchForumTopics());
+    });
     setFields(initialFields);
   };
 
-  const openTopic = (e) => {
+  const openTopic = (e: MouseEvent<HTMLElement>) => {
     setModalOpen(true);
     const topic =
       data.find((item) => item.id === Number(e.currentTarget.id)) || {};
@@ -43,15 +45,15 @@ export const Forum = () => {
         <Input
           label="Тема"
           error=""
-          name="topic"
-          value={fields.topic}
+          name="title"
+          value={fields.title}
           {...rest}
         />
         <Input
           label="Описание"
           error=""
-          name="content"
-          value={fields.content}
+          name="description"
+          value={fields.description}
           {...rest}
         />
         <Button
@@ -61,28 +63,26 @@ export const Forum = () => {
           onClick={createTopic}
         />
       </form>
-      {data
-        .sort((a, b) => b.data - a.data)
-        .map((item) => {
-          const toDate = new Date(item.data).toUTCString();
+      {data?.map((item) => {
+        const date = new Date(item.createdAt).toUTCString();
 
-          return (
-            <Card
-              key={item.id}
-              id={item.id.toString()}
-              className={styles.card}
-              onClick={openTopic}
-            >
-              <h3 className={styles.title}>{item.title}</h3>
-              <p className={styles.content}>{item.content}</p>
-              <p className={styles.data}>{toDate}</p>
-            </Card>
-          );
-        })}
+        return (
+          <Card
+            key={item.id}
+            id={item.id.toString()}
+            className={styles.card}
+            onClick={openTopic}
+          >
+            <h3 className={styles.title}>{item.title}</h3>
+            <p className={styles.content}>{item.description}</p>
+            <p className={styles.date}>{date}</p>
+          </Card>
+        );
+      })}
       <ForumModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        item={openedTopic}
+        topic={openedTopic}
       />
     </Content>
   );

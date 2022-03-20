@@ -1,36 +1,79 @@
-import React, { useState } from 'react';
-import { useInput } from '@hooks';
-import { useUserSelector } from '@store';
-import { Button, Input, Modal, ViewButton, Message } from '@components';
-import { TInitialFields, TMessage } from './types';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  Input,
+  Modal,
+  ViewButton,
+  Comment,
+  EmojiPanel,
+} from '@components';
+import { useInput, useForumComments } from '@hooks';
+import { BaseEmoji } from 'emoji-mart';
+import { sliceString } from '@utils/utils';
+import { TInitialFields, TComment } from './types';
 
 import styles from './styles.module.scss';
 
 const initialFields: TInitialFields = {
-  message: '',
+  comment: '',
 };
 
-const initialState: TMessage[] = [];
+const initialState: TComment[] = [];
 
-export const ForumModal = ({ isOpen, onClose, item }) => {
+const initialInputState: string = 'Введите сообщение';
+
+export const ForumModal = ({ isOpen, onClose, topic }) => {
   const { fields, setFields, fieldsError, ...rest } = useInput(initialFields);
-  const [messages, setMessages] = useState(initialState);
-  const user = useUserSelector();
+  const { comments, setComments, getComments, createComment, deleteComment } =
+    useForumComments(initialState);
+  const [inputLabel, setInputLabel] = useState(initialInputState);
+  const [parentIdComment, setParentIdComment] = useState(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      getComments(topic.id);
+    }
+  }, [isOpen]);
+
+  const resetState = () => {
+    setFields(initialFields);
+    setInputLabel(initialInputState);
+    setParentIdComment(null);
+  };
 
   const onModalClose = () => {
+    setComments([]);
+    resetState();
     onClose();
   };
 
-  const sendMessage = (e) => {
+  const onEmojiSelect = (emoji: BaseEmoji) => {
+    const commentWithEmoji = fields.comment + emoji.native;
+    setFields({ comment: commentWithEmoji });
+  };
+
+  const sendComment = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const newMessage: TMessage = {
-      id: messages.length + 1,
-      login: user.login,
-      text: fields.message,
-      data: Date.now(),
+    const newComment: TComment = {
+      topicId: topic.id,
+      parentId: parentIdComment,
+      comment: fields.comment,
     };
-    setMessages([...messages, newMessage]);
-    setFields(initialFields);
+    if (newComment.comment) {
+      createComment(newComment);
+    }
+    resetState();
+  };
+
+  const handleAnswer = ({ id, owner, comment }) => {
+    const input = formRef.current?.querySelector(
+      '[name="comment"]',
+    ) as HTMLInputElement;
+
+    setInputLabel(`Введите ответ: ${owner.login} - ${sliceString(comment)}`);
+    setParentIdComment(id);
+    input?.focus();
   };
 
   return (
@@ -40,27 +83,33 @@ export const ForumModal = ({ isOpen, onClose, item }) => {
       className={styles.modalContainer}
     >
       <div>
-        <h3 className={styles.title}>{item?.title}</h3>
-        <p className={styles.content}>{item?.content}</p>
+        <h3 className={styles.title}>{topic?.title}</h3>
+        <p className={styles.content}>{topic?.description}</p>
       </div>
-      <div className={styles.messagesField}>
-        {messages.map((message) => (
-          <Message key={message.id} message={message} />
+      <div className={styles.commentsField}>
+        {comments?.map((comment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            deleteComment={deleteComment}
+            handleAnswer={handleAnswer}
+          />
         ))}
       </div>
-      <form className={styles.messageContainer}>
+      <form name="forum" className={styles.commentContainer} ref={formRef}>
+        <EmojiPanel onEmojiSelect={onEmojiSelect} />
         <Input
-          label="Введите сообщение"
+          label={inputLabel}
           error=""
-          name="message"
-          value={fields.message}
+          name="comment"
+          value={fields.comment}
           {...rest}
         />
         <Button
           title="Отправить"
           type="submit"
           view={ViewButton.main}
-          onClick={sendMessage}
+          onClick={sendComment}
         />
       </form>
     </Modal>

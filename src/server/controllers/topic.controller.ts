@@ -43,7 +43,11 @@ async function get(req: PrivateRequest, res: Response) {
 }
 
 async function createComment(
-  req: PrivateRequest<{ id: number }, any, { parentId?: number; data: string }>,
+  req: PrivateRequest<
+    { id: number },
+    any,
+    { parentId?: number; comment: string }
+  >,
   res: Response,
 ) {
   try {
@@ -53,7 +57,7 @@ async function createComment(
       ownerId: req.user.id,
       topicId: params.id,
       parentId: body.parentId || null,
-      data: body.data,
+      comment: body.comment,
     });
 
     res.send({
@@ -81,6 +85,16 @@ async function commentsByTopic(
           model: UserModel,
           nested: true,
         },
+        {
+          model: TopicCommentModel,
+          nested: true,
+          include: [
+            {
+              model: UserModel,
+              nested: true,
+            },
+          ],
+        },
       ],
     });
 
@@ -93,7 +107,26 @@ async function commentsByTopic(
   }
 }
 
+async function deleteComment(
+  req: PrivateRequest<{ topicId: number; id: number }>,
+  res: Response,
+) {
+  try {
+    const { id } = req.params;
+
+    const findComment = await TopicCommentModel.findByPk(id);
+    await findComment?.destroy();
+
+    res.send({
+      success: true,
+    });
+  } catch (err) {
+    reqErrorHandler(err, res);
+  }
+}
+
 topicRoute.route('/create').post(create);
 topicRoute.route('/').get(get);
 topicRoute.route('/:id/comments').post(createComment);
 topicRoute.route('/:id/comments').get(commentsByTopic);
+topicRoute.route('/:id/comments/:id').delete(deleteComment);
