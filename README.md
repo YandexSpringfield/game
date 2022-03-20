@@ -3,7 +3,7 @@
 ```bash
 127.0.0.1 my-app.localhost.ya-praktikum.tech
 ```
-Приложение будет доступно по адресу; https://my-app.localhost.ya-praktikum.tech:3000
+Приложение будет доступно по адресу: https://my-app.localhost.ya-praktikum.tech:3000
 
 ### Документация к API
 https://documenter.getpostman.com/view/5766242/UVsEUTpW
