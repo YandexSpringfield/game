@@ -12,6 +12,8 @@ export async function authMiddleware(
 ) {
   const { cookies } = req;
 
+  console.log('INSIDE COOKIES TO REQUEST', cookies);
+
   if (!cookies?.authCookie && !cookies?.uuid) {
     next();
   }
