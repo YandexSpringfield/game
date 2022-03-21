@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 
 import { connectToDBClient } from '@server/db/client';
 import https from 'https';
-import { userThemeRoute, topicRoute } from '@server/controllers';
+import { userThemeRoute, topicRoute, authRoute } from '@server/controllers';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
 import {
@@ -26,6 +26,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
 app.use('/api/v1/topics', [privateMiddleware, topicRoute]);
+app.use('/api/v1/auth', authRoute);
 
 app.get(
   '/*',

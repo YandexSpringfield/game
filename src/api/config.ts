@@ -1,6 +1,10 @@
 export const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 export const BASE_SERVER_API_URL = '/api/v1';
 
+export const BFF_URLS = {
+  signIn: `${BASE_SERVER_API_URL}/auth/signin`,
+};
+
 export const BASE_YA_URL = 'https://oauth.yandex.ru';
 
 export const PATH_API = {
