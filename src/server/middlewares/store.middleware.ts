@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { ServerRequest } from '@server/types';
 import { NextFunction, Response } from 'express';
-import { routes, defaultPagination } from '@appConstants';
-import { leaderboardAPI } from '@api';
+import { defaultPagination, routes } from '@appConstants';
 import { setAuthCookies } from '@server';
 import { RequestStatus } from '@types';
+import apiInstance from '@server/axios';
 
 export async function storeMiddleware(
   req: ServerRequest,
@@ -19,11 +19,15 @@ export async function storeMiddleware(
     switch (url) {
       case routes.leaderboard: {
         try {
-          const { data } = await leaderboardAPI.getAllUsers(defaultPagination, {
-            headers: cookieHeader,
-          });
+          const response = await apiInstance.post(
+            '/api/v2/leaderboard/all',
+            defaultPagination,
+            {
+              headers: cookieHeader,
+            },
+          );
           req.leaderboard = {
-            data,
+            data: response.data,
             requestStatus: RequestStatus.SUCCESS,
           };
         } catch (err) {

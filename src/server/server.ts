@@ -6,7 +6,12 @@ import cookieParser from 'cookie-parser';
 
 import { connectToDBClient } from '@server/db/client';
 import https from 'https';
-import { userThemeRoute, topicRoute, authRoute } from '@server/controllers';
+import {
+  userThemeRoute,
+  topicRoute,
+  authRoute,
+  leaderboardRoute,
+} from '@server/controllers';
 import clientConfig from '../../webpack/client.config';
 import { IS_DEV } from '../../webpack/env';
 import {
@@ -28,6 +33,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
 app.use('/api/v1/topics', [privateMiddleware, topicRoute]);
 app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/leaderboard', [privateMiddleware, leaderboardRoute]);
 app.use('/api/v1/resources', resourcesMiddleware);
 
 app.get(
@@ -59,6 +65,7 @@ const startApp = async () => {
       },
       app,
     );
+
     server.listen(port, () => {
       console.log('Application is started on localhost:', port);
     });

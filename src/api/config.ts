@@ -4,6 +4,8 @@ export const BASE_SERVER_API_URL = '/api/v1';
 export const BFF_URLS = {
   signIn: `${BASE_SERVER_API_URL}/auth/sign-in`,
   me: `${BASE_SERVER_API_URL}/auth/me`,
+  leaderboard: `${BASE_SERVER_API_URL}/leaderboard/`,
+  addToLeaderBoard: `${BASE_SERVER_API_URL}/leaderboard/create`,
 };
 
 export const BASE_YA_URL = 'https://oauth.yandex.ru';
