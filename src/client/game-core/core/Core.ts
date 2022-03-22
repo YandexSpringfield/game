@@ -7,7 +7,7 @@ import {
   loadImage,
   eventBus,
 } from '@game-core';
-import { level1, TLevel } from '@game-core/levels';
+import { levels, TLevel } from '@game-core/levels';
 import spriteImage from '@assets/images/sprite.png';
 import coin from '@assets/music/coin.ogg';
 import jump from '@assets/music/jump.ogg';
@@ -28,9 +28,13 @@ export class Core {
 
   public levelMap: TLevel;
 
+  public currentLevel: number;
+
   public gameStatus: string;
 
   constructor(canvasBg: HTMLCanvasElement, canvasMario: HTMLCanvasElement) {
+    this.currentLevel =
+      Number(localStorage.getItem('SpringfieldMario Level')) || 0;
     this.canvasBg = canvasBg;
     this.canvasMario = canvasMario;
     this.addAudio();
@@ -50,8 +54,14 @@ export class Core {
   }
 
   loadLevel() {
-    // TODO: здесь будет загрузчик уровней
-    this.levelMap = level1;
+    if (!levels[this.currentLevel]) {
+      this.currentLevel = 0;
+    }
+    this.levelMap = levels[this.currentLevel];
+    localStorage.setItem(
+      'SpringfieldMario Level',
+      JSON.stringify(this.currentLevel),
+    );
   }
 
   startGame(level) {
@@ -63,12 +73,12 @@ export class Core {
   }
 
   startNextLevel() {
+    this.currentLevel += 1;
     this.loadLevel();
     this.startGame(this.levelMap);
   }
 
   restartLevel() {
-    this.loadLevel();
     this.startGame(this.levelMap);
   }
 

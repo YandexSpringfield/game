@@ -102,11 +102,11 @@ export class Mario extends Entity {
     this.vel.y += this.gravity * deltaTime;
 
     if (this.pos.y + this.height >= this.canvas.height) {
-      // eventBus.emit(GAME_END, 'lost');
+      eventBus.emit(GAME_END, 'lost');
     }
 
     if (this.pos.x >= (this.levelSize.COLS - 1) * 32) {
-      // eventBus.emit(GAME_END, 'win');
+      eventBus.emit(GAME_END, 'win');
     }
   }
 }

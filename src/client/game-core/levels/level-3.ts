@@ -230,4 +230,4 @@ export const level3: TLevel = {
     initial: { column: 35, row: 11 },
     pos: [],
   },
-}
+};

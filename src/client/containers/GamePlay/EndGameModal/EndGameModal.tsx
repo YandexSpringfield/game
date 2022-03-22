@@ -64,9 +64,13 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
     goToNewGame();
   };
 
+  const scoreText =
+    status === 'win' ? <h3 className={styles.title}>Очки: {score}</h3> : null;
+
   return (
     <Modal isOpen={isOpen} className={styles.modal} onClose={onModalClose}>
       <h2 className={styles.title}>{GAME_STATUS[status]?.text}</h2>
+      {scoreText}
       <div className={styles.logo}>
         <Logo width="50" height="50" />
       </div>

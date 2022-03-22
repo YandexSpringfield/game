@@ -33,8 +33,8 @@ export const tilesSize: ITilesSize = {
 
 export const tilesTypes = {
   sky: { name: OverworldTiles.Sky },
-  coin: { name: OverworldTiles.Coin },
-  goomba: { name: OverworldEntity.Goomba },
+  coin: { name: OverworldTiles.Coin, type: 'coin' },
+  goomba: { name: OverworldEntity.Goomba, type: 'enemy' },
   ground: { name: OverworldTiles.Ground, type: 'ground' },
   bricks: { name: OverworldTiles.Bricks, type: 'ground' },
   chocolate: { name: OverworldTiles.Chocolate, type: 'ground' },
