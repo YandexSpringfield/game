@@ -14,7 +14,7 @@ class AuthAPI {
   };
 
   getUserInfo = async (config?: AxiosRequestConfig) => {
-    return await instanceAxios.get(PATH_API.AUTH.USER, config);
+    return await instanceAxios.get(BFF_URLS.me, config);
   };
 
   logout = async (config?: AxiosRequestConfig) => {

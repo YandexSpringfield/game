@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
 import { PrivateRequest } from '@server/types';
 import { userService } from '@server/services';
-import { authAPI } from '@api';
 import { setAuthCookies } from '@server';
+import yandexApiInstanceAxios from '@server/axios';
 
 export async function privateMiddleware(
   req: PrivateRequest,
@@ -17,7 +17,7 @@ export async function privateMiddleware(
   }
 
   try {
-    const response = await authAPI.getUserInfo({
+    const response = await yandexApiInstanceAxios.get('/api/v2/auth/user', {
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
     const user = await userService.findById(response.data.id);
@@ -27,10 +27,7 @@ export async function privateMiddleware(
       return;
     }
 
-    req.user = {
-      id: user.getDataValue('id'),
-      login: user.getDataValue('login'),
-    };
+    req.user = response.data;
 
     next();
   } catch (err) {

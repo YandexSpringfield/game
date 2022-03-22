@@ -1,14 +1,14 @@
 import { Request, Response, Router } from 'express';
-import setCookie from 'set-cookie-parser';
 import apiInstance from '@server/axios';
 import {
   privateMiddleware,
-  proxyCookieOptions,
+  setAuthCookiesToResponse,
   proxyErrorHandler,
   setAuthCookies,
   parseProxyResponseCookies,
 } from '@server';
 import { userService, userThemeService } from '@server/services';
+import { PrivateRequest } from '@server/types';
 
 export const authRoute = Router();
 
@@ -20,7 +20,7 @@ type SignInReq = {
 /**
  * Create user and create base theme
  */
-async function createUserFromProxy(authCookie: string, uuid: string) {
+async function createOrFindUserFromProxy(authCookie: string, uuid: string) {
   const response = await apiInstance.get('/api/v2/auth/user', {
     withCredentials: true,
     headers: setAuthCookies(authCookie, uuid),
@@ -45,14 +45,9 @@ async function signIn(req: Request<null, any, SignInReq>, res: Response) {
     const cookies = parseProxyResponseCookies(response.headers);
 
     const { uuid, authCookie } = cookies;
-    await createUserFromProxy(authCookie.value, uuid.value);
+    await createOrFindUserFromProxy(authCookie.value, uuid.value);
 
-    res.cookie(uuid.name, uuid.value, proxyCookieOptions(uuid));
-    res.cookie(
-      authCookie.name,
-      authCookie.value,
-      proxyCookieOptions(authCookie),
-    );
+    setAuthCookiesToResponse(res, cookies);
 
     res.sendStatus(200);
   } catch (err) {
@@ -60,7 +55,7 @@ async function signIn(req: Request<null, any, SignInReq>, res: Response) {
   }
 }
 
-async function logout(req: Request, res: Response) {
+async function logout(req: PrivateRequest, res: Response) {
   try {
     const { cookies } = req;
 
@@ -73,21 +68,8 @@ async function logout(req: Request, res: Response) {
       },
     );
 
-    const yandexCookies = setCookie.parse(
-      response.headers['set-cookie'] || [],
-      {
-        map: true,
-      },
-    );
-
-    const { uuid, authCookie } = yandexCookies;
-
-    res.cookie(uuid.name, uuid.value, proxyCookieOptions(uuid));
-    res.cookie(
-      authCookie.name,
-      authCookie.value,
-      proxyCookieOptions(authCookie),
-    );
+    const yandexCookies = parseProxyResponseCookies(response.headers);
+    setAuthCookiesToResponse(res, yandexCookies);
 
     res.sendStatus(200);
   } catch (err) {
@@ -102,15 +84,20 @@ async function signUp(req: Request<null, any, SignInReq>, res: Response) {
     const cookies = parseProxyResponseCookies(response.headers);
 
     const { uuid, authCookie } = cookies;
-    await createUserFromProxy(authCookie.value, uuid.value);
-
-    res.cookie(uuid.name, uuid.value, proxyCookieOptions(uuid));
-    res.cookie(
-      authCookie.name,
-      authCookie.value,
-      proxyCookieOptions(authCookie),
-    );
+    await createOrFindUserFromProxy(authCookie.value, uuid.value);
+    setAuthCookiesToResponse(res, cookies);
     res.sendStatus(201);
+  } catch (err) {
+    proxyErrorHandler(res, err);
+  }
+}
+
+async function me(req: PrivateRequest, res: Response) {
+  try {
+    res.status(200).send({
+      success: true,
+      data: req.user,
+    });
   } catch (err) {
     proxyErrorHandler(res, err);
   }
@@ -118,4 +105,5 @@ async function signUp(req: Request<null, any, SignInReq>, res: Response) {
 
 authRoute.route('/sign-in').post(signIn);
 authRoute.route('/sign-up').post(signUp);
+authRoute.route('/me').get([privateMiddleware, me]);
 authRoute.route('/sign-out').post([privateMiddleware, logout]);

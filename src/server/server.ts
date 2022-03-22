@@ -15,6 +15,7 @@ import {
   storeMiddleware,
   privateMiddleware,
   webpackClientMiddleware,
+  resourcesMiddleware,
 } from '.';
 
 const app = express();
@@ -27,6 +28,7 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
 app.use('/api/v1/topics', [privateMiddleware, topicRoute]);
 app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/resources', resourcesMiddleware);
 
 app.get(
   '/*',
