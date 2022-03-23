@@ -6,7 +6,7 @@ import { Theme } from '@types';
 
 class AuthAPI {
   signUp = async (data: TSignUp, config?: AxiosRequestConfig) => {
-    await instanceAxios.post(PATH_API.AUTH.SIGN_UP, data, config);
+    await instanceAxios.post(BFF_URLS.signUp, data, config);
   };
 
   signIn = async (data: TSignIn, config?: AxiosRequestConfig) => {
@@ -18,7 +18,7 @@ class AuthAPI {
   };
 
   logout = async (config?: AxiosRequestConfig) => {
-    await instanceAxios.post(PATH_API.AUTH.LOGOUT, config);
+    await instanceAxios.post(BFF_URLS.logout, config);
   };
 
   yaGetId = async (data) => {

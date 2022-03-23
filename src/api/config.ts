@@ -3,9 +3,14 @@ export const BASE_SERVER_API_URL = '/api/v1';
 
 export const BFF_URLS = {
   signIn: `${BASE_SERVER_API_URL}/auth/sign-in`,
+  signUp: `${BASE_SERVER_API_URL}/auth/sign-up`,
+  logout: `${BASE_SERVER_API_URL}/auth/sign-out`,
   me: `${BASE_SERVER_API_URL}/auth/me`,
   leaderboard: `${BASE_SERVER_API_URL}/leaderboard/`,
   addToLeaderBoard: `${BASE_SERVER_API_URL}/leaderboard/create`,
+  updateProfile: `${BASE_SERVER_API_URL}/user/profile`,
+  updateAvatar: `${BASE_SERVER_API_URL}/user/avatar`,
+  updatePassword: `${BASE_SERVER_API_URL}/user/password`,
 };
 
 export const BASE_YA_URL = 'https://oauth.yandex.ru';
