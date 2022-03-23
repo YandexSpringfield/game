@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { leaderboardAPI } from '@api/leaderboard';
 import { authAPI } from '@api/auth';
+import { ratingFieldName } from '@appConstants/leaderboard';
 
 export const addToLeaderboard = createAsyncThunk(
   'leaderboard/addToLeaderboard',
@@ -9,12 +10,12 @@ export const addToLeaderboard = createAsyncThunk(
       const userRes = await authAPI.getUserInfo();
       await leaderboardAPI.addUser({
         data: {
-          score: data.score,
+          springfieldMarioScore: data.score,
           city: data.location,
           avatar: userRes.data.avatar,
           name: userRes.data.first_name || userRes.data.display_name,
         },
-        ratingFieldName: 'score',
+        ratingFieldName,
       });
     } catch (err) {
       rejectWithValue(err.response.data);

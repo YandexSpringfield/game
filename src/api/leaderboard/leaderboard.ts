@@ -1,7 +1,11 @@
 import { instanceAxios } from '@api/axios';
 import { PATH_API } from '@api/config';
 import { TLeaderboardNewLeaderRequest, TLeaderboardRequest } from '@api';
-import { defaultPagination } from '@appConstants/leaderboard';
+import {
+  defaultPagination,
+  ratingFieldName,
+  teamName,
+} from '@appConstants/leaderboard';
 import { AxiosRequestConfig } from 'axios';
 
 class LeaderboardAPI {
@@ -9,7 +13,15 @@ class LeaderboardAPI {
     data: TLeaderboardNewLeaderRequest,
     config?: AxiosRequestConfig,
   ) => {
-    await instanceAxios.post(PATH_API.LEADERBOARD.ADD_USER, data, config);
+    await instanceAxios.post(
+      PATH_API.LEADERBOARD.ADD_USER,
+      {
+        ...data,
+        ratingFieldName,
+        teamName,
+      },
+      config,
+    );
   };
 
   getAllUsers = async (

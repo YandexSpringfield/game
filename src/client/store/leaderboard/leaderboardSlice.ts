@@ -34,9 +34,7 @@ export const leaderboardSlice = createSlice({
 
     builder.addCase(fetchLeaderboard.fulfilled, (state, { payload }) => {
       state.requestStatus = RequestStatus.SUCCESS;
-      Object.keys(payload).forEach((key) => {
-        state[key] = payload[key];
-      });
+      state.data = payload;
     });
 
     builder.addCase(addToLeaderboard.pending, (state) => {
