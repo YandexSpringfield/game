@@ -22,7 +22,6 @@ export const PATH_API = {
   },
   LEADERBOARD: {
     ADD_USER: '/leaderboard',
-    GET_TEAM_USERS: (teamName) => `/leaderboard/${teamName}`,
     GET_ALL_USERS: '/leaderboard/all',
   },
   FORUM: {

@@ -15,32 +15,16 @@ import {
   storeMiddleware,
   privateMiddleware,
   webpackClientMiddleware,
+  cspMiddleware,
 } from '.';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cspMiddleware());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../dist')));
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; " +
-      "object-src 'none'; " +
-      "script-src 'self' 'unsafe-inline'; " +
-      "font-src 'self'; " +
-      "media-src 'self'; " +
-      "style-src 'self' 'unsafe-inline'; " +
-      "connect-src https://ya-praktikum.tech/ 'self'; " +
-      "img-src https://ya-praktikum.tech/ 'self'; " +
-      "frame-ancestors 'self'; " +
-      "require-trusted-types-for 'script'; " +
-      'block-all-mixed-content; ' +
-      'upgrade-insecure-requests',
-  );
-  return next();
-});
 
 app.use('/api/v1/theme', [privateMiddleware, userThemeRoute]);
 app.use('/api/v1/topics', [privateMiddleware, topicRoute]);
