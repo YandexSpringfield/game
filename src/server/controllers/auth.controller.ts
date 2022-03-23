@@ -51,6 +51,7 @@ async function signIn(req: Request<null, any, SignInReq>, res: Response) {
 
     res.sendStatus(200);
   } catch (err) {
+    console.log('err into sign in', err);
     proxyErrorHandler(res, err);
   }
 }
