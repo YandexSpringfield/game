@@ -1,5 +1,6 @@
-import { AxiosRequestHeaders } from 'axios';
-import { Response } from 'express';
+import { AxiosError, AxiosRequestHeaders, AxiosResponseHeaders } from 'axios';
+import { Response, CookieOptions } from 'express';
+import setCookie, { Cookie, CookieMap } from 'set-cookie-parser';
 import { DatabaseError, ValidationError } from 'sequelize';
 
 export const setAuthCookies = (
@@ -20,4 +21,42 @@ export const reqErrorHandler = (err: Error, res: Response) => {
     return;
   }
   res.sendStatus(500);
+};
+
+export const proxyErrorHandler = (res: Response, err: AxiosError) => {
+  if (err.response?.status) {
+    res.status(err.response.status).send({
+      success: false,
+      message: err.response?.data?.reason || 'Unexpected error',
+    });
+    return;
+  }
+
+  res.sendStatus(500);
+};
+
+export const parseProxyResponseCookies = (headers: AxiosResponseHeaders) => {
+  return setCookie(headers['set-cookie'] || [], {
+    map: true,
+  });
+};
+
+export const defaultCookieOptions = (cookie: Cookie): CookieOptions => ({
+  expires: cookie.expires,
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  path: cookie.path,
+  domain: process.env.COOKIE_DOMAIN,
+});
+
+export const setAuthCookiesToResponse = (res: Response, cookies: CookieMap) => {
+  const { uuid, authCookie } = cookies;
+
+  res.cookie(uuid.name, uuid.value, defaultCookieOptions(uuid));
+  res.cookie(
+    authCookie.name,
+    authCookie.value,
+    defaultCookieOptions(authCookie),
+  );
 };

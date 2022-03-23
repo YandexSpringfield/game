@@ -6,7 +6,7 @@ export const fetchUserProfile = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     return await authAPI
       .getUserInfo()
-      .then((res) => res.data)
+      .then((res) => res.data.data)
       .catch((err) => rejectWithValue(err.response.data));
   },
 );

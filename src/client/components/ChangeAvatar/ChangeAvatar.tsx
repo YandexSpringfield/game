@@ -14,7 +14,7 @@ export const ChangeAvatar: FC<TProps> = ({ src }) => {
     const fileName = e.target.value.split('\\').pop();
     setLabelVal(fileName);
     const formData = new FormData();
-    formData.append('file', e.target.files[0]);
+    formData.append('avatar', e.target.files[0]);
     editProfileAPI
       .editAvatar(formData)
       .then(() => setLabelVal(defaultLabel))

@@ -2,8 +2,8 @@ import { NextFunction, Response } from 'express';
 import { ServerRequest } from '@server/types';
 import { setAuthCookies } from '@server/helpers';
 import { RequestStatus } from '@types';
-import { authAPI } from '@api';
 import { userService, userThemeService } from '@server/services';
+import yandexApiInstanceAxios from '@server/axios';
 
 export async function authMiddleware(
   req: ServerRequest,
@@ -12,14 +12,12 @@ export async function authMiddleware(
 ) {
   const { cookies } = req;
 
-  console.log('INSIDE COOKIES TO REQUEST', cookies);
-
   if (!cookies?.authCookie && !cookies?.uuid) {
     next();
   }
 
   try {
-    const response = await authAPI.getUserInfo({
+    const response = await yandexApiInstanceAxios.get('/api/v2/auth/user', {
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
 

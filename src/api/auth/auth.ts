@@ -1,24 +1,24 @@
 import { instanceAxios } from '@api/axios';
-import { BASE_SERVER_API_URL, PATH_API } from '@api/config';
+import { BASE_SERVER_API_URL, BFF_URLS, PATH_API } from '@api/config';
 import { TSignIn, TSignUp } from '@api';
 import { AxiosRequestConfig } from 'axios';
 import { Theme } from '@types';
 
 class AuthAPI {
   signUp = async (data: TSignUp, config?: AxiosRequestConfig) => {
-    await instanceAxios.post(PATH_API.AUTH.SIGN_UP, data, config);
+    await instanceAxios.post(BFF_URLS.signUp, data, config);
   };
 
   signIn = async (data: TSignIn, config?: AxiosRequestConfig) => {
-    await instanceAxios.post(PATH_API.AUTH.SIGN_IN, data, config);
+    await instanceAxios.post(BFF_URLS.signIn, data, config);
   };
 
   getUserInfo = async (config?: AxiosRequestConfig) => {
-    return await instanceAxios.get(PATH_API.AUTH.USER, config);
+    return await instanceAxios.get(BFF_URLS.me, config);
   };
 
   logout = async (config?: AxiosRequestConfig) => {
-    await instanceAxios.post(PATH_API.AUTH.LOGOUT, config);
+    await instanceAxios.post(BFF_URLS.logout, config);
   };
 
   yaGetId = async (data) => {
