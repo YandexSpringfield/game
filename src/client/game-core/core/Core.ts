@@ -34,7 +34,7 @@ export class Core {
 
   constructor(canvasBg: HTMLCanvasElement, canvasMario: HTMLCanvasElement) {
     this.currentLevel =
-      Number(localStorage.getItem('SpringfieldMario Level')) || 0;
+      Number(localStorage.getItem('SpringfieldMarioLevel')) || 0;
     this.canvasBg = canvasBg;
     this.canvasMario = canvasMario;
     this.addAudio();
@@ -59,7 +59,7 @@ export class Core {
     }
     this.levelMap = levels[this.currentLevel];
     localStorage.setItem(
-      'SpringfieldMario Level',
+      'SpringfieldMarioLevel',
       JSON.stringify(this.currentLevel),
     );
   }
