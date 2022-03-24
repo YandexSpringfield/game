@@ -12,8 +12,8 @@ export const addToLeaderboard = createAsyncThunk(
         data: {
           springfieldMarioScore: data.score,
           city: data.location,
-          avatar: userRes.data.avatar,
-          name: userRes.data.first_name || userRes.data.display_name,
+          avatar: userRes.data.data.avatar,
+          name: userRes.data.data.first_name || userRes.data.data.display_name,
         },
         ratingFieldName,
       });
