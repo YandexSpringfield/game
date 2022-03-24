@@ -1,8 +1,8 @@
 import { NextFunction, Response } from 'express';
 import { PrivateRequest } from '@server/types';
-import { userService } from '@server/services';
-import { authAPI } from '@api';
+import { userService, userThemeService } from '@server/services';
 import { setAuthCookies } from '@server';
+import yandexApiInstanceAxios from '@server/axios';
 
 export async function privateMiddleware(
   req: PrivateRequest,
@@ -17,10 +17,11 @@ export async function privateMiddleware(
   }
 
   try {
-    const response = await authAPI.getUserInfo({
+    const response = await yandexApiInstanceAxios.get('/api/v2/auth/user', {
       headers: setAuthCookies(cookies.authCookie, cookies.uuid),
     });
     const user = await userService.findById(response.data.id);
+    const [userTheme] = await userThemeService.findOrCreate(response.data.id);
 
     if (!user) {
       res.sendStatus(401);
@@ -28,8 +29,8 @@ export async function privateMiddleware(
     }
 
     req.user = {
-      id: user.getDataValue('id'),
-      login: user.getDataValue('login'),
+      ...response.data,
+      theme: userTheme.getDataValue('theme'),
     };
 
     next();

@@ -1,5 +1,5 @@
 import { instanceAxios } from '@api/axios';
-import { PATH_API } from '@api/config';
+import { BFF_URLS } from '@api/config';
 import { TChangePasswordRequest, TUserRequest } from '@api';
 
 class EditProfileAPI {
@@ -10,15 +10,15 @@ class EditProfileAPI {
       },
     };
 
-    await instanceAxios.put(PATH_API.USER.AVATAR, data, config);
+    await instanceAxios.put(BFF_URLS.updateAvatar, data, config);
   };
 
   editPassword = async (data: TChangePasswordRequest) => {
-    await instanceAxios.put(PATH_API.USER.PASSWORD, data);
+    await instanceAxios.put(BFF_URLS.updatePassword, data);
   };
 
   editProfile = async (data: TUserRequest) => {
-    await instanceAxios.put(PATH_API.USER.PROFILE, data);
+    await instanceAxios.put(BFF_URLS.updateProfile, data);
   };
 }
 

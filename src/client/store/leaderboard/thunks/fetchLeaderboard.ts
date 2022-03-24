@@ -6,7 +6,7 @@ export const fetchLeaderboard = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     return await leaderboardAPI
       .getAllUsers()
-      .then((res) => res.data)
+      .then((res) => res.data.data)
       .catch((err) => rejectWithValue(err.response.data));
   },
 );

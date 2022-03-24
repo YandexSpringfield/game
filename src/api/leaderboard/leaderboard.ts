@@ -1,5 +1,5 @@
 import { instanceAxios } from '@api/axios';
-import { PATH_API } from '@api/config';
+import { BFF_URLS } from '@api/config';
 import { TLeaderboardNewLeaderRequest, TLeaderboardRequest } from '@api';
 import {
   defaultPagination,
@@ -13,15 +13,7 @@ class LeaderboardAPI {
     data: TLeaderboardNewLeaderRequest,
     config?: AxiosRequestConfig,
   ) => {
-    await instanceAxios.post(
-      PATH_API.LEADERBOARD.ADD_USER,
-      {
-        ...data,
-        ratingFieldName,
-        teamName,
-      },
-      config,
-    );
+    await instanceAxios.post(BFF_URLS.addToLeaderBoard, data, config);
   };
 
   getAllUsers = async (
@@ -29,8 +21,12 @@ class LeaderboardAPI {
     config?: AxiosRequestConfig,
   ) => {
     return await instanceAxios.post(
-      PATH_API.LEADERBOARD.GET_ALL_USERS,
-      data,
+      BFF_URLS.leaderboard,
+      {
+        ...data,
+        ratingFieldName,
+        teamName,
+      },
       config,
     );
   };

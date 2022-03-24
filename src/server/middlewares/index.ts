@@ -4,3 +4,4 @@ export { renderMiddleware } from './render.middleware';
 export { webpackClientMiddleware } from './webpack.middleware';
 export { privateMiddleware } from './private.middleware';
 export { cspMiddleware } from './csp.middleware';
+export { resourcesMiddleware } from './resources.middleware';
