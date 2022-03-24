@@ -1,7 +1,7 @@
 import { Vectors } from '@game-core/entity/Vectors';
 import { SpriteResolver } from '@game-core';
 import { tilesSize } from '@game-core/sprite-resolver';
-import { TLevel } from '@game-core/levels/level-1';
+import { TLevel } from '@game-core/levels';
 
 export enum EntityEvents {
   selectCoin = 'selectCoin',

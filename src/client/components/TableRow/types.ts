@@ -1,6 +1,6 @@
 export type TProps = {
   index: number;
-  score?: number;
+  springfieldMarioScore?: number;
   avatar?: string;
   name?: string;
   login?: string;

@@ -31,36 +31,49 @@ class TileCollider extends TileConverter {
     );
 
     matches.forEach((match: ITile) => {
+      if (!match.tile.type) {
+        return;
+      }
+
+      if (
+        entity.name === OverworldEntity.Goomba &&
+        match.tile.type === 'enemy'
+      ) {
+        return;
+      }
+
       if (match.tile.name === 'coin' && entity.name === OverworldEntity.Mario) {
         this._notifyCoin(match);
       }
 
       if (
-        match.tile.name === OverworldEntity.Goomba &&
+        match.tile.type === 'enemy' &&
         entity.name === OverworldEntity.Mario
       ) {
-        eventBus.emit(GAME_END, 'lost');
-      }
-
-      if (!match.tile.type) {
-        return;
+        if (entity.pos.x + entity.width > match.x1 || entity.pos.x < match.x2) {
+          eventBus.emit(GAME_END, 'lost');
+        }
       }
 
       if (entity.vel.x > 0) {
         if (entity.pos.x + entity.width > match.x1) {
           entity.pos.set(match.x1 - entity.width, entity.pos.y);
           entity.vel.set(0, entity.vel.y);
-          // @ts-ignore
-          // eslint-disable-next-line no-param-reassign
-          entity.direction = -1;
+          if (entity.name === OverworldEntity.Goomba) {
+            // @ts-ignore
+            // eslint-disable-next-line no-param-reassign
+            entity.direction = -1;
+          }
         }
       } else if (entity.vel.x < 0) {
         if (entity.pos.x < match.x2) {
           entity.pos.set(match.x2, entity.pos.y);
           entity.vel.set(0, entity.vel.y);
-          // @ts-ignore
-          // eslint-disable-next-line no-param-reassign
-          entity.direction = 1;
+          if (entity.name === OverworldEntity.Goomba) {
+            // @ts-ignore
+            // eslint-disable-next-line no-param-reassign
+            entity.direction = 1;
+          }
         }
       }
     });

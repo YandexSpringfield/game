@@ -5,6 +5,7 @@ import { useAppDispatch, addToLeaderboard, useUserSelector } from '@store';
 import { routes } from '@appConstants';
 import { eventBus } from '@game-core/EventBus';
 import { GAME_STATUS } from '@game-core';
+import { RequestStatus } from '@types';
 
 import styles from './styles.module.scss';
 
@@ -14,35 +15,32 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getSavedScore = (): number | undefined => {
-    if (localStorage.getItem('SpringfieldMario')) {
+  const getSavedScore = (): number => {
+    if (localStorage.getItem('SpringfieldMarioScore')) {
       const oldItem = JSON.parse(
-        localStorage.getItem('SpringfieldMario') as string,
+        localStorage.getItem('SpringfieldMarioScore') as string,
       );
       return oldItem.score + score;
     }
-    return undefined;
+    return score;
   };
 
   const dispatchToLeaderboard = () => {
-    if (requestStatus === 'SUCCESS') {
-      const updatedScore = getSavedScore() || score;
+    const updatedScore = getSavedScore();
+
+    if (requestStatus === RequestStatus.SUCCESS) {
       dispatch(
         addToLeaderboard({
           location: 'Москва',
           score: updatedScore,
         }),
       );
-      localStorage.removeItem('SpringfieldMario');
-    } else if (localStorage.getItem('SpringfieldMario')) {
-      const newItem = { login, score: getSavedScore() };
-      localStorage.setItem('SpringfieldMario', JSON.stringify(newItem));
-    } else {
-      localStorage.setItem(
-        'SpringfieldMario',
-        JSON.stringify({ login, score }),
-      );
     }
+
+    localStorage.setItem(
+      'SpringfieldMarioScore',
+      JSON.stringify({ login, score: updatedScore }),
+    );
   };
 
   const goToNewGame = () => {
@@ -64,9 +62,13 @@ export const EndGameModal = ({ isOpen, onClose, gameStatus }) => {
     goToNewGame();
   };
 
+  const scoreText =
+    status === 'win' ? <h3 className={styles.title}>Очки: {score}</h3> : null;
+
   return (
     <Modal isOpen={isOpen} className={styles.modal} onClose={onModalClose}>
       <h2 className={styles.title}>{GAME_STATUS[status]?.text}</h2>
+      {scoreText}
       <div className={styles.logo}>
         <Logo width="50" height="50" />
       </div>

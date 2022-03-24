@@ -39,7 +39,7 @@ export const Leaderboard: FC = () => {
       </div>
       {data?.map(({ data }, index) => (
         <TableRow
-          key={`${data.score}-${data?.login}-${data.name}`}
+          key={`${data.springfieldMarioScore}-${data?.login}-${data.name}`}
           {...data}
           index={index + 1}
         />

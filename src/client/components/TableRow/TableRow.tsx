@@ -11,7 +11,7 @@ export const TableRow: FC<TProps> = ({
   login,
   name,
   city,
-  score,
+  springfieldMarioScore,
 }) => {
   const itemAvatar = resourcesUrl + avatar;
 
@@ -23,7 +23,7 @@ export const TableRow: FC<TProps> = ({
         {login || name || 'unknown'}
       </div>
       <div>{city || 'unknown'}</div>
-      <div>{score}</div>
+      <div>{springfieldMarioScore}</div>
     </div>
   );
 };
